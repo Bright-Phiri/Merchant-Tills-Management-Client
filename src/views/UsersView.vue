@@ -34,7 +34,7 @@ const headers = [
                   density="compact"
                 ></v-text-field>
               </v-col>
-              <v-btn color="primary" class="text-capitalize" variant="outlined">New User</v-btn>
+              <v-btn color="#365B73" class="text-capitalize" variant="outlined">New User</v-btn>
             </div>
           </v-card-title>
           <v-card-text>
@@ -44,6 +44,13 @@ const headers = [
               :search="search"
               :loading="fetchUsesLoading"
               loading-text="Loading users..."
+            >
+              <template v-slot:loader>
+                <v-progress-linear
+                  height="3"
+                  indeterminate
+                  color="#365B73"
+                ></v-progress-linear> </template
             ></v-data-table>
           </v-card-text>
         </v-card>

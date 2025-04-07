@@ -39,6 +39,13 @@ const headers = [
               :search="search"
               :loading="fetchUsesLoading"
               loading-text="Loading payments..."
+            >
+              <template v-slot:loader>
+                <v-progress-linear
+                  height="3"
+                  indeterminate
+                  color="#365B73"
+                ></v-progress-linear> </template
             ></v-data-table>
           </v-card-text>
         </v-card>

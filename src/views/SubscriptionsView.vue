@@ -31,7 +31,7 @@ const headers = [
                   density="compact"
                 ></v-text-field>
               </v-col>
-              <v-btn color="primary" class="text-capitalize" variant="outlined"
+              <v-btn color="#365B73" class="text-capitalize" variant="outlined"
                 >New Subscription</v-btn
               >
             </div>
@@ -43,6 +43,13 @@ const headers = [
               :search="search"
               :loading="fetchSubscriptionsLoading"
               loading-text="Loading subscriptions..."
+            >
+              <template v-slot:loader>
+                <v-progress-linear
+                  height="3"
+                  indeterminate
+                  color="#365B73"
+                ></v-progress-linear> </template
             ></v-data-table>
           </v-card-text>
         </v-card>

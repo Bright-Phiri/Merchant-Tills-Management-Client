@@ -42,13 +42,7 @@ const navBarItems = [
 
 <template>
   <div class="NavBar">
-    <v-navigation-drawer
-      class="bg-deep-purple"
-      theme="dark"
-      :width="270"
-      permanent
-      v-model="drawer"
-    >
+    <v-navigation-drawer color="#365B73" theme="dark" :width="270" permanent v-model="drawer">
       <v-list>
         <v-list-item
           v-for="link in navBarItems"

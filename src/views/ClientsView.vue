@@ -39,7 +39,11 @@ const headers = [
               :search="search"
               :loading="loading"
               loading-text="Loading clients..."
-            ></v-data-table>
+            >
+              <template v-slot:loader>
+                <v-progress-linear height="3" indeterminate color="#365B73"></v-progress-linear>
+              </template>
+            </v-data-table>
           </v-card-text>
         </v-card>
       </v-col>
