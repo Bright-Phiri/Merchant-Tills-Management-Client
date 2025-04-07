@@ -39,8 +39,8 @@ const headers = [
           <v-card-text>
             <v-data-table
               class="elevation-1"
-              :headers="headers"
-              :search="search"
+              :headers
+              :search
               :loading="fetchSubscriptionsLoading"
               loading-text="Loading subscriptions..."
             >

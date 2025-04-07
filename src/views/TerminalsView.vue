@@ -35,9 +35,9 @@ const headers = [
           <v-card-text>
             <v-data-table
               class="elevation-1"
-              :headers="headers"
-              :search="search"
-              :loading="loading"
+              :headers
+              :search
+              :loading
               loading-text="Loading terminals..."
             >
               <template v-slot:loader>

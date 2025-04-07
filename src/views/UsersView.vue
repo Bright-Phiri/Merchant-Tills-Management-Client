@@ -40,8 +40,8 @@ const headers = [
           <v-card-text>
             <v-data-table
               class="elevation-1"
-              :headers="headers"
-              :search="search"
+              :headers
+              :search
               :loading="fetchUsesLoading"
               loading-text="Loading users..."
             >
