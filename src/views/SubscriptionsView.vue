@@ -11,6 +11,7 @@ const headers = [
   { key: 'taxpayer', title: 'Client Name' },
   { key: 'start_date', title: 'Start Date' },
   { key: 'end_date', title: 'End Date' },
+  { key: 'action', title: 'Action' },
 ]
 </script>
 <template>
