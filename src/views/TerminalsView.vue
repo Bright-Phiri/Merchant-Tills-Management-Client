@@ -4,15 +4,15 @@ const loading = ref(true)
 const headers = [
   {
     align: 'start',
-    key: 'tin',
+    key: 'terminal_id',
     sortable: false,
-    title: 'TIN',
+    title: 'Terminal ID',
   },
-  { key: 'name', title: 'Name' },
-  { key: 'email_address', title: 'Email Address' },
+  { key: 'terminal_label', title: 'Terminal Label' },
+  { key: 'activation_date', title: 'Activation Date' },
   { key: 'phone_number', title: 'Phone Number' },
-  { key: 'terminals_count', title: 'Terminals Count' },
-  { key: 'action', title: 'Action' },
+  { key: 'status', title: 'Status' },
+  { key: 'taxpayer', title: 'Owner' },
 ]
 </script>
 <template>
@@ -26,6 +26,7 @@ const headers = [
               <v-text-field
                 prepend-inner-icon="mdi-magnify"
                 clearable
+                placeholder="Search terminal"
                 variant="outlined"
                 density="compact"
               ></v-text-field>

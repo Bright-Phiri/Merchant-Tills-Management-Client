@@ -26,6 +26,7 @@ const headers = [
               <v-text-field
                 prepend-inner-icon="mdi-magnify"
                 clearable
+                placeholder="Search client"
                 variant="outlined"
                 density="compact"
               ></v-text-field>
