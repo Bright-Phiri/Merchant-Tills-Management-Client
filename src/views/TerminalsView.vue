@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 const loading = ref(true)
-terminals = ref([])
+const terminals = ref([])
 const headers = [
   {
     align: 'start',

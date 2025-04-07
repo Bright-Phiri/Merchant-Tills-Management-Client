@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 const fetchSubscriptionsLoading = ref(true)
-subscription = ref([])
+const subscription = ref([])
 const headers = [
   {
     align: 'start',

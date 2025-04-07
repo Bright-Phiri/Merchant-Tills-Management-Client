@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 const fetchUsesLoading = ref(true)
-payments = ref([])
+const payments = ref([])
 const headers = [
   {
     align: 'start',
