@@ -24,7 +24,7 @@ const headers = [
             <span>All Terminals</span>
             <v-col cols="3">
               <v-text-field
-                prepend-inner-icon="mdi-magnify"
+                append-inner-icon="mdi-magnify"
                 clearable
                 placeholder="Search terminal"
                 variant="outlined"

@@ -24,7 +24,7 @@ const headers = [
             <span>Payments</span>
             <v-col cols="3">
               <v-text-field
-                prepend-inner-icon="mdi-magnify"
+                append-inner-icon="mdi-magnify"
                 clearable
                 placeholder="Search payment"
                 variant="outlined"

@@ -22,17 +22,20 @@ const headers = [
     <v-row>
       <v-col cols="12">
         <v-card>
-          <v-card-title class="d-flex justify-space-between">
+          <v-card-title>
             <span>System Users</span>
-            <v-col cols="3">
-              <v-text-field
-                prepend-inner-icon="mdi-magnify"
-                clearable
-                placeholder="Search user"
-                variant="outlined"
-                density="compact"
-              ></v-text-field>
-            </v-col>
+            <div class="d-flex justify-space-between mt-2">
+              <v-col cols="3" class="pa-0">
+                <v-text-field
+                  append-inner-icon="mdi-magnify"
+                  clearable
+                  placeholder="Search user"
+                  variant="outlined"
+                  density="compact"
+                ></v-text-field>
+              </v-col>
+              <v-btn color="primary" class="text-capitalize" variant="outlined">New User</v-btn>
+            </div>
           </v-card-title>
           <v-card-text>
             <v-data-table
