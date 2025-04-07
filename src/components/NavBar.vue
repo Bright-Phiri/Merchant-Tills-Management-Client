@@ -5,7 +5,7 @@ const navBarItems = [
   {
     text: 'Dashboard',
     icon: 'mdi-view-dashboard',
-    to: '/dashbaord',
+    to: '/dashboard',
   },
   {
     text: 'Clients',
