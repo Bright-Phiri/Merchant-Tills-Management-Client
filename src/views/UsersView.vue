@@ -1,30 +1,22 @@
-<script>
+<script setup>
 import { ref } from 'vue'
-export default {
-  setup() {
-    const fetchUsesLoading = ref(true)
-    const headers = [
-      {
-        align: 'start',
-        key: 'first_name',
-        sortable: false,
-        title: 'First Name',
-      },
-      { key: 'last_name', title: 'Last Name' },
-      { key: 'user_name', title: 'User Name' },
-      { key: 'role', title: 'Role' },
-      { key: 'email_address', title: 'Email Address' },
-      { key: 'phone_number', title: 'Phone Number' },
-      { key: 'status', title: 'Status' },
-      { key: 'action', title: 'Action' },
-    ]
-
-    return {
-      fetchUsesLoading,
-      headers,
-    }
+const fetchUsesLoading = ref(true)
+const users = ref([])
+const headers = [
+  {
+    align: 'start',
+    key: 'first_name',
+    sortable: false,
+    title: 'First Name',
   },
-}
+  { key: 'last_name', title: 'Last Name' },
+  { key: 'user_name', title: 'User Name' },
+  { key: 'role', title: 'Role' },
+  { key: 'email_address', title: 'Email Address' },
+  { key: 'phone_number', title: 'Phone Number' },
+  { key: 'status', title: 'Status' },
+  { key: 'action', title: 'Action' },
+]
 </script>
 <template>
   <div class="Clients">

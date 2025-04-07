@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 const loading = ref(true)
+const clients = ref([])
 const headers = [
   {
     align: 'start',
