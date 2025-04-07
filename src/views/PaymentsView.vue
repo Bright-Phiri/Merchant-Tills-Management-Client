@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-const fetchSubscriptionsLoading = ref(true)
+const fetchUsesLoading = ref(true)
 const headers = [
   {
     align: 'start',
@@ -8,9 +8,11 @@ const headers = [
     sortable: false,
     title: 'Customer TIN',
   },
-  { key: 'taxpayer', title: 'Client Name' },
-  { key: 'start_date', title: 'Start Date' },
-  { key: 'end_date', title: 'End Date' },
+  { key: 'taxpayer', title: 'Customer Name' },
+  { key: 'payment_date', title: 'Payment Date' },
+  { key: 'amount', title: 'Amount (MK)' },
+  { key: 'payment_method', title: 'Payment Method' },
+  { key: 'transaction_id', title: 'Transaction ID' },
 ]
 </script>
 <template>
@@ -19,12 +21,12 @@ const headers = [
       <v-col cols="12">
         <v-card>
           <v-card-title class="d-flex justify-space-between">
-            <span>Subscriptions</span>
+            <span>Payments</span>
             <v-col cols="3">
               <v-text-field
                 prepend-inner-icon="mdi-magnify"
                 clearable
-                placeholder="Search subscription"
+                placeholder="Search payment"
                 variant="outlined"
                 density="compact"
               ></v-text-field>
@@ -35,8 +37,8 @@ const headers = [
               class="elevation-1"
               :headers="headers"
               :search="search"
-              :loading="fetchSubscriptionsLoading"
-              loading-text="Loading subscriptions..."
+              :loading="fetchUsesLoading"
+              loading-text="Loading payments..."
             ></v-data-table>
           </v-card-text>
         </v-card>
