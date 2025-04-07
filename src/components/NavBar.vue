@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-const drawer = ref(false)
+const drawer = ref(true)
 const navBarItems = [
   {
     text: 'Dashboard',
