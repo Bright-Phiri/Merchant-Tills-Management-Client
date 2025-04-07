@@ -1,21 +1,30 @@
-<script setup>
+<script>
 import { ref } from 'vue'
-const fetchUsesLoading = ref(true)
-const headers = [
-  {
-    align: 'start',
-    key: 'first_name',
-    sortable: false,
-    title: 'First Name',
+export default {
+  setup() {
+    const fetchUsesLoading = ref(true)
+    const headers = [
+      {
+        align: 'start',
+        key: 'first_name',
+        sortable: false,
+        title: 'First Name',
+      },
+      { key: 'last_name', title: 'Last Name' },
+      { key: 'user_name', title: 'User Name' },
+      { key: 'role', title: 'Role' },
+      { key: 'email_address', title: 'Email Address' },
+      { key: 'phone_number', title: 'Phone Number' },
+      { key: 'status', title: 'Status' },
+      { key: 'action', title: 'Action' },
+    ]
+
+    return {
+      fetchUsesLoading,
+      headers,
+    }
   },
-  { key: 'last_name', title: 'Last Name' },
-  { key: 'user_name', title: 'User Name' },
-  { key: 'role', title: 'Role' },
-  { key: 'email_address', title: 'Email Address' },
-  { key: 'phone_number', title: 'Phone Number' },
-  { key: 'status', title: 'Status' },
-  { key: 'action', title: 'Action' },
-]
+}
 </script>
 <template>
   <div class="Clients">
@@ -23,7 +32,7 @@ const headers = [
       <v-col cols="12">
         <v-card>
           <v-card-title>
-            <span>System Users</span>
+            <span>Users</span>
             <div class="d-flex justify-space-between mt-2">
               <v-col cols="3" class="pa-0">
                 <v-text-field

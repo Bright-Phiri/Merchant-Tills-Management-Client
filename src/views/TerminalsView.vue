@@ -21,7 +21,7 @@ const headers = [
       <v-col cols="12">
         <v-card>
           <v-card-title class="d-flex justify-space-between">
-            <span>All Terminals</span>
+            <span>Terminals</span>
             <v-col cols="3">
               <v-text-field
                 append-inner-icon="mdi-magnify"
