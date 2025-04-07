@@ -34,6 +34,7 @@ const headers = [
           </v-card-title>
           <v-card-text>
             <v-data-table
+              class="elevation-1"
               :headers="headers"
               :search="search"
               :loading="loading"
