@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+
 const fetchSubscriptionsLoading = ref(true)
 const subscription = ref([])
 const headers = [

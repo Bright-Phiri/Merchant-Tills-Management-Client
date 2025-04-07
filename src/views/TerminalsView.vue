@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+
 const loading = ref(true)
 const terminals = ref([])
 const headers = [

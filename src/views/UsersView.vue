@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+
 const fetchUsesLoading = ref(true)
 const users = ref([])
 const headers = [
