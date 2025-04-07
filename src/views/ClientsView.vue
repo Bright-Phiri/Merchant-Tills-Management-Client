@@ -45,6 +45,7 @@ onMounted(() => {
               <v-text-field
                 append-inner-icon="mdi-magnify"
                 clearable
+                label="Search Client"
                 placeholder="Search client"
                 variant="outlined"
                 density="compact"

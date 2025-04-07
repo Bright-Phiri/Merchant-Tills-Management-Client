@@ -28,6 +28,7 @@ const headers = [
               <v-text-field
                 append-inner-icon="mdi-magnify"
                 clearable
+                label="Search Payment"
                 placeholder="Search payment"
                 variant="outlined"
                 density="compact"

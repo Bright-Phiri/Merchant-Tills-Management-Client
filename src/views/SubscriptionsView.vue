@@ -28,6 +28,7 @@ const headers = [
                 <v-text-field
                   append-inner-icon="mdi-magnify"
                   clearable
+                  label="Search Subscription"
                   placeholder="Search subscription"
                   variant="outlined"
                   density="compact"

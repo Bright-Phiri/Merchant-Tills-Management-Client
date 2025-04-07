@@ -31,6 +31,7 @@ const headers = [
                 <v-text-field
                   append-inner-icon="mdi-magnify"
                   clearable
+                  label="Search User"
                   placeholder="Search user"
                   variant="outlined"
                   density="compact"
