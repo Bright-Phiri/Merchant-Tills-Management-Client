@@ -5,6 +5,11 @@ const user = ref({
   first_name: '',
   last_name: '',
   user_name: '',
+  role: '',
+  email_address: '',
+  phone_number: '',
+  password: '',
+  password_confirmation: '',
 })
 const roles = ref(['Officer', 'Admin'])
 </script>
@@ -48,6 +53,7 @@ const roles = ref(['Officer', 'Admin'])
 
                   <v-col cols="12" sm="6">
                     <v-select
+                      v-model="user.role"
                       label="Select Role"
                       :items="roles"
                       variant="outlined"
@@ -57,7 +63,7 @@ const roles = ref(['Officer', 'Admin'])
 
                   <v-col cols="12" sm="6" class="px-0">
                     <v-text-field
-                      v-model="user.user_name"
+                      v-model="user.email_address"
                       label="Email Address"
                       variant="outlined"
                       density="comfortable"
@@ -66,7 +72,7 @@ const roles = ref(['Officer', 'Admin'])
 
                   <v-col cols="12" sm="6">
                     <v-text-field
-                      v-model="user.user_name"
+                      v-model="user.phone_number"
                       label="Phone Number"
                       variant="outlined"
                       density="comfortable"
@@ -76,7 +82,7 @@ const roles = ref(['Officer', 'Admin'])
                   <v-col cols="12" sm="6" class="px-0">
                     <v-text-field
                       type="password"
-                      v-model="user.user_name"
+                      v-model="user.password"
                       label="Password"
                       variant="outlined"
                       density="comfortable"
@@ -86,7 +92,7 @@ const roles = ref(['Officer', 'Admin'])
                   <v-col cols="12" sm="6">
                     <v-text-field
                       type="password"
-                      v-model="user.user_name"
+                      v-model="user.password_confirmation"
                       label="Password Confirmation"
                       variant="outlined"
                       density="comfortable"
