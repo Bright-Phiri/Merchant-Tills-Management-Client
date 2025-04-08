@@ -56,6 +56,11 @@ const router = createRouter({
           name: 'edit-user',
           component: () => import('../views/EditUserView.vue'),
         },
+        {
+          path: '/client-terminals/:id',
+          name: 'client-terminals',
+          component: () => import('../views/ClientTerminalsView.vue'),
+        },
       ],
     },
   ],

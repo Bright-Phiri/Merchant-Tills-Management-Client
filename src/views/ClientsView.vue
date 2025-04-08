@@ -1,5 +1,6 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import axios from 'axios'
 
 const loading = ref(false)
@@ -7,6 +8,7 @@ const clients = ref([])
 const search = ref('')
 const itemsPerPage = ref(10)
 const totalItems = ref(0)
+const router = useRouter()
 const headers = [
   {
     align: 'start',
@@ -34,6 +36,10 @@ async function fetchClients({ page, itemsPerPage }) {
     loading.value = false
     console.log(err)
   }
+}
+
+function loadClientTerminalsView(id) {
+  router.push({ name: 'client-terminals', params: { id }, replace: true })
 }
 </script>
 
@@ -78,6 +84,7 @@ async function fetchClients({ page, itemsPerPage }) {
                     prepend-icon="mdi-eye"
                     class="text-capitalize"
                     color="#365B73"
+                    v-on:click="loadClientTerminalsView(item.id)"
                     >View Terminals</v-btn
                   >
                 </div>
