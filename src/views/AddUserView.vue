@@ -1,5 +1,6 @@
 <script setup>
-import { ref, useTemplateRef } from 'vue'
+import { ref, useTemplateRef, onMounted } from 'vue'
+import axios from 'axios'
 import Swal from 'sweetalert2'
 
 const user = ref({
@@ -36,6 +37,35 @@ async function addUser() {
       text: 'Please enter all required fields',
     })
     return
+  }
+  const payload = {
+    first_name: user.value.first_name,
+    last_name: user.value.last_name,
+    user_name: user.value.user_name,
+    role: user.value.role,
+    email_address: user.value.email_address,
+    phone_number: user.value.phone_number,
+    password: user.value.password,
+    password_confirmation: user.value.password_confirmation,
+  }
+
+  try {
+    const response = await axios.post('http://127.0.0.1:3000/api/v1/users', payload)
+
+    if (response.status === 201) {
+      await Swal.fire({
+        icon: 'success',
+        title: 'User Created',
+        text: 'The user was successfully created!',
+      })
+      userForm.value.reset()
+    }
+  } catch (error) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'Something went wrong',
+    })
   }
 }
 

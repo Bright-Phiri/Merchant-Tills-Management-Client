@@ -1,9 +1,11 @@
 <script setup>
 import router from '@/router'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
 
-const fetchUsesLoading = ref(true)
+const fetchUsesLoading = ref(false)
 const users = ref([])
+const search = ref('')
 const headers = [
   {
     align: 'start',
@@ -20,9 +22,30 @@ const headers = [
   { key: 'action', title: 'Action' },
 ]
 
-function loadAddUserPage() {
-  router.push({ name: 'new-user' })
+function getColor(status) {
+  if (status === 'active') return 'success'
+  else return 'red'
 }
+
+function loadAddUserPage() {
+  router.push({ path: '/new-user', replace: true })
+}
+
+async function fetchSystemUsers() {
+  fetchUsesLoading.value = true
+  try {
+    const response = await axios.get('http://127.0.0.1:3000/api/v1/users')
+    users.value = response.data.data
+    fetchUsesLoading.value = false
+  } catch (err) {
+    fetchUsesLoading.value = false
+    console.log(err)
+  }
+}
+
+onMounted(() => {
+  fetchSystemUsers()
+})
 </script>
 <template>
   <div class="Clients">
@@ -36,6 +59,7 @@ function loadAddUserPage() {
                 <v-text-field
                   append-inner-icon="mdi-magnify"
                   clearable
+                  v-model="search"
                   label="Search User"
                   placeholder="Search user"
                   variant="outlined"
@@ -56,11 +80,57 @@ function loadAddUserPage() {
               density="comfortable"
               class="elevation-1"
               :headers
+              :items="users"
               :search
               :loading="fetchUsesLoading"
               loading-text="Loading users..."
               hover
             >
+              <template v-slot:[`item.action`]="{ item }">
+                <v-icon small class="mr-0" v-on:click="showEditEmployeeDialog(item.id)" color="blue"
+                  >mdi-pencil
+                </v-icon>
+                <v-tooltip bottom v-if="item.status === 'disabled'">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon
+                      small
+                      class="mr-0"
+                      color="green"
+                      v-on:click="activateEmployee(item.id)"
+                      v-bind="attrs"
+                      v-on="on"
+                      >mdi-account-off</v-icon
+                    >
+                  </template>
+                  <span>Activate</span>
+                </v-tooltip>
+                <v-tooltip bottom v-if="item.status === 'active'">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon
+                      small
+                      class="mr-0"
+                      color="red"
+                      v-on:click="disableEmployee(item.id)"
+                      v-bind="attrs"
+                      v-on="on"
+                      >mdi-account-lock</v-icon
+                    >
+                  </template>
+                  <span>Disable</span>
+                </v-tooltip>
+              </template>
+              <template v-slot:[`item.status`]="{ item }">
+                <v-chip
+                  class="text-center"
+                  small
+                  style="width: 65px"
+                  outlined
+                  :color="getColor(item.status)"
+                  dark
+                >
+                  {{ item.status === 'active' ? 'Active' : 'Inactive' }}
+                </v-chip>
+              </template>
               <template v-slot:loader>
                 <v-progress-linear
                   height="3"
