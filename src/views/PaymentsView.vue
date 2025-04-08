@@ -37,11 +37,13 @@ const headers = [
           </v-card-title>
           <v-card-text>
             <v-data-table
+              density="comfortable"
               class="elevation-1"
               :headers
               :search
               :loading="fetchUsesLoading"
               loading-text="Loading payments..."
+              hover
             >
               <template v-slot:loader>
                 <v-progress-linear
