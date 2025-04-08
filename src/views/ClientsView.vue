@@ -6,7 +6,7 @@ import axios from 'axios'
 const loading = ref(false)
 const clients = ref([])
 const search = ref('')
-const itemsPerPage = ref(10)
+const itemsPerPage = ref(20)
 const totalItems = ref(0)
 const router = useRouter()
 const headers = [
@@ -27,7 +27,7 @@ async function fetchClients({ page, itemsPerPage }) {
   loading.value = true
   try {
     const response = await axios.get('http://127.0.0.1:3000/api/v1/taxpayers', {
-      params: { page, itemsPerPage },
+      params: { page, per_page: itemsPerPage },
     })
     clients.value = response.data.data.taxpayers
     totalItems.value = response.data.data.total
@@ -38,8 +38,8 @@ async function fetchClients({ page, itemsPerPage }) {
   }
 }
 
-function loadClientTerminalsView(id) {
-  router.push({ name: 'client-terminals', params: { id }, replace: true })
+function loadClientTerminalsView(id, name) {
+  router.push({ name: 'client-terminals', params: { id, name }, replace: true })
 }
 </script>
 
@@ -84,7 +84,7 @@ function loadClientTerminalsView(id) {
                     prepend-icon="mdi-eye"
                     class="text-capitalize"
                     color="#365B73"
-                    v-on:click="loadClientTerminalsView(item.id)"
+                    v-on:click="loadClientTerminalsView(item.id, item.name)"
                     >View Terminals</v-btn
                   >
                 </div>

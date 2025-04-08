@@ -1,10 +1,14 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import axios from 'axios'
+import { useRoute } from 'vue-router'
 
 const loading = ref(true)
 const terminals = ref([])
 const search = ref('')
+const itemsPerPage = ref(20)
+const totalItems = ref(0)
+const route = useRoute()
 const headers = [
   {
     align: 'start',
@@ -23,21 +27,23 @@ function getColor(status) {
   else return 'red'
 }
 
-async function fetchTerminals() {
+async function fetchClientTerminals({ page, itemsPerPage }) {
   loading.value = true
   try {
-    const response = await axios.get('http://127.0.0.1:3000/api/v1/terminals')
+    const response = await axios.get(
+      `http://127.0.0.1:3000/api/v1/taxpayers/${route.params.id}/show_terminals`,
+      {
+        params: { page, per_page: itemsPerPage },
+      },
+    )
     terminals.value = response.data.data.terminals
+    totalItems.value = response.data.data.total
     loading.value = false
   } catch (err) {
     loading.value = false
     console.log(err)
   }
 }
-
-onMounted(() => {
-  //fetchTerminals()
-})
 </script>
 <template>
   <div class="Terminals">
@@ -45,7 +51,7 @@ onMounted(() => {
       <v-col cols="12">
         <v-card>
           <v-card-title class="d-flex justify-space-between">
-            <span>Terminals</span>
+            <span>{{ route.params.name }} Terminals</span>
             <v-col cols="3">
               <v-text-field
                 append-inner-icon="mdi-magnify"
@@ -59,14 +65,16 @@ onMounted(() => {
             </v-col>
           </v-card-title>
           <v-card-text>
-            <v-data-table
+            <v-data-table-server
               density="comfortable"
               class="elevation-1"
               :headers
               :items="terminals"
+              :items-length="totalItems"
               :search
               :loading
-              items-per-page="7"
+              :items-per-page="itemsPerPage"
+              @update:options="fetchClientTerminals"
               loading-text="Loading client's terminals..."
               hover
             >
@@ -88,7 +96,7 @@ onMounted(() => {
                   indeterminate
                   color="#365B73"
                 ></v-progress-linear> </template
-            ></v-data-table>
+            ></v-data-table-server>
           </v-card-text>
         </v-card>
       </v-col>

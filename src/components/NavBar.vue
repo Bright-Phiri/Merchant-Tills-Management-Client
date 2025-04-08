@@ -13,11 +13,6 @@ const navBarItems = [
     to: '/clients',
   },
   {
-    text: 'Users',
-    icon: 'mdi-account-multiple',
-    to: '/users',
-  },
-  {
     text: 'Terminals',
     icon: 'mdi-sitemap',
     to: '/terminals',
@@ -31,6 +26,11 @@ const navBarItems = [
     text: 'Payments',
     icon: 'mdi-credit-card-outline',
     to: '/payments',
+  },
+  {
+    text: 'Users',
+    icon: 'mdi-account-multiple',
+    to: '/users',
   },
   {
     text: 'Settings',
