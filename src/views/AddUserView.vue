@@ -61,10 +61,17 @@ async function addUser() {
       userForm.value.reset()
     }
   } catch (error) {
+    if (!error.status) {
+      await Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error + ", Couldn't reach API",
+      })
+    }
     await Swal.fire({
       icon: 'error',
       title: 'Error',
-      text: 'Something went wrong',
+      text: error.response.data.message + ', ' + error.response.data.errors,
     })
   }
 }
