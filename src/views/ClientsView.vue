@@ -5,6 +5,8 @@ import axios from 'axios'
 const loading = ref(false)
 const clients = ref([])
 const search = ref('')
+const itemsPerPage = ref(10)
+const totalItems = ref(0)
 const headers = [
   {
     align: 'start',
@@ -19,21 +21,20 @@ const headers = [
   { key: 'action', title: 'Action' },
 ]
 
-async function fetchClients() {
+async function fetchClients({ page, itemsPerPage }) {
   loading.value = true
   try {
-    const response = await axios.get('http://127.0.0.1:3000/api/v1/taxpayers')
+    const response = await axios.get('http://127.0.0.1:3000/api/v1/taxpayers', {
+      params: { page, itemsPerPage },
+    })
     clients.value = response.data.data.taxpayers
+    totalItems.value = response.data.data.total
     loading.value = false
   } catch (err) {
     loading.value = false
     console.log(err)
   }
 }
-
-onMounted(() => {
-  fetchClients()
-})
 </script>
 
 <template>
@@ -56,14 +57,17 @@ onMounted(() => {
             </v-col>
           </v-card-title>
           <v-card-text>
-            <v-data-table
+            <v-data-table-server
               density="comfortable"
               class="elevation-1"
+              v-model:items-per-page="itemsPerPage"
               :headers
               :items="clients"
+              :items-length="totalItems"
               :search
               :loading
-              items-per-page="7"
+              :items-per-page="itemsPerPage"
+              @update:options="fetchClients"
               loading-text="Loading clients..."
               hover
             >
@@ -81,7 +85,7 @@ onMounted(() => {
               <template v-slot:loader>
                 <v-progress-linear height="3" indeterminate color="#365B73"></v-progress-linear>
               </template>
-            </v-data-table>
+            </v-data-table-server>
           </v-card-text>
         </v-card>
       </v-col>

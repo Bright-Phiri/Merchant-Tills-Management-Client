@@ -1,8 +1,10 @@
 <script setup>
-import router from '@/router'
+import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
+const router = useRouter()
 const fetchUsesLoading = ref(false)
 const users = ref([])
 const search = ref('')
@@ -41,6 +43,44 @@ async function fetchSystemUsers() {
     fetchUsesLoading.value = false
     console.log(err)
   }
+}
+
+async function activateUser(id) {
+  try {
+    const response = await axios.patch(`http://127.0.0.1:3000/api/v1/users/${id}/activate`)
+    if (response.status === 200) {
+      Swal.fire({
+        icon: 'success',
+        title: 'User Activated',
+        text: 'The user has been successfully activated.',
+      }).then(() => {
+        fetchSystemUsers()
+      })
+    }
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+async function disableUser(id) {
+  try {
+    const response = await axios.patch(`http://127.0.0.1:3000/api/v1/users/${id}/disable`)
+    if (response.status === 200) {
+      Swal.fire({
+        icon: 'success',
+        title: 'User Disabled',
+        text: 'The user has been successfully disabled.',
+      }).then(() => {
+        fetchSystemUsers()
+      })
+    }
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+function loadEditUserForm(id) {
+  router.push({ name: 'edit-user', params: { id }, replace: true })
 }
 
 onMounted(() => {
@@ -87,7 +127,7 @@ onMounted(() => {
               hover
             >
               <template v-slot:[`item.action`]="{ item }">
-                <v-icon small class="mr-0" v-on:click="showEditEmployeeDialog(item.id)" color="blue"
+                <v-icon small class="mr-0" v-on:click="loadEditUserForm(item.id)" color="blue"
                   >mdi-pencil
                 </v-icon>
                 <v-tooltip bottom v-if="item.status === 'disabled'">
@@ -96,7 +136,7 @@ onMounted(() => {
                       small
                       class="mr-0"
                       color="green"
-                      v-on:click="activateEmployee(item.id)"
+                      v-on:click="activateUser(item.id)"
                       v-bind="attrs"
                       v-on="on"
                       >mdi-account-off</v-icon
@@ -110,7 +150,7 @@ onMounted(() => {
                       small
                       class="mr-0"
                       color="red"
-                      v-on:click="disableEmployee(item.id)"
+                      v-on:click="disableUser(item.id)"
                       v-bind="attrs"
                       v-on="on"
                       >mdi-account-lock</v-icon
