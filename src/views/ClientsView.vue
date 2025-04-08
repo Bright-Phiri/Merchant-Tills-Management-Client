@@ -4,6 +4,7 @@ import axios from 'axios'
 
 const loading = ref(false)
 const clients = ref([])
+const search = ref('')
 const headers = [
   {
     align: 'start',
@@ -21,8 +22,9 @@ const headers = [
 async function fetchClients() {
   loading.value = true
   try {
-    const response = await axios.get('')
-    clients.value = response.data
+    const response = await axios.get('http://127.0.0.1:3000/api/v1/taxpayers')
+    clients.value = response.data.data.taxpayers
+    loading.value = false
   } catch (err) {
     loading.value = false
     console.log(err)
@@ -45,6 +47,7 @@ onMounted(() => {
               <v-text-field
                 append-inner-icon="mdi-magnify"
                 clearable
+                v-model="search"
                 label="Search Client"
                 placeholder="Search client"
                 variant="outlined"
@@ -56,10 +59,23 @@ onMounted(() => {
             <v-data-table
               class="elevation-1"
               :headers
+              :items="clients"
               :search
               :loading
+              items-per-page="7"
               loading-text="Loading clients..."
             >
+              <template v-slot:item.action="{ item }">
+                <div class="d-flex">
+                  <v-btn
+                    variant="outlined"
+                    prepend-icon="mdi-eye"
+                    class="text-capitalize"
+                    color="#365B73"
+                    >View Terminals</v-btn
+                  >
+                </div>
+              </template>
               <template v-slot:loader>
                 <v-progress-linear height="3" indeterminate color="#365B73"></v-progress-linear>
               </template>
