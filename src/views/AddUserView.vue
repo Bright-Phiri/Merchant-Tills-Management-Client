@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, useTemplateRef } from 'vue'
 
 const user = ref({
   first_name: '',
@@ -11,7 +11,15 @@ const user = ref({
   password: '',
   password_confirmation: '',
 })
+
 const roles = ref(['Officer', 'Admin'])
+const userForm = useTemplateRef('UserForm')
+
+async function addUser() {}
+
+function cancelAddUser() {
+  userForm.value.reset()
+}
 </script>
 
 <template>
@@ -21,7 +29,7 @@ const roles = ref(['Officer', 'Admin'])
         <v-card>
           <v-card-title>Add New User</v-card-title>
           <v-card-text>
-            <v-form>
+            <v-form ref="UserForm">
               <v-container fluid>
                 <v-row>
                   <v-col cols="12" sm="6" class="px-0">
@@ -100,8 +108,10 @@ const roles = ref(['Officer', 'Admin'])
                   </v-col>
                   <v-col cols="12">
                     <div class="d-flex justify-end">
-                      <v-btn color="black" variant="flat">Cancel</v-btn>
-                      <v-btn color="#365B73" variant="outlined" class="ml-2">Save</v-btn>
+                      <v-btn color="black" variant="flat" v-on:click="cancelAddUser">Cancel</v-btn>
+                      <v-btn color="#365B73" variant="outlined" class="ml-2" v-on:click="addUser"
+                        >Save</v-btn
+                      >
                     </div>
                   </v-col>
                 </v-row>
