@@ -15,6 +15,7 @@ const user = ref({
 })
 const roles = ref(['Officer', 'Admin'])
 const userForm = useTemplateRef('UserForm')
+const loading = ref(false)
 
 async function addUser() {
   const requiredFields = [
@@ -31,13 +32,23 @@ async function addUser() {
   const missingField = requiredFields.find((field) => !user.value[field])
 
   if (missingField) {
-    await Swal.fire({
+    Swal.fire({
       icon: 'warning',
       title: 'Missing Fields',
       text: 'Please enter all required fields',
     })
     return
   }
+
+  if (user.value.password !== user.value.password_confirmation) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Password Mismatch',
+      text: 'Password and confirmation do not match.',
+    })
+    return
+  }
+
   const payload = {
     first_name: user.value.first_name,
     last_name: user.value.last_name,
@@ -50,9 +61,11 @@ async function addUser() {
   }
 
   try {
+    loading.value = true
     const response = await axios.post('http://127.0.0.1:3000/api/v1/users', payload)
 
     if (response.status === 201) {
+      loading.value = false
       await Swal.fire({
         icon: 'success',
         title: 'User Created',
@@ -61,17 +74,14 @@ async function addUser() {
       userForm.value.reset()
     }
   } catch (error) {
-    if (!error.status) {
-      await Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: error + ", Couldn't reach API",
-      })
-    }
+    loading.value = false
+    const message = error?.response?.data?.message || "Couldn't reach API"
+    const errors = error?.response?.data?.errors || ''
+
     await Swal.fire({
       icon: 'error',
       title: 'Error',
-      text: error.response.data.message + ', ' + error.response.data.errors,
+      text: `${message}${errors ? `: ${errors}` : ''}`,
     })
   }
 }
@@ -168,7 +178,12 @@ function cancelAddUser() {
                   <v-col cols="12">
                     <div class="d-flex justify-end">
                       <v-btn color="black" variant="flat" v-on:click="cancelAddUser">Cancel</v-btn>
-                      <v-btn color="#365B73" variant="outlined" class="ml-2" v-on:click="addUser"
+                      <v-btn
+                        color="#365B73"
+                        variant="outlined"
+                        class="ml-2"
+                        v-on:click="addUser"
+                        :loading
                         >Save</v-btn
                       >
                     </div>
