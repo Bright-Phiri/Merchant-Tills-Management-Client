@@ -57,6 +57,7 @@ onMounted(() => {
           </v-card-title>
           <v-card-text>
             <v-data-table
+              density="comfortable"
               class="elevation-1"
               :headers
               :items="clients"
@@ -64,6 +65,7 @@ onMounted(() => {
               :loading
               items-per-page="7"
               loading-text="Loading clients..."
+              hover
             >
               <template v-slot:item.action="{ item }">
                 <div class="d-flex">
