@@ -3,6 +3,8 @@ import router from './router'
 import { createPinia } from 'pinia'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import VueSweetalert2 from 'vue-sweetalert2'
+import 'sweetalert2/dist/sweetalert2.min.css'
 
 // Vuetify
 import 'vuetify/styles'
@@ -19,4 +21,10 @@ const vuetify = createVuetify({
   directives,
 })
 
-createApp(App).use(VueAxios, axios).use(router).use(vuetify).use(createPinia()).mount('#app')
+createApp(App)
+  .use(VueAxios, axios)
+  .use(router)
+  .use(VueSweetalert2)
+  .use(vuetify)
+  .use(createPinia())
+  .mount('#app')

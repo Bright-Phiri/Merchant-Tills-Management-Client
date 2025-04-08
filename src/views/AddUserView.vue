@@ -1,5 +1,6 @@
 <script setup>
 import { ref, useTemplateRef } from 'vue'
+import Swal from 'sweetalert2'
 
 const user = ref({
   first_name: '',
@@ -29,6 +30,11 @@ async function addUser() {
   const missingField = requiredFields.find((field) => !user.value[field])
 
   if (missingField) {
+    await Swal.fire({
+      icon: 'warning',
+      title: 'Missing Fields',
+      text: 'Please enter all required fields',
+    })
     return
   }
 }
