@@ -1,4 +1,5 @@
 <script setup>
+import router from '@/router'
 import { ref } from 'vue'
 
 const fetchUsesLoading = ref(true)
@@ -18,6 +19,10 @@ const headers = [
   { key: 'status', title: 'Status' },
   { key: 'action', title: 'Action' },
 ]
+
+function loadAddUserPage() {
+  router.push({ name: 'new-user' })
+}
 </script>
 <template>
   <div class="Clients">
@@ -37,7 +42,13 @@ const headers = [
                   density="compact"
                 ></v-text-field>
               </v-col>
-              <v-btn color="#365B73" class="text-capitalize" variant="outlined">New User</v-btn>
+              <v-btn
+                color="#365B73"
+                class="text-capitalize"
+                variant="outlined"
+                v-on:click="loadAddUserPage"
+                >New User</v-btn
+              >
             </div>
           </v-card-title>
           <v-card-text>

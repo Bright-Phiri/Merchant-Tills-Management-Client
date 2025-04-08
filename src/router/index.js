@@ -49,6 +49,11 @@ const router = createRouter({
           name: 'payments',
           component: () => import('../views/PaymentsView.vue'),
         },
+        {
+          path: '/new-user',
+          name: 'new-user',
+          component: () => import('../views/AddUserView.vue'),
+        },
       ],
     },
   ],
