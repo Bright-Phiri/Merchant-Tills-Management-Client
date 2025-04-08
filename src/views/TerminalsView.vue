@@ -14,8 +14,8 @@ const headers = [
   },
   { key: 'terminal_label', title: 'Terminal Label' },
   { key: 'activation_date', title: 'Activation Date' },
-  { key: 'status', title: 'Status' },
   { key: 'taxpayer', title: 'Owner' },
+  { key: 'status', title: 'Status' },
 ]
 
 function getColor(status) {
