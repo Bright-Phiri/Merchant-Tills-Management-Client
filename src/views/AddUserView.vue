@@ -11,11 +11,27 @@ const user = ref({
   password: '',
   password_confirmation: '',
 })
-
 const roles = ref(['Officer', 'Admin'])
 const userForm = useTemplateRef('UserForm')
 
-async function addUser() {}
+async function addUser() {
+  const requiredFields = [
+    'first_name',
+    'last_name',
+    'user_name',
+    'role',
+    'email_address',
+    'phone_number',
+    'password',
+    'password_confirmation',
+  ]
+
+  const missingField = requiredFields.find((field) => !user.value[field])
+
+  if (missingField) {
+    return
+  }
+}
 
 function cancelAddUser() {
   userForm.value.reset()
