@@ -62,7 +62,7 @@ async function addUser() {
 
   try {
     loading.value = true
-    const response = await api.post('/users', payload)
+    const response = await api.post('users', payload)
 
     if (response.status === 201) {
       loading.value = false

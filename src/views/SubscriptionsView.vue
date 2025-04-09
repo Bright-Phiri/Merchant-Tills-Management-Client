@@ -33,7 +33,7 @@ function getColor(status) {
 async function fetchSubscriptions({ page, itemsPerPage }) {
   loading.value = true
   try {
-    const response = await api.get('/subscriptions', {
+    const response = await api.get('subscriptions', {
       params: { page, per_page: itemsPerPage },
     })
     subscriptions.value = response.data.data.subscriptions
@@ -55,7 +55,7 @@ function viewSubscription(id) {
 
 async function deleteSubscription(id) {
   try {
-    const response = await api.delete(`/subscriptions/${id}`)
+    const response = await api.delete(`subscriptions/${id}`)
     if (response.status === 204) {
       Swal.fire({
         icon: 'success',

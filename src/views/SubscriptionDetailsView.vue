@@ -19,7 +19,7 @@ const headers = [
 async function fetchSubscriptionDetails() {
   try {
     loading.value = true
-    const response = await api.get(`/subscriptions/${route.params.id}`)
+    const response = await api.get(`subscriptions/${route.params.id}`)
     subscription.value = response.data.data
     payments.value = response.data.data.payments
     loading.value = false

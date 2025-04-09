@@ -23,7 +23,7 @@ const headers = [
 async function fetchPayments({ page, itemsPerPage }) {
   loading.value = true
   try {
-    const response = await api.get('/payments', {
+    const response = await api.get('payments', {
       params: { page, per_page: itemsPerPage },
     })
     payments.value = response.data.data.payments

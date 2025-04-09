@@ -36,7 +36,7 @@ function loadAddUserPage() {
 async function fetchSystemUsers() {
   fetchUsesLoading.value = true
   try {
-    const response = await api.get('/users')
+    const response = await api.get('users')
     users.value = response.data.data
     fetchUsesLoading.value = false
   } catch (err) {
@@ -51,7 +51,7 @@ async function fetchSystemUsers() {
 
 async function activateUser(id) {
   try {
-    const response = await api.patch(`/users/${id}/activate`)
+    const response = await api.patch(`users/${id}/activate`)
     if (response.status === 200) {
       Swal.fire({
         icon: 'success',
@@ -72,7 +72,7 @@ async function activateUser(id) {
 
 async function disableUser(id) {
   try {
-    const response = await api.patch(`/users/${id}/disable`)
+    const response = await api.patch(`users/${id}/disable`)
     if (response.status === 200) {
       Swal.fire({
         icon: 'success',

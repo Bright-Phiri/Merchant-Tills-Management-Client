@@ -49,7 +49,7 @@ async function createSubscription() {
 
   try {
     loading.value = true
-    const response = await api.post(`/taxpayers/${route.params.id}/subscriptions`, payload)
+    const response = await api.post(`taxpayers/${route.params.id}/subscriptions`, payload)
     if (response.status === 201) {
       loading.value = false
       await Swal.fire({

@@ -23,7 +23,7 @@ const loading = ref(false)
 
 async function fetchUserDetails(id) {
   try {
-    const response = await api.get(`http://127.0.0.1:3000/api/v1/users/${id}`)
+    const response = await api.get(`users/${id}`)
     if (response.status == 200) {
       user.value = response.data.data
     }
@@ -73,7 +73,7 @@ async function updateUser() {
 
   try {
     loading.value = true
-    const response = await api.put(`/users/${user_id.value}`, payload)
+    const response = await api.put(`users/${user_id.value}`, payload)
 
     if (response.status === 200) {
       loading.value = false

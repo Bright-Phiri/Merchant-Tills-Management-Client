@@ -29,7 +29,7 @@ function getColor(status) {
 async function fetchTerminals({ page, itemsPerPage }) {
   loading.value = true
   try {
-    const response = await api.get('/terminals', {
+    const response = await api.get('terminals', {
       params: { page, per_page: itemsPerPage },
     })
     terminals.value = response.data.data.terminals

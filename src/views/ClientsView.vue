@@ -27,9 +27,7 @@ const headers = [
 async function fetchClients({ page, itemsPerPage }) {
   loading.value = true
   try {
-    const response = await api.get('/taxpayers', {
-      params: { page, per_page: itemsPerPage },
-    })
+    const response = await api.get('taxpayers', { params: { page, per_page: itemsPerPage } })
     clients.value = response.data.data.taxpayers
     totalItems.value = response.data.data.total
     loading.value = false
