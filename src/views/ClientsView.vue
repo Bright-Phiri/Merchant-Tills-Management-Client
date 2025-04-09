@@ -15,9 +15,9 @@ const headers = [
     align: 'start',
     key: 'tin',
     sortable: false,
-    title: 'TIN',
+    title: 'Client TIN',
   },
-  { key: 'name', title: 'Name' },
+  { key: 'name', title: 'Client Name' },
   { key: 'email_address', title: 'Email Address' },
   { key: 'phone_number', title: 'Phone Number' },
   { key: 'terminals_count', title: 'Terminals Count' },
@@ -41,6 +41,10 @@ async function fetchClients({ page, itemsPerPage }) {
       text: err + ", Couldn't reach API",
     })
   }
+}
+
+function loadNewSubscriptionForm(id) {
+  router.push({ name: 'new-subscription', params: { id }, replace: true })
 }
 
 function loadClientTerminalsView(id, name) {
@@ -85,12 +89,21 @@ function loadClientTerminalsView(id, name) {
               <template v-slot:item.action="{ item }">
                 <div class="d-flex">
                   <v-btn
-                    variant="outlined"
+                    variant="text"
                     prepend-icon="mdi-eye"
                     class="text-capitalize"
                     color="#365B73"
                     v-on:click="loadClientTerminalsView(item.id, item.name)"
                     >View Terminals</v-btn
+                  >
+
+                  <v-btn
+                    variant="text"
+                    prepend-icon="mdi-plus-circle-multiple-outline"
+                    class="text-capitalize ml-2"
+                    color="#365B73"
+                    v-on:click="loadNewSubscriptionForm(item.id)"
+                    >Create Subscription</v-btn
                   >
                 </div>
               </template>

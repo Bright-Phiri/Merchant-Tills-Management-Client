@@ -18,7 +18,7 @@ const user_id = ref(0)
 const router = useRouter()
 const route = useRoute()
 const roles = ref(['Officer', 'Admin'])
-const userForm = useTemplateRef('UserForm')
+const userForm = useTemplateRef('userForm')
 const loading = ref(false)
 
 async function fetchUserDetails(id) {
@@ -117,7 +117,7 @@ onMounted(() => {
         <v-card>
           <v-card-title>Edit User</v-card-title>
           <v-card-text>
-            <v-form ref="UserForm">
+            <v-form ref="userForm">
               <v-container fluid>
                 <v-row>
                   <v-col cols="12" sm="6" class="px-0">

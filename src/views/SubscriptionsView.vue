@@ -8,7 +8,7 @@ const headers = [
     align: 'start',
     key: 'owner',
     sortable: false,
-    title: 'Customer TIN',
+    title: 'Client TIN',
   },
   { key: 'taxpayer', title: 'Client Name' },
   { key: 'start_date', title: 'Start Date' },
@@ -34,9 +34,6 @@ const headers = [
                   density="compact"
                 ></v-text-field>
               </v-col>
-              <v-btn color="#365B73" class="text-capitalize" variant="outlined"
-                >New Subscription</v-btn
-              >
             </div>
           </v-card-title>
           <v-card-text>

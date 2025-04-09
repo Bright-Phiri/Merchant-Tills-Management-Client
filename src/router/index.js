@@ -61,6 +61,11 @@ const router = createRouter({
           name: 'client-terminals',
           component: () => import('../views/ClientTerminalsView.vue'),
         },
+        {
+          path: '/new-subscription/:id',
+          name: 'new-subscription',
+          component: () => import('../views/NewSubscriptionView.vue'),
+        },
       ],
     },
   ],
