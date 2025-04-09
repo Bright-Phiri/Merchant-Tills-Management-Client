@@ -6,6 +6,7 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 const subscription = ref(null)
 const loading = ref(true)
+const search = ref('')
 const payments = ref([])
 
 const headers = [
@@ -91,6 +92,7 @@ onMounted(() => {
                     append-inner-icon="mdi-magnify"
                     clearable
                     label="Search Payment"
+                    v-model="search"
                     placeholder="Search payment"
                     variant="outlined"
                     density="compact"
@@ -104,7 +106,7 @@ onMounted(() => {
               :headers
               :items="payments"
               :search
-              :loading="loading"
+              :loading
               loading-text="Loading payments..."
               hover
             >

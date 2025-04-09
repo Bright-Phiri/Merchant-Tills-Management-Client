@@ -1,8 +1,11 @@
 <script setup>
 import { ref } from 'vue'
+import axios from 'axios'
 
-const fetchUsesLoading = ref(true)
+const loading = ref(false)
 const payments = ref([])
+const itemsPerPage = ref(20)
+const totalItems = ref(0)
 const headers = [
   {
     align: 'start',
@@ -16,6 +19,25 @@ const headers = [
   { key: 'payment_method', title: 'Payment Method' },
   { key: 'transaction_id', title: 'Transaction ID' },
 ]
+
+async function fetchPayments({ page, itemsPerPage }) {
+  loading.value = true
+  try {
+    const response = await axios.get('http://127.0.0.1:3000/api/v1/payments', {
+      params: { page, per_page: itemsPerPage },
+    })
+    payments.value = response.data.data.payments
+    totalItems.value = response.data.data.total
+    loading.value = false
+  } catch (err) {
+    loading.value = false
+    Swal.fire({
+      icon: 'error',
+      title: 'Unable to Reach Server',
+      text: err + ", Couldn't reach API",
+    })
+  }
+}
 </script>
 <template>
   <div class="Clients">
@@ -36,12 +58,16 @@ const headers = [
             </v-col>
           </v-card-title>
           <v-card-text>
-            <v-data-table
+            <v-data-table-server
               density="comfortable"
               class="elevation-1"
               :headers
+              :items="payments"
+              :items-length="totalItems"
               :search
-              :loading="fetchUsesLoading"
+              :loading
+              :items-per-page="itemsPerPage"
+              @update:options="fetchPayments"
               loading-text="Loading payments..."
               hover
             >
@@ -51,7 +77,7 @@ const headers = [
                   indeterminate
                   color="#365B73"
                 ></v-progress-linear> </template
-            ></v-data-table>
+            ></v-data-table-server>
           </v-card-text>
         </v-card>
       </v-col>
