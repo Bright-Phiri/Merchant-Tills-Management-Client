@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 const loading = ref(false)
 const clients = ref([])
@@ -34,7 +35,11 @@ async function fetchClients({ page, itemsPerPage }) {
     loading.value = false
   } catch (err) {
     loading.value = false
-    console.log(err)
+    Swal.fire({
+      icon: 'error',
+      title: 'Unable to Reach Server',
+      text: err + ", Couldn't reach API",
+    })
   }
 }
 

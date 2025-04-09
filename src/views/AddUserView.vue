@@ -69,7 +69,7 @@ async function addUser() {
       await Swal.fire({
         icon: 'success',
         title: 'User Created',
-        text: 'The user was successfully created!',
+        text: response.data.message,
       })
       userForm.value.reset()
     }

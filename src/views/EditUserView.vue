@@ -80,7 +80,7 @@ async function updateUser() {
       await Swal.fire({
         icon: 'success',
         title: 'User Updated',
-        text: 'The user was successfully updated!',
+        text: response.data.message,
       }).then(() => {
         userForm.value.reset()
         router.push({ name: 'users' })

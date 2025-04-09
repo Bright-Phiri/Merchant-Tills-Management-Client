@@ -41,7 +41,11 @@ async function fetchSystemUsers() {
     fetchUsesLoading.value = false
   } catch (err) {
     fetchUsesLoading.value = false
-    console.log(err)
+    Swal.fire({
+      icon: 'error',
+      title: 'Unable to Reach Server',
+      text: err + ", Couldn't reach API",
+    })
   }
 }
 
@@ -58,7 +62,11 @@ async function activateUser(id) {
       })
     }
   } catch (err) {
-    console.error(err)
+    Swal.fire({
+      icon: 'error',
+      title: 'Unable to Reach Server',
+      text: err + ", Couldn't reach API",
+    })
   }
 }
 
@@ -75,7 +83,11 @@ async function disableUser(id) {
       })
     }
   } catch (err) {
-    console.error(err)
+    Swal.fire({
+      icon: 'error',
+      title: 'Unable to Reach Server',
+      text: err + ", Couldn't reach API",
+    })
   }
 }
 
