@@ -3,6 +3,7 @@ import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import api from '@/services/api'
 import { showAlert } from '@/utils/alert'
+import { getColor } from '@/utils/statusColor'
 
 const router = useRouter()
 const fetchUsesLoading = ref(false)
@@ -23,11 +24,6 @@ const headers = [
   { key: 'status', title: 'Status' },
   { key: 'action', title: 'Action' },
 ]
-
-function getColor(status) {
-  if (status === 'active') return 'success'
-  else return 'red'
-}
 
 function loadAddUserPage() {
   router.push({ path: '/new-user', replace: true })

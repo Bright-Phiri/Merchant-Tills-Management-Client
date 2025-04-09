@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import api from '@/services/api'
 import { showAlert } from '@/utils/alert'
+import { getColor } from '@/utils/statusColor'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -24,11 +25,6 @@ const headers = [
   { key: 'status', title: 'Status' },
   { key: 'action', title: 'Action' },
 ]
-
-function getColor(status) {
-  if (status === 'active') return 'success'
-  else return 'red'
-}
 
 async function fetchSubscriptions({ page, itemsPerPage }) {
   loading.value = true

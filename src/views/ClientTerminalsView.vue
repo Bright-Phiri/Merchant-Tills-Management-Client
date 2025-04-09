@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import api from '@/services/api'
 import { useRoute } from 'vue-router'
 import { showAlert } from '@/utils/alert'
+import { getColor } from '@/utils/statusColor'
 
 const loading = ref(true)
 const terminals = ref([])
@@ -22,11 +23,6 @@ const headers = [
   { key: 'taxpayer', title: 'Owner' },
   { key: 'status', title: 'Status' },
 ]
-
-function getColor(status) {
-  if (status === 'active') return 'success'
-  else return 'red'
-}
 
 async function fetchClientTerminals({ page, itemsPerPage }) {
   loading.value = true
