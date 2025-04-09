@@ -1,6 +1,6 @@
 <script setup>
 import { ref, useTemplateRef, onMounted } from 'vue'
-import axios from 'axios'
+import api from '@/services/api'
 import Swal from 'sweetalert2'
 
 const user = ref({
@@ -62,7 +62,7 @@ async function addUser() {
 
   try {
     loading.value = true
-    const response = await axios.post('http://127.0.0.1:3000/api/v1/users', payload)
+    const response = await api.post('/users', payload)
 
     if (response.status === 201) {
       loading.value = false

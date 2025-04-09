@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import axios from 'axios'
+import api from '@/services/api'
 
 const loading = ref(false)
 const payments = ref([])
@@ -23,7 +23,7 @@ const headers = [
 async function fetchPayments({ page, itemsPerPage }) {
   loading.value = true
   try {
-    const response = await axios.get('http://127.0.0.1:3000/api/v1/payments', {
+    const response = await api.get('/payments', {
       params: { page, per_page: itemsPerPage },
     })
     payments.value = response.data.data.payments

@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import axios from 'axios'
+import api from '@/services/api'
 import Swal from 'sweetalert2'
 
 const loading = ref(true)
@@ -29,7 +29,7 @@ function getColor(status) {
 async function fetchTerminals({ page, itemsPerPage }) {
   loading.value = true
   try {
-    const response = await axios.get('http://127.0.0.1:3000/api/v1/terminals', {
+    const response = await api.get('/terminals', {
       params: { page, per_page: itemsPerPage },
     })
     terminals.value = response.data.data.terminals

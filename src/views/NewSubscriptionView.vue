@@ -2,7 +2,7 @@
 import { ref, useTemplateRef } from 'vue'
 import { useRoute } from 'vue-router'
 import Swal from 'sweetalert2'
-import axios from 'axios'
+import api from '@/services/api'
 
 const route = useRoute()
 const loading = ref(false)
@@ -49,10 +49,7 @@ async function createSubscription() {
 
   try {
     loading.value = true
-    const response = await axios.post(
-      `http://127.0.0.1:3000/api/v1/taxpayers/${route.params.id}/subscriptions`,
-      payload,
-    )
+    const response = await api.post(`/taxpayers/${route.params.id}/subscriptions`, payload)
     if (response.status === 201) {
       loading.value = false
       await Swal.fire({

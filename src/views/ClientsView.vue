@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
+import api from '@/services/api'
 import Swal from 'sweetalert2'
 
 const loading = ref(false)
@@ -27,7 +27,7 @@ const headers = [
 async function fetchClients({ page, itemsPerPage }) {
   loading.value = true
   try {
-    const response = await axios.get('http://127.0.0.1:3000/api/v1/taxpayers', {
+    const response = await api.get('/taxpayers', {
       params: { page, per_page: itemsPerPage },
     })
     clients.value = response.data.data.taxpayers

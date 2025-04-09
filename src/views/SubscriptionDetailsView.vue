@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-import axios from 'axios'
+import api from '@/services/api'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
@@ -19,9 +19,7 @@ const headers = [
 async function fetchSubscriptionDetails() {
   try {
     loading.value = true
-    const response = await axios.get(
-      `http://127.0.0.1:3000/api/v1/subscriptions/${route.params.id}`,
-    )
+    const response = await api.get(`/subscriptions/${route.params.id}`)
     subscription.value = response.data.data
     payments.value = response.data.data.payments
     loading.value = false

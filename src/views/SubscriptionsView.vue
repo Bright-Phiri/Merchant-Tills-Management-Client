@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
-import axios from 'axios'
+import api from '@/services/api'
+import Swal from 'sweetalert2'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -32,7 +33,7 @@ function getColor(status) {
 async function fetchSubscriptions({ page, itemsPerPage }) {
   loading.value = true
   try {
-    const response = await axios.get('http://127.0.0.1:3000/api/v1/subscriptions', {
+    const response = await api.get('/subscriptions', {
       params: { page, per_page: itemsPerPage },
     })
     subscriptions.value = response.data.data.subscriptions
@@ -54,9 +55,15 @@ function viewSubscription(id) {
 
 async function deleteSubscription(id) {
   try {
-    const response = await axios.delete(`http://127.0.0.1:3000/api/v1/subscriptions/${id}`)
+    const response = await api.delete(`/subscriptions/${id}`)
     if (response.status === 204) {
-      fetchSubscriptions(tableOptions.value)
+      Swal.fire({
+        icon: 'success',
+        title: 'Message',
+        text: 'Subscription successfully deleted',
+      }).then(() => {
+        fetchSubscriptions(tableOptions.value)
+      })
     }
   } catch (err) {
     loading.value = false

@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import axios from 'axios'
+import api from '@/services/api'
 import { useRoute } from 'vue-router'
 import Swal from 'sweetalert2'
 
@@ -31,12 +31,9 @@ function getColor(status) {
 async function fetchClientTerminals({ page, itemsPerPage }) {
   loading.value = true
   try {
-    const response = await axios.get(
-      `http://127.0.0.1:3000/api/v1/taxpayers/${route.params.id}/show_terminals`,
-      {
-        params: { page, per_page: itemsPerPage },
-      },
-    )
+    const response = await api.get(`/taxpayers/${route.params.id}/show_terminals`, {
+      params: { page, per_page: itemsPerPage },
+    })
     terminals.value = response.data.data.terminals
     totalItems.value = response.data.data.total
     loading.value = false
