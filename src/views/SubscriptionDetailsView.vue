@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import api from '@/services/api'
+import { showAlert } from '@/utils/alert'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
@@ -25,11 +26,7 @@ async function fetchSubscriptionDetails() {
     loading.value = false
   } catch (err) {
     loading.value = false
-    Swal.fire({
-      icon: 'error',
-      title: 'Failed to load subscription',
-      text: "Couldn't fetch subscription details.",
-    })
+    showAlert('error', 'Unable to Reach Server', err + ", Couldn't reach API")
   }
 }
 

@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import api from '@/services/api'
+import { showAlert } from '@/utils/alert'
 
 const loading = ref(false)
 const payments = ref([])
@@ -31,11 +32,7 @@ async function fetchPayments({ page, itemsPerPage }) {
     loading.value = false
   } catch (err) {
     loading.value = false
-    Swal.fire({
-      icon: 'error',
-      title: 'Unable to Reach Server',
-      text: err + ", Couldn't reach API",
-    })
+    showAlert('error', 'Unable to Reach Server', err + ", Couldn't reach API")
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import api from '@/services/api'
-import Swal from 'sweetalert2'
+import { showAlert } from '@/utils/alert'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -41,11 +41,7 @@ async function fetchSubscriptions({ page, itemsPerPage }) {
     loading.value = false
   } catch (err) {
     loading.value = false
-    Swal.fire({
-      icon: 'error',
-      title: 'Unable to Reach Server',
-      text: err + ", Couldn't reach API",
-    })
+    showAlert('error', 'Unable to Reach Server', err + ", Couldn't reach API")
   }
 }
 
@@ -57,21 +53,13 @@ async function deleteSubscription(id) {
   try {
     const response = await api.delete(`subscriptions/${id}`)
     if (response.status === 204) {
-      Swal.fire({
-        icon: 'success',
-        title: 'Message',
-        text: 'Subscription successfully deleted',
-      }).then(() => {
+      showAlert('success', 'Message', 'Subscription successfully deleted').then(() => {
         fetchSubscriptions(tableOptions.value)
       })
     }
   } catch (err) {
     loading.value = false
-    Swal.fire({
-      icon: 'error',
-      title: 'Unable to Reach Server',
-      text: err + ", Couldn't reach API",
-    })
+    showAlert('error', 'Unable to Reach Server', err + ", Couldn't reach API")
   }
 }
 </script>

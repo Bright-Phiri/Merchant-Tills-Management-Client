@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import api from '@/services/api'
-import Swal from 'sweetalert2'
+import { showAlert } from '@/utils/alert'
 
 const loading = ref(false)
 const clients = ref([])
@@ -33,11 +33,7 @@ async function fetchClients({ page, itemsPerPage }) {
     loading.value = false
   } catch (err) {
     loading.value = false
-    Swal.fire({
-      icon: 'error',
-      title: 'Unable to Reach Server',
-      text: err + ", Couldn't reach API",
-    })
+    showAlert('error', 'Unable to Reach Server', err + ", Couldn't reach API")
   }
 }
 

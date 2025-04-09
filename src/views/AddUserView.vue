@@ -1,7 +1,7 @@
 <script setup>
 import { ref, useTemplateRef, onMounted } from 'vue'
 import api from '@/services/api'
-import Swal from 'sweetalert2'
+import { showAlert } from '@/utils/alert'
 
 const user = ref({
   first_name: '',
@@ -32,20 +32,12 @@ async function addUser() {
   const missingField = requiredFields.find((field) => !user.value[field])
 
   if (missingField) {
-    Swal.fire({
-      icon: 'warning',
-      title: 'Missing Fields',
-      text: 'Please enter all required fields',
-    })
+    showAlert('warning', 'Missing Fields', 'Please enter all required fields')
     return
   }
 
   if (user.value.password !== user.value.password_confirmation) {
-    Swal.fire({
-      icon: 'warning',
-      title: 'Password Mismatch',
-      text: 'Password and confirmation do not match.',
-    })
+    showAlert('warning', 'Password Mismatch', 'Password and confirmation do not match.')
     return
   }
 
@@ -66,23 +58,14 @@ async function addUser() {
 
     if (response.status === 201) {
       loading.value = false
-      await Swal.fire({
-        icon: 'success',
-        title: 'User Created',
-        text: response.data.message,
-      })
+      showAlert('success', 'User Created', response.data.message)
       userForm.value.reset()
     }
   } catch (error) {
     loading.value = false
     const message = error?.response?.data?.message || "Couldn't reach API"
     const errors = error?.response?.data?.errors || ''
-
-    await Swal.fire({
-      icon: 'error',
-      title: 'Error',
-      text: `${message}${errors ? `: ${errors}` : ''}`,
-    })
+    showAlert('error', 'Error', `${message}${errors ? `: ${errors}` : ''}`)
   }
 }
 

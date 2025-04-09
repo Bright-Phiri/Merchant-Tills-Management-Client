@@ -1,7 +1,7 @@
 <script setup>
 import { ref, useTemplateRef } from 'vue'
 import { useRoute } from 'vue-router'
-import Swal from 'sweetalert2'
+import { showAlert } from '@/utils/alert'
 import api from '@/services/api'
 
 const route = useRoute()
@@ -34,11 +34,7 @@ async function createSubscription() {
   const allFieldsFilled = requiredFields.every((field) => !!field)
 
   if (!allFieldsFilled) {
-    Swal.fire({
-      icon: 'warning',
-      title: 'Missing Fields',
-      text: 'Please enter all required fields',
-    })
+    showAlert('warning', 'Missing Fields', 'Please enter all required fields')
     return
   }
 
@@ -52,25 +48,19 @@ async function createSubscription() {
     const response = await api.post(`taxpayers/${route.params.id}/subscriptions`, payload)
     if (response.status === 201) {
       loading.value = false
-      await Swal.fire({
-        icon: 'success',
-        title: 'Subscription Created',
-        text: response.data.message,
-      })
+      showAlert('success', 'Subscription Created', response.data.message)
       subscriptionForm.value.reset()
     }
   } catch (err) {
     if (err.response.status === 422 || err.response.status === 400) {
       const data = err.response.data
       const errorText = data.errors || data.message || 'An unknown error occurred'
-
-      await Swal.fire({
-        icon: 'error',
-        title: 'Failed to create subscription',
-        text: Array.isArray(errorText) ? errorText.join(', ') : errorText,
-      })
+      showAlert(
+        'error',
+        'Failed to create subscription',
+        Array.isArray(errorText) ? errorText.join(', ') : errorText,
+      )
     }
-
     loading.value = false
   }
 }

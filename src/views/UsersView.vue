@@ -2,7 +2,7 @@
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import api from '@/services/api'
-import Swal from 'sweetalert2'
+import { showAlert } from '@/utils/alert'
 
 const router = useRouter()
 const fetchUsesLoading = ref(false)
@@ -41,11 +41,7 @@ async function fetchSystemUsers() {
     fetchUsesLoading.value = false
   } catch (err) {
     fetchUsesLoading.value = false
-    Swal.fire({
-      icon: 'error',
-      title: 'Unable to Reach Server',
-      text: err + ", Couldn't reach API",
-    })
+    showAlert('error', 'Unable to Reach Server', err + ", Couldn't reach API")
   }
 }
 
@@ -53,20 +49,14 @@ async function activateUser(id) {
   try {
     const response = await api.patch(`users/${id}/activate`)
     if (response.status === 200) {
-      Swal.fire({
-        icon: 'success',
-        title: 'User Activated',
-        text: 'The user has been successfully activated.',
-      }).then(() => {
-        fetchSystemUsers()
-      })
+      showAlert('success', 'User Activated', 'The user has been successfully activated').then(
+        () => {
+          fetchSystemUsers()
+        },
+      )
     }
   } catch (err) {
-    Swal.fire({
-      icon: 'error',
-      title: 'Unable to Reach Server',
-      text: err + ", Couldn't reach API",
-    })
+    showAlert('error', 'Unable to Reach Server', err + ", Couldn't reach API")
   }
 }
 
@@ -74,20 +64,12 @@ async function disableUser(id) {
   try {
     const response = await api.patch(`users/${id}/disable`)
     if (response.status === 200) {
-      Swal.fire({
-        icon: 'success',
-        title: 'User Disabled',
-        text: 'The user has been successfully disabled.',
-      }).then(() => {
+      showAlert('success', 'User Disabled', 'Use has been sucessfully disabled').then(() => {
         fetchSystemUsers()
       })
     }
   } catch (err) {
-    Swal.fire({
-      icon: 'error',
-      title: 'Unable to Reach Server',
-      text: err + ", Couldn't reach API",
-    })
+    showAlert('error', 'Unable to Reach Server', err + ", Couldn't reach API")
   }
 }
 

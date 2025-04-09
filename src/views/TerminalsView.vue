@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import api from '@/services/api'
-import Swal from 'sweetalert2'
+import { showAlert } from '@/utils/alert'
 
 const loading = ref(true)
 const terminals = ref([])
@@ -37,11 +37,7 @@ async function fetchTerminals({ page, itemsPerPage }) {
     loading.value = false
   } catch (err) {
     loading.value = false
-    Swal.fire({
-      icon: 'error',
-      title: 'Unable to Reach Server',
-      text: err + ", Couldn't reach API",
-    })
+    showAlert('error', 'Unable to Reach Server', err + ", Couldn't reach API")
   }
 }
 </script>
