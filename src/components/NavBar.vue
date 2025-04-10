@@ -1,5 +1,8 @@
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 const drawer = ref(true)
 const navBarItems = [
   {
@@ -38,6 +41,11 @@ const navBarItems = [
     to: '/settings',
   },
 ]
+
+const logout = () => {
+  localStorage.removeItem('token')
+  router.push({ path: '/sign-in' })
+}
 </script>
 
 <template>
@@ -56,7 +64,7 @@ const navBarItems = [
 
       <template v-slot:append>
         <div class="pa-2">
-          <v-btn block> Logout </v-btn>
+          <v-btn block v-on:click="logout"> Logout </v-btn>
         </div>
       </template>
     </v-navigation-drawer>
