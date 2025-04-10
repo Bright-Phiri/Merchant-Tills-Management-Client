@@ -1,5 +1,6 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { useDebounceFn } from '@vueuse/core'
 import api from '@/services/api'
 import { showAlert } from '@/utils/utils'
 
@@ -22,11 +23,11 @@ const headers = [
   { key: 'transaction_id', title: 'Transaction ID' },
 ]
 
-const fetchPayments = async ({ page, itemsPerPage }) => {
+const fetchPayments = async ({ page, itemsPerPage, search }) => {
   loading.value = true
   try {
     const response = await api.get('payments', {
-      params: { page, per_page: itemsPerPage },
+      params: { page, per_page: itemsPerPage, search },
     })
     payments.value = response.data.data.payments
     totalItems.value = response.data.data.total
@@ -36,6 +37,14 @@ const fetchPayments = async ({ page, itemsPerPage }) => {
     loading.value = false
   }
 }
+
+const debouncedSearch = useDebounceFn(() => {
+  fetchPayments({ page: 1, itemsPerPage: itemsPerPage.value, search: search.value })
+}, 400)
+
+watch(search, () => {
+  debouncedSearch()
+})
 </script>
 <template>
   <div class="Clients">
@@ -50,6 +59,7 @@ const fetchPayments = async ({ page, itemsPerPage }) => {
                 clearable
                 label="Search Payment"
                 placeholder="Search payment"
+                v-model="search"
                 variant="outlined"
                 density="compact"
               ></v-text-field>
@@ -62,7 +72,6 @@ const fetchPayments = async ({ page, itemsPerPage }) => {
               :headers
               :items="payments"
               :items-length="totalItems"
-              :search
               :loading
               :items-per-page="itemsPerPage"
               @update:options="fetchPayments"

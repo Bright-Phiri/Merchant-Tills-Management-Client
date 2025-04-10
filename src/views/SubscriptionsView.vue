@@ -1,5 +1,6 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { useDebounceFn } from '@vueuse/core'
 import api from '@/services/api'
 import { showAlert, getColor } from '@/utils/utils'
 import { useRouter } from 'vue-router'
@@ -25,11 +26,11 @@ const headers = [
   { key: 'action', title: 'Action' },
 ]
 
-const fetchSubscriptions = async ({ page, itemsPerPage }) => {
+const fetchSubscriptions = async ({ page, itemsPerPage, search }) => {
   loading.value = true
   try {
     const response = await api.get('subscriptions', {
-      params: { page, per_page: itemsPerPage },
+      params: { page, per_page: itemsPerPage, search },
     })
     subscriptions.value = response.data.data.subscriptions
     totalItems.value = response.data.data.total
@@ -39,6 +40,14 @@ const fetchSubscriptions = async ({ page, itemsPerPage }) => {
     loading.value = false
   }
 }
+
+const debouncedSearch = useDebounceFn(() => {
+  fetchSubscriptions({ page: 1, itemsPerPage: itemsPerPage.value, search: search.value })
+}, 400)
+
+watch(search, () => {
+  debouncedSearch()
+})
 
 const viewSubscription = (id) => {
   router.push({ name: 'subscription-details', params: { id }, replace: true })
@@ -71,6 +80,7 @@ const deleteSubscription = async (id) => {
                   clearable
                   label="Search Subscription"
                   placeholder="Search subscription"
+                  v-model="search"
                   variant="outlined"
                   density="compact"
                 ></v-text-field>
@@ -84,7 +94,6 @@ const deleteSubscription = async (id) => {
               :headers
               :items="subscriptions"
               :items-length="totalItems"
-              :search
               :loading
               :items-per-page="itemsPerPage"
               @update:options="fetchSubscriptions"
