@@ -1,5 +1,6 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { useDebounceFn } from '@vueuse/core'
 import api from '@/services/api'
 import { showAlert, getColor } from '@/utils/utils'
 
@@ -21,11 +22,11 @@ const headers = [
   { key: 'status', title: 'Status' },
 ]
 
-const fetchTerminals = async ({ page, itemsPerPage }) => {
+const fetchTerminals = async ({ page, itemsPerPage, search }) => {
   loading.value = true
   try {
     const response = await api.get('terminals', {
-      params: { page, per_page: itemsPerPage },
+      params: { page, per_page: itemsPerPage, search },
     })
     terminals.value = response.data.data.terminals
     totalItems.value = response.data.data.total
@@ -35,6 +36,14 @@ const fetchTerminals = async ({ page, itemsPerPage }) => {
     loading.value = false
   }
 }
+
+const debouncedSearch = useDebounceFn(() => {
+  fetchTerminals({ page: 1, itemsPerPage: itemsPerPage.value, search: search.value })
+}, 400)
+
+watch(search, () => {
+  debouncedSearch()
+})
 </script>
 <template>
   <div class="Terminals">
@@ -62,7 +71,6 @@ const fetchTerminals = async ({ page, itemsPerPage }) => {
               :headers
               :items="terminals"
               :items-length="totalItems"
-              :search
               :loading
               :items-per-page="itemsPerPage"
               @update:options="fetchTerminals"
