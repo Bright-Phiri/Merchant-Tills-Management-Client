@@ -19,11 +19,11 @@ const payment = ref({
   transaction_id: '',
 })
 
-function cancelCreateSubscription() {
+const cancelCreateSubscription = () => {
   subscriptionForm.value.reset()
 }
 
-async function createSubscription() {
+const createSubscription = async () => {
   const requiredFields = [
     subscription.value.months,
     payment.value.payment_date,
@@ -47,7 +47,6 @@ async function createSubscription() {
     loading.value = true
     const response = await api.post(`taxpayers/${route.params.id}/subscriptions`, payload)
     if (response.status === 201) {
-      loading.value = false
       showAlert('success', 'Subscription Created', response.data.message)
       subscriptionForm.value.reset()
     }
@@ -61,6 +60,7 @@ async function createSubscription() {
         Array.isArray(errorText) ? errorText.join(', ') : errorText,
       )
     }
+  } finally {
     loading.value = false
   }
 }

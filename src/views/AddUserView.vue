@@ -17,7 +17,7 @@ const roles = ref(['Officer', 'Admin'])
 const userForm = useTemplateRef('userForm')
 const loading = ref(false)
 
-async function addUser() {
+const addUser = async () => {
   const requiredFields = [
     'first_name',
     'last_name',
@@ -57,19 +57,19 @@ async function addUser() {
     const response = await api.post('users', payload)
 
     if (response.status === 201) {
-      loading.value = false
       showAlert('success', 'User Created', response.data.message)
       userForm.value.reset()
     }
   } catch (error) {
-    loading.value = false
     const message = error?.response?.data?.message || "Couldn't reach API"
     const errors = error?.response?.data?.errors || ''
     showAlert('error', 'Error', `${message}${errors ? `: ${errors}` : ''}`)
+  } finally {
+    loading.value = false
   }
 }
 
-function cancelAddUser() {
+const cancelAddUser = () => {
   userForm.value.reset()
 }
 </script>

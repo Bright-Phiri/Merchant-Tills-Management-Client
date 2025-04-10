@@ -24,24 +24,24 @@ const headers = [
   { key: 'action', title: 'Action' },
 ]
 
-async function fetchClients({ page, itemsPerPage }) {
+const fetchClients = async ({ page, itemsPerPage }) => {
   loading.value = true
   try {
     const response = await api.get('taxpayers', { params: { page, per_page: itemsPerPage } })
     clients.value = response.data.data.taxpayers
     totalItems.value = response.data.data.total
-    loading.value = false
   } catch (err) {
-    loading.value = false
     showAlert('error', 'Unable to Reach Server', err + ", Couldn't reach API")
+  } finally {
+    loading.value = false
   }
 }
 
-function loadNewSubscriptionForm(id) {
+const loadNewSubscriptionForm = (id) => {
   router.push({ name: 'new-subscription', params: { id }, replace: true })
 }
 
-function loadClientTerminalsView(id, name) {
+const loadClientTerminalsView = (id, name) => {
   router.push({ name: 'client-terminals', params: { id, name }, replace: true })
 }
 </script>

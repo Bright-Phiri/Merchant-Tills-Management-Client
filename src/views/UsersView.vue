@@ -24,23 +24,23 @@ const headers = [
   { key: 'action', title: 'Action' },
 ]
 
-function loadAddUserPage() {
+const loadAddUserPage = () => {
   router.push({ path: '/new-user', replace: true })
 }
 
-async function fetchSystemUsers() {
+const fetchSystemUsers = async () => {
   fetchUsesLoading.value = true
   try {
     const response = await api.get('users')
     users.value = response.data.data
-    fetchUsesLoading.value = false
   } catch (err) {
-    fetchUsesLoading.value = false
     showAlert('error', 'Unable to Reach Server', err + ", Couldn't reach API")
+  } finally {
+    fetchUsesLoading.value = false
   }
 }
 
-async function activateUser(id) {
+const activateUser = async (id) => {
   try {
     const response = await api.patch(`users/${id}/activate`)
     if (response.status === 200) {
@@ -55,7 +55,7 @@ async function activateUser(id) {
   }
 }
 
-async function disableUser(id) {
+const disableUser = async (id) => {
   try {
     const response = await api.patch(`users/${id}/disable`)
     if (response.status === 200) {
@@ -68,7 +68,7 @@ async function disableUser(id) {
   }
 }
 
-function loadEditUserForm(id) {
+const loadEditUserForm = (id) => {
   router.push({ name: 'edit-user', params: { id }, replace: true })
 }
 

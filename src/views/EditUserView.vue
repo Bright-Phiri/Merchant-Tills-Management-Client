@@ -21,7 +21,7 @@ const roles = ref(['Officer', 'Admin'])
 const userForm = useTemplateRef('userForm')
 const loading = ref(false)
 
-async function fetchUserDetails(id) {
+const fetchUserDetails = async (id) => {
   try {
     const response = await api.get(`users/${id}`)
     if (response.status == 200) {
@@ -32,7 +32,7 @@ async function fetchUserDetails(id) {
   }
 }
 
-async function updateUser() {
+const updateUser = async () => {
   const requiredFields = [
     'first_name',
     'last_name',
@@ -84,7 +84,7 @@ async function updateUser() {
   }
 }
 
-function cancelEditUser() {
+const cancelEditUser = () => {
   router.push({ name: 'users' })
 }
 

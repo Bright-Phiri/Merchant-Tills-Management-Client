@@ -21,7 +21,7 @@ const headers = [
   { key: 'transaction_id', title: 'Transaction ID' },
 ]
 
-async function fetchPayments({ page, itemsPerPage }) {
+const fetchPayments = async ({ page, itemsPerPage }) => {
   loading.value = true
   try {
     const response = await api.get('payments', {
@@ -29,10 +29,10 @@ async function fetchPayments({ page, itemsPerPage }) {
     })
     payments.value = response.data.data.payments
     totalItems.value = response.data.data.total
-    loading.value = false
   } catch (err) {
-    loading.value = false
     showAlert('error', 'Unable to Reach Server', err + ", Couldn't reach API")
+  } finally {
+    loading.value = false
   }
 }
 </script>

@@ -17,16 +17,16 @@ const headers = [
   { key: 'transaction_id', title: 'Transaction ID' },
 ]
 
-async function fetchSubscriptionDetails() {
+const fetchSubscriptionDetails = async () => {
   try {
     loading.value = true
     const response = await api.get(`subscriptions/${route.params.id}`)
     subscription.value = response.data.data
     payments.value = response.data.data.payments
-    loading.value = false
   } catch (err) {
-    loading.value = false
     showAlert('error', 'Unable to Reach Server', err + ", Couldn't reach API")
+  } finally {
+    loading.value = false
   }
 }
 

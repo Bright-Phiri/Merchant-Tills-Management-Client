@@ -25,7 +25,7 @@ const headers = [
   { key: 'action', title: 'Action' },
 ]
 
-async function fetchSubscriptions({ page, itemsPerPage }) {
+const fetchSubscriptions = async ({ page, itemsPerPage }) => {
   loading.value = true
   try {
     const response = await api.get('subscriptions', {
@@ -33,18 +33,18 @@ async function fetchSubscriptions({ page, itemsPerPage }) {
     })
     subscriptions.value = response.data.data.subscriptions
     totalItems.value = response.data.data.total
-    loading.value = false
   } catch (err) {
-    loading.value = false
     showAlert('error', 'Unable to Reach Server', err + ", Couldn't reach API")
+  } finally {
+    loading.value = false
   }
 }
 
-function viewSubscription(id) {
+const viewSubscription = (id) => {
   router.push({ name: 'subscription-details', params: { id }, replace: true })
 }
 
-async function deleteSubscription(id) {
+const deleteSubscription = async (id) => {
   try {
     const response = await api.delete(`subscriptions/${id}`)
     if (response.status === 204) {
@@ -53,7 +53,6 @@ async function deleteSubscription(id) {
       })
     }
   } catch (err) {
-    loading.value = false
     showAlert('error', 'Unable to Reach Server', err + ", Couldn't reach API")
   }
 }

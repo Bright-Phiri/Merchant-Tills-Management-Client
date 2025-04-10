@@ -23,7 +23,7 @@ const headers = [
   { key: 'status', title: 'Status' },
 ]
 
-async function fetchClientTerminals({ page, itemsPerPage }) {
+const fetchClientTerminals = async ({ page, itemsPerPage }) => {
   loading.value = true
   try {
     const response = await api.get(`taxpayers/${route.params.id}/show_terminals`, {
@@ -31,10 +31,10 @@ async function fetchClientTerminals({ page, itemsPerPage }) {
     })
     terminals.value = response.data.data.terminals
     totalItems.value = response.data.data.total
-    loading.value = false
   } catch (err) {
-    loading.value = false
     showAlert('error', 'Unable to Reach Server', err + ", Couldn't reach API")
+  } finally {
+    loading.value = false
   }
 }
 </script>
