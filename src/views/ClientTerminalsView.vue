@@ -73,12 +73,11 @@ const fetchClientTerminals = async ({ page, itemsPerPage }) => {
             >
               <template v-slot:[`item.status`]="{ item }">
                 <v-chip
-                  class="text-center"
-                  small
-                  style="width: 65px"
-                  outlined
+                  class="d-flex justify-center"
+                  size="small"
+                  style="width: 80px"
+                  variant="tonal"
                   :color="getColor(item.status)"
-                  dark
                 >
                   {{ item.status === 'active' ? 'Active' : 'Blocked' }}
                 </v-chip>
