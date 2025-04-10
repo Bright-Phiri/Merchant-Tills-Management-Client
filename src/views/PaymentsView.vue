@@ -5,6 +5,7 @@ import { showAlert } from '@/utils/utils'
 
 const loading = ref(false)
 const payments = ref([])
+const search = ref('')
 const itemsPerPage = ref(20)
 const totalItems = ref(0)
 const headers = [

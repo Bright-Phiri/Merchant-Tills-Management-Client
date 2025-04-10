@@ -127,7 +127,6 @@ onMounted(() => {
                       color="green"
                       v-on:click="activateUser(item.id)"
                       v-bind="attrs"
-                      v-on="on"
                       >mdi-account-off</v-icon
                     >
                   </template>
@@ -141,7 +140,6 @@ onMounted(() => {
                       color="red"
                       v-on:click="disableUser(item.id)"
                       v-bind="attrs"
-                      v-on="on"
                       >mdi-account-lock</v-icon
                     >
                   </template>
