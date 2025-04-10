@@ -1,6 +1,7 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
+import { useDebounceFn } from '@vueuse/core'
 import api from '@/services/api'
 import { showAlert } from '@/utils/utils'
 
@@ -24,10 +25,12 @@ const headers = [
   { key: 'action', title: 'Action' },
 ]
 
-const fetchClients = async ({ page, itemsPerPage }) => {
+const fetchClients = async ({ page, itemsPerPage, search }) => {
   loading.value = true
   try {
-    const response = await api.get('taxpayers', { params: { page, per_page: itemsPerPage } })
+    const response = await api.get('taxpayers', {
+      params: { page, per_page: itemsPerPage, search },
+    })
     clients.value = response.data.data.taxpayers
     totalItems.value = response.data.data.total
   } catch (err) {
@@ -36,6 +39,14 @@ const fetchClients = async ({ page, itemsPerPage }) => {
     loading.value = false
   }
 }
+
+const debouncedSearch = useDebounceFn(() => {
+  fetchClients({ page: 1, itemsPerPage: itemsPerPage.value, search: search.value })
+}, 400)
+
+watch(search, () => {
+  debouncedSearch()
+})
 
 const loadNewSubscriptionForm = (id) => {
   router.push({ name: 'new-subscription', params: { id }, replace: true })
@@ -73,7 +84,6 @@ const loadClientTerminalsView = (id, name) => {
               :headers
               :items="clients"
               :items-length="totalItems"
-              :search
               :loading
               :items-per-page="itemsPerPage"
               @update:options="fetchClients"
