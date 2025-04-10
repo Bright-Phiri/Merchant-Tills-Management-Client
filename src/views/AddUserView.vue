@@ -1,7 +1,7 @@
 <script setup>
-import { ref, useTemplateRef, onMounted } from 'vue'
+import { ref, useTemplateRef } from 'vue'
 import api from '@/services/api'
-import { showAlert } from '@/utils/alert'
+import { showAlert } from '@/utils/utils'
 
 const user = ref({
   first_name: '',

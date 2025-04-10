@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import api from '@/services/api'
-import { showAlert } from '@/utils/alert'
+import { showAlert } from '@/utils/utils'
 
 const loading = ref(false)
 const payments = ref([])

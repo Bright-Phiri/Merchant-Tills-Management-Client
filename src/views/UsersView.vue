@@ -2,8 +2,7 @@
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import api from '@/services/api'
-import { showAlert } from '@/utils/alert'
-import { getColor } from '@/utils/statusColor'
+import { showAlert, getColor } from '@/utils/utils'
 
 const router = useRouter()
 const fetchUsesLoading = ref(false)

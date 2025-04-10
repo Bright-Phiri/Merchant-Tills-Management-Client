@@ -2,7 +2,7 @@
 import { useRoute, useRouter } from 'vue-router'
 import { ref, useTemplateRef, onMounted } from 'vue'
 import api from '@/services/api'
-import { showAlert } from '@/utils/alert'
+import { showAlert } from '@/utils/utils'
 
 const user = ref({
   first_name: '',

@@ -7,3 +7,8 @@ export function showAlert(icon, title, text) {
     text,
   })
 }
+
+export function getColor(status) {
+  if (status === 'active') return 'success'
+  else return 'red'
+}

@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import api from '@/services/api'
-import { showAlert } from '@/utils/alert'
+import { showAlert } from '@/utils/utils'
 
 const loading = ref(false)
 const clients = ref([])

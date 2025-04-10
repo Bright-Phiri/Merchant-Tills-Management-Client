@@ -1,8 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import api from '@/services/api'
-import { showAlert } from '@/utils/alert'
-import { getColor } from '@/utils/statusColor'
+import { showAlert, getColor } from '@/utils/utils'
 
 const loading = ref(true)
 const terminals = ref([])

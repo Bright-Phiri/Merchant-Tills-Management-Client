@@ -1,7 +1,7 @@
 <script setup>
 import { ref, useTemplateRef } from 'vue'
 import { useRoute } from 'vue-router'
-import { showAlert } from '@/utils/alert'
+import { showAlert } from '@/utils/utils'
 import api from '@/services/api'
 
 const route = useRoute()

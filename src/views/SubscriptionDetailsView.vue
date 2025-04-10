@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import api from '@/services/api'
-import { showAlert } from '@/utils/alert'
+import { showAlert } from '@/utils/utils'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
