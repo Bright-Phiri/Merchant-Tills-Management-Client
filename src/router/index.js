@@ -80,13 +80,21 @@ const router = createRouter({
       name: 'sign-in',
       component: () => import('../views/SignInView.vue'),
     },
+    {
+      path: '/sign-up',
+      name: 'sign-up',
+      component: () => import('../views/SignUpView.vue'),
+    },
   ],
 })
 
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token')
-  if (to.name !== 'sign-in' && !token) next({ name: 'sign-in' })
-  else next()
+  if (to.name !== 'sign-in' && to.name !== 'sign-up' && !token) {
+    next({ name: 'sign-in' })
+  } else {
+    next()
+  }
 })
 
 export default router

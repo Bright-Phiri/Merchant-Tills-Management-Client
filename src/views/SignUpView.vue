@@ -9,10 +9,12 @@ const loading = ref(false)
 const router = useRouter()
 const user = ref({
   user_name: '',
+  email_address: '',
   password: '',
+  password_confirmation: '',
 })
 
-const login = async () => {
+const signUp = async () => {
   if (!user.value.user_name || !user.value.password) {
     showAlert('warning', 'Missing Fields', 'Please enter all required fields')
     return
@@ -20,15 +22,15 @@ const login = async () => {
 
   try {
     loading.value = true
-    const response = await api.post('authentication/login', user.value)
-    if (response.status === 200) {
-      localStorage.setItem('token', response.data.data.token)
-      console.log('Token' + response.data.data.token)
-      router.push({ path: '/' })
+    const response = await api.post('users/register', user.value)
+    if (response.status === 201) {
+      showAlert('success', 'Account Created', response.data.message).then(() => {
+        router.push({ path: '/sign-in' })
+      })
     }
   } catch (err) {
     if (err.response) {
-      showAlert('error', 'Failed to Login', err.response.data.message)
+      showAlert('error', 'Failed to create an account', err.response.data.errors)
     } else {
       showAlert('error', 'Unable to Reach Server', err + ", Couldn't reach API")
     }
@@ -40,8 +42,8 @@ const login = async () => {
 
 <template>
   <div class="d-flex flex-column align-center my-6">
-    <v-card class="pa-12 pb-8 mt-6" elevation="8" max-width="448" rounded="lg">
-      <div class="text-center text-h6 mt-2">Terminal Control | Sign In</div>
+    <v-card class="pa-12 pb-8 mt-6" elevation="8" width="448" rounded="lg">
+      <div class="text-center text-h6 mt-2">Terminal Control | Sign Up</div>
       <div class="text-subtitle-1 text-medium-emphasis mt-4">Account</div>
 
       <v-text-field
@@ -52,18 +54,17 @@ const login = async () => {
         v-model="user.user_name"
       ></v-text-field>
 
-      <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
-        Password
+      <div class="text-subtitle-1 text-medium-emphasis mt-4">Email Address</div>
 
-        <a
-          class="text-caption text-decoration-none text-blue"
-          href="#"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          Forgot login password?
-        </a>
-      </div>
+      <v-text-field
+        density="compact"
+        placeholder="Email Address"
+        prepend-inner-icon="mdi-email-outline"
+        variant="outlined"
+        v-model="user.email_address"
+      ></v-text-field>
+
+      <div class="text-subtitle-1 text-medium-emphasis">Password</div>
 
       <v-text-field
         :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
@@ -76,11 +77,18 @@ const login = async () => {
         v-model="user.password"
       ></v-text-field>
 
-      <v-card class="mb-12" color="surface-variant" variant="tonal">
-        <v-card-text class="text-medium-emphasis text-caption">
-          you can also click "Forgot login password?" to reset the login password.
-        </v-card-text>
-      </v-card>
+      <div class="text-subtitle-1 text-medium-emphasis">Password Confirmation</div>
+
+      <v-text-field
+        :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+        :type="visible ? 'text' : 'password'"
+        density="compact"
+        placeholder="Enter your password"
+        prepend-inner-icon="mdi-lock-outline"
+        variant="outlined"
+        @click:append-inner="visible = !visible"
+        v-model="user.password_confirmation"
+      ></v-text-field>
 
       <v-btn
         class="mb-8"
@@ -89,17 +97,18 @@ const login = async () => {
         variant="tonal"
         block
         :loading
-        v-on:click="login"
+        v-on:click="signUp"
       >
-        Log In
+        Create Account
       </v-btn>
 
       <v-card-text class="text-center">
+        <span>Already have and account? </span>
         <router-link
-          to="/sign-up"
+          to="/sign-in"
           class="text-blue text-decoration-none d-inline-flex align-center"
         >
-          Sign up now <v-icon icon="mdi-chevron-right" />
+          Sign in<v-icon icon="mdi-chevron-right" />
         </router-link>
       </v-card-text>
     </v-card>
