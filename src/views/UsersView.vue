@@ -24,10 +24,6 @@ const headers = [
   { key: 'action', title: 'Action' },
 ]
 
-const loadAddUserPage = () => {
-  router.push({ path: '/new-user', replace: true })
-}
-
 const fetchSystemUsers = async () => {
   fetchUsesLoading.value = true
   try {
@@ -101,7 +97,7 @@ onMounted(() => {
                 class="text-capitalize"
                 rounded="xl"
                 variant="outlined"
-                v-on:click="loadAddUserPage"
+                to="/new-user"
                 >New User</v-btn
               >
             </div>
