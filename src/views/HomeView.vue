@@ -224,9 +224,7 @@ onMounted(() => {
                 <v-icon color="white" icon="mdi-sitemap" />
               </v-avatar>
 
-              <span class="ml-3 font-weight-medium text-h6 text-grey-darken-2"
-                >Terminals Count</span
-              >
+              <span class="ml-3 font-weight-medium text-h6 text-grey-darken-2">All Terminals</span>
             </div>
             <v-icon icon="mdi-dots-vertical" />
           </v-card-title>

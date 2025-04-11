@@ -75,10 +75,6 @@ const updateUser = async () => {
   }
 }
 
-const cancelEditUser = () => {
-  router.push({ name: 'users' })
-}
-
 onMounted(() => {
   const id = route.params.id
   user_id.value = id
@@ -152,15 +148,23 @@ onMounted(() => {
                   </v-col>
 
                   <v-col cols="12">
-                    <div class="d-flex justify-end">
-                      <v-btn color="black" variant="flat" v-on:click="cancelEditUser">Cancel</v-btn>
+                    <div class="d-flex">
                       <v-btn
-                        color="#365B73"
-                        variant="outlined"
-                        class="ml-2"
+                        color="#01A1FF"
+                        rounded="xl"
+                        variant="flat"
+                        class="text-capitalize"
                         v-on:click="updateUser"
                         :loading
                         >Update</v-btn
+                      >
+                      <v-btn
+                        color="#ff6692"
+                        class="ml-2 text-capitalize"
+                        rounded="xl"
+                        variant="tonal"
+                        to="/users"
+                        >Cancel</v-btn
                       >
                     </div>
                   </v-col>
