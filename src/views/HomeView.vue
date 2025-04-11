@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import ApexChart from 'vue3-apexcharts'
 const value = [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0]
 
@@ -88,34 +88,32 @@ const chartOptions1 = {
 const growthSeries = ref([
   {
     name: 'Clients',
-    data: [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8], // 12 months of data
+    data: [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8],
+  },
+  {
+    name: 'Subscriptions',
+    data: [1, 3, 4, 6, 8, 9, 4, 6, 2, 1, 3, 7],
   },
 ])
 
 const growthChartOptions = ref({
   chart: {
-    toolbar: { show: false },
     animations: {
       enabled: true,
+      easing: 'easeinout',
+      speed: 800,
+      animateGradually: { enabled: true, delay: 150 },
+      dynamicAnimation: { enabled: true, speed: 350 },
     },
+    toolbar: { show: false },
   },
-  stroke: {
-    curve: 'smooth',
-    width: 2,
-  },
+  stroke: { curve: 'smooth', width: 4 },
   fill: {
     type: 'gradient',
-    gradient: {
-      shadeIntensity: 1,
-      opacityFrom: 0.6,
-      opacityTo: 0.05,
-      stops: [0, 100],
-    },
+    gradient: { shadeIntensity: 1, opacityFrom: 0.6, opacityTo: 0.05, stops: [0, 100] },
   },
-  colors: ['#E3E9F1'],
-  dataLabels: {
-    enabled: false, // ✅ don't show values by default
-  },
+  colors: ['#01A1FF', '#E3E9F1'],
+  dataLabels: { enabled: false },
   xaxis: {
     categories: [
       'Jan',
@@ -131,29 +129,14 @@ const growthChartOptions = ref({
       'Nov',
       'Dec',
     ],
-    labels: {
-      style: {
-        colors: '#6B7280', // optional: makes labels soft gray
-        fontSize: '12px',
-      },
-    },
-    axisTicks: { show: false },
-    axisBorder: { show: false },
   },
-  yaxis: {
-    labels: {
-      style: {
-        colors: '#6B7280',
-        fontSize: '12px',
-      },
-    },
-  },
-  grid: {
-    strokeDashArray: 4,
-  },
-  tooltip: {
-    enabled: true,
-  },
+  tooltip: { enabled: true },
+})
+
+onMounted(() => {
+  setTimeout(() => {
+    growthSeries.value[0].data = [2, 4, 7, 12, 7, 13, 5, 6, 2, 1, 3, 10]
+  }, 2000)
 })
 </script>
 
@@ -183,8 +166,8 @@ const growthChartOptions = ref({
     </v-row>
     <v-row>
       <v-col cols="4">
-        <v-card color="#FFE4EC" rounded="xl" height="210">
-          <v-card-title class="d-flex justify-space-between py-8">
+        <v-card color="#FFE4EC" rounded="xl" height="200">
+          <v-card-title class="d-flex justify-space-between py-6">
             <div class="d-flex align-center">
               <v-avatar color="#ff6692" size="50" rounded="xl" icon="mdi-account-multiple" />
               <span class="ml-3 font-weight-medium text-h6 text-grey-darken-2">All Clients</span>
@@ -203,12 +186,12 @@ const growthChartOptions = ref({
         </v-card>
       </v-col>
       <v-col cols="4">
-        <v-card color="#E7E2F3" rounded="xl" height="210">
-          <v-card-title class="d-flex justify-space-between py-8">
+        <v-card color="#E7E2F3" rounded="xl" height="200">
+          <v-card-title class="d-flex justify-space-between py-6">
             <div class="d-flex align-center">
               <v-avatar color="#8565E9" size="50" rounded="xl" icon="mdi-playlist-check" />
               <span class="ml-3 font-weight-medium text-h6 text-grey-darken-2"
-                >Active Subscriptions</span
+                >All Subscriptions</span
               >
             </div>
             <v-icon class="mt-2" icon="mdi-dots-vertical" />
@@ -217,6 +200,15 @@ const growthChartOptions = ref({
           <v-card-text class="d-flex justify-space-between align-end">
             <div>
               <span class="text-h6 text-md-h5 text-lg-h4">2,000</span>
+              <v-chip
+                class="d-flex justify-center mt-3"
+                size="small"
+                style="width: 90px; border: 1px solid #526b7a; color: #8565e9"
+                variant="outlined"
+                color="#8565E9"
+              >
+                <span style="color: #526b7a"> 10000 Active</span>
+              </v-chip>
             </div>
             <div style="width: 200px; height: 60px">
               <apexchart type="area" :options="chartOptions1" :series="series1" height="60" />
@@ -225,7 +217,7 @@ const growthChartOptions = ref({
         </v-card>
       </v-col>
       <v-col cols="4">
-        <v-card color="#D2F9F4" rounded="xl" height="210">
+        <v-card color="#D2F9F4" rounded="xl" height="200">
           <v-card-title class="d-flex justify-space-between align-center py-6">
             <div class="d-flex align-center">
               <v-avatar color="#00CEB6" size="50" rounded="xl">
@@ -239,17 +231,20 @@ const growthChartOptions = ref({
             <v-icon icon="mdi-dots-vertical" />
           </v-card-title>
 
-          <v-card-text class="d-flex align-center justify-space-between px-4 py-2">
+          <v-card-text class="d-flex align-center justify-space-between px-4">
             <div>
-              <span class="text-h6 text-md-h5 text-lg-h4">20</span>
+              <span class="text-h4">20</span>
+              <v-chip
+                class="d-flex justify-center"
+                size="small"
+                style="width: 90px; border: 1px solid #526b7a; color: #8565e9"
+                variant="outlined"
+                color="#8565E9"
+              >
+                <span style="color: #526b7a"> 5 Active</span>
+              </v-chip>
             </div>
-            <v-progress-circular
-              :model-value="20"
-              size="100"
-              width="6"
-              color="#00CBE6"
-              rotate="-90"
-            >
+            <v-progress-circular :model-value="20" size="90" width="6" color="#00CBE6" rotate="-90">
             </v-progress-circular>
           </v-card-text>
         </v-card>
