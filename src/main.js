@@ -12,6 +12,7 @@ import '@mdi/font/css/materialdesignicons.css'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
+import VueApexCharts from 'vue3-apexcharts'
 
 // Components
 import App from './App.vue'
@@ -27,4 +28,5 @@ createApp(App)
   .use(VueSweetalert2)
   .use(vuetify)
   .use(createPinia())
+  .component('apexchart', VueApexCharts)
   .mount('#app')
