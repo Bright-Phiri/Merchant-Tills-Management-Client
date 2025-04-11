@@ -9,6 +9,6 @@ export function showAlert(icon, title, text) {
 }
 
 export function getColor(status) {
-  if (status === 'active') return 'success'
-  else return 'red'
+  if (status === 'active') return '#01A1FF'
+  else return '#ff6692'
 }

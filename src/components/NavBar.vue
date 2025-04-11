@@ -50,25 +50,26 @@ const logout = () => {
 
 <template>
   <div class="NavBar">
-    <v-navigation-drawer color="#365B73" theme="dark" :width="270" permanent v-model="drawer">
-      <v-list>
+    <v-navigation-drawer color="#ffffff" :width="280" permanent v-model="drawer">
+      <v-list nav>
         <v-list-item
           v-for="link in navBarItems"
           :prepend-icon="link.icon"
           :title="link.text"
           :key="link.text"
           :to="link.to"
-          nav
+          rounded="xl"
+          color="#01A1FF"
         ></v-list-item>
       </v-list>
 
       <template v-slot:append>
         <div class="pa-2">
-          <v-btn block v-on:click="logout"> Logout </v-btn>
+          <v-btn theme="dark" block v-on:click="logout" class="text-capitalize"> Logout </v-btn>
         </div>
       </template>
     </v-navigation-drawer>
-    <v-app-bar :elevation="1">
+    <v-app-bar :elevation="0" color="#f9fafe">
       <template v-slot:prepend>
         <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       </template>

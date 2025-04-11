@@ -25,19 +25,12 @@ const addUser = async () => {
     'role',
     'email_address',
     'phone_number',
-    'password',
-    'password_confirmation',
   ]
 
   const missingField = requiredFields.find((field) => !user.value[field])
 
   if (missingField) {
     showAlert('warning', 'Missing Fields', 'Please enter all required fields')
-    return
-  }
-
-  if (user.value.password !== user.value.password_confirmation) {
-    showAlert('warning', 'Password Mismatch', 'Password and confirmation do not match.')
     return
   }
 
@@ -48,8 +41,6 @@ const addUser = async () => {
     role: user.value.role,
     email_address: user.value.email_address,
     phone_number: user.value.phone_number,
-    password: user.value.password,
-    password_confirmation: user.value.password_confirmation,
   }
 
   try {
@@ -78,14 +69,15 @@ const cancelAddUser = () => {
   <div class="AddUser">
     <v-row>
       <v-col cols="12">
-        <v-card>
-          <v-card-title>Add New User</v-card-title>
+        <v-card rounded="xl">
+          <v-card-title class="text-black font-weight-bold">User Details</v-card-title>
           <v-card-text>
             <v-form ref="userForm">
               <v-container fluid>
                 <v-row>
                   <v-col cols="12" sm="6" class="px-0">
                     <v-text-field
+                      rounded="lg"
                       v-model="user.first_name"
                       label="First Name"
                       variant="outlined"
@@ -95,6 +87,7 @@ const cancelAddUser = () => {
 
                   <v-col cols="12" sm="6">
                     <v-text-field
+                      rounded="lg"
                       v-model="user.last_name"
                       label="Last Name"
                       variant="outlined"
@@ -104,6 +97,7 @@ const cancelAddUser = () => {
 
                   <v-col cols="12" sm="6" class="px-0">
                     <v-text-field
+                      rounded="lg"
                       v-model="user.user_name"
                       label="Username"
                       variant="outlined"
@@ -113,6 +107,7 @@ const cancelAddUser = () => {
 
                   <v-col cols="12" sm="6">
                     <v-select
+                      rounded="lg"
                       v-model="user.role"
                       label="Select Role"
                       :items="roles"
@@ -123,6 +118,7 @@ const cancelAddUser = () => {
 
                   <v-col cols="12" sm="6" class="px-0">
                     <v-text-field
+                      rounded="lg"
                       v-model="user.email_address"
                       label="Email Address"
                       variant="outlined"
@@ -132,6 +128,7 @@ const cancelAddUser = () => {
 
                   <v-col cols="12" sm="6">
                     <v-text-field
+                      rounded="lg"
                       v-model="user.phone_number"
                       label="Phone Number"
                       variant="outlined"
@@ -139,35 +136,24 @@ const cancelAddUser = () => {
                     ></v-text-field>
                   </v-col>
 
-                  <v-col cols="12" sm="6" class="px-0">
-                    <v-text-field
-                      type="password"
-                      v-model="user.password"
-                      label="Password"
-                      variant="outlined"
-                      density="comfortable"
-                    ></v-text-field>
-                  </v-col>
-
-                  <v-col cols="12" sm="6">
-                    <v-text-field
-                      type="password"
-                      v-model="user.password_confirmation"
-                      label="Password Confirmation"
-                      variant="outlined"
-                      density="comfortable"
-                    ></v-text-field>
-                  </v-col>
                   <v-col cols="12">
-                    <div class="d-flex justify-end">
-                      <v-btn color="black" variant="flat" v-on:click="cancelAddUser">Cancel</v-btn>
+                    <div class="d-flex">
                       <v-btn
-                        color="#365B73"
-                        variant="outlined"
-                        class="ml-2"
+                        color="#01A1FF"
+                        rounded="xl"
+                        variant="flat"
+                        class="text-capitalize"
                         v-on:click="addUser"
                         :loading
-                        >Save</v-btn
+                        >Submit</v-btn
+                      >
+                      <v-btn
+                        color="#ff6692"
+                        class="ml-2 text-capitalize"
+                        rounded="xl"
+                        variant="tonal"
+                        v-on:click="cancelAddUser"
+                        >Cancel</v-btn
                       >
                     </div>
                   </v-col>

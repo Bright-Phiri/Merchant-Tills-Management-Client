@@ -70,12 +70,13 @@ const deleteSubscription = async (id) => {
   <div class="Clients">
     <v-row>
       <v-col cols="12">
-        <v-card>
+        <v-card rounded="xl">
           <v-card-title>
-            <span>Subscriptions</span>
+            <span class="text-black font-weight-bold">Subscriptions</span>
             <div class="d-flex justify-space-between mt-2">
               <v-col cols="3" class="pa-0">
                 <v-text-field
+                  rounded="xl"
                   append-inner-icon="mdi-magnify"
                   clearable
                   label="Search Subscription"
@@ -90,7 +91,7 @@ const deleteSubscription = async (id) => {
           <v-card-text>
             <v-data-table-server
               density="comfortable"
-              class="elevation-1"
+              class="elevation-1 rounded-xl"
               :headers
               :items="subscriptions"
               :items-length="totalItems"
@@ -114,7 +115,7 @@ const deleteSubscription = async (id) => {
               <template v-slot:[`item.action`]="{ item }">
                 <div class="d-flex">
                   <v-icon
-                    color="blue"
+                    color="#01A1FF"
                     icon="mdi-eye"
                     size="small"
                     @click="viewSubscription(item.id)"
@@ -122,7 +123,7 @@ const deleteSubscription = async (id) => {
 
                   <v-icon
                     class="ml-2"
-                    color="red"
+                    color="#ff6692"
                     icon="mdi-delete"
                     size="small"
                     @click="deleteSubscription(item.id)"

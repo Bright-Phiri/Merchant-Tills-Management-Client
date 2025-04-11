@@ -11,8 +11,6 @@ const user = ref({
   role: '',
   email_address: '',
   phone_number: '',
-  password: '',
-  password_confirmation: '',
 })
 const user_id = ref(0)
 const router = useRouter()
@@ -49,11 +47,6 @@ const updateUser = async () => {
     return
   }
 
-  if (user.value.password !== user.value.password_confirmation) {
-    showAlert('warning', 'Password Mismatch', 'Password and confirmation do not match.')
-    return
-  }
-
   const payload = {
     first_name: user.value.first_name,
     last_name: user.value.last_name,
@@ -61,8 +54,6 @@ const updateUser = async () => {
     role: user.value.role,
     email_address: user.value.email_address,
     phone_number: user.value.phone_number,
-    password: user.value.password,
-    password_confirmation: user.value.password_confirmation,
   }
 
   try {
@@ -100,7 +91,7 @@ onMounted(() => {
     <v-row>
       <v-col cols="12">
         <v-card>
-          <v-card-title>Edit User</v-card-title>
+          <v-card-title class="text-black font-weight-bold">Edit User</v-card-title>
           <v-card-text>
             <v-form ref="userForm">
               <v-container fluid>
@@ -160,25 +151,6 @@ onMounted(() => {
                     ></v-text-field>
                   </v-col>
 
-                  <v-col cols="12" sm="6" class="px-0">
-                    <v-text-field
-                      type="password"
-                      v-model="user.password"
-                      label="Password"
-                      variant="outlined"
-                      density="comfortable"
-                    ></v-text-field>
-                  </v-col>
-
-                  <v-col cols="12" sm="6">
-                    <v-text-field
-                      type="password"
-                      v-model="user.password_confirmation"
-                      label="Password Confirmation"
-                      variant="outlined"
-                      density="comfortable"
-                    ></v-text-field>
-                  </v-col>
                   <v-col cols="12">
                     <div class="d-flex justify-end">
                       <v-btn color="black" variant="flat" v-on:click="cancelEditUser">Cancel</v-btn>

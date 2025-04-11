@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-main>
+    <v-main style="background-color: #f9fafe">
       <v-container fluid>
         <router-view />
       </v-container>

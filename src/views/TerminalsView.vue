@@ -49,11 +49,12 @@ watch(search, () => {
   <div class="Terminals">
     <v-row>
       <v-col cols="12">
-        <v-card>
+        <v-card rounded="xl">
           <v-card-title class="d-flex justify-space-between">
-            <span>Terminals</span>
+            <span class="text-black font-weight-bold">Terminals</span>
             <v-col cols="3">
               <v-text-field
+                rounded="xl"
                 append-inner-icon="mdi-magnify"
                 clearable
                 v-model="search"
@@ -66,8 +67,9 @@ watch(search, () => {
           </v-card-title>
           <v-card-text>
             <v-data-table-server
+              :header-props="{ class: 'text-black font-weight-bold' }"
               density="comfortable"
-              class="elevation-1"
+              class="elevation-1 rounded-xl"
               :headers
               :items="terminals"
               :items-length="totalItems"

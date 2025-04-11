@@ -80,12 +80,13 @@ onMounted(() => {
   <div class="Clients">
     <v-row>
       <v-col cols="12">
-        <v-card>
+        <v-card rounded="xl">
           <v-card-title>
-            <span>Users</span>
+            <span class="text-black font-weight-bold">Users</span>
             <div class="d-flex justify-space-between mt-2">
               <v-col cols="3" class="pa-0">
                 <v-text-field
+                  rounded="xl"
                   append-inner-icon="mdi-magnify"
                   clearable
                   v-model="search"
@@ -96,8 +97,9 @@ onMounted(() => {
                 ></v-text-field>
               </v-col>
               <v-btn
-                color="#365B73"
+                color="#01A1FF"
                 class="text-capitalize"
+                rounded="xl"
                 variant="outlined"
                 v-on:click="loadAddUserPage"
                 >New User</v-btn
@@ -106,8 +108,9 @@ onMounted(() => {
           </v-card-title>
           <v-card-text>
             <v-data-table
+              :header-props="{ class: 'text-black font-weight-bold' }"
               density="comfortable"
-              class="elevation-1"
+              class="elevation-1 rounded-xl"
               :headers
               :items="users"
               :search
@@ -116,7 +119,7 @@ onMounted(() => {
               hover
             >
               <template v-slot:[`item.action`]="{ item }">
-                <v-icon small class="mr-0" v-on:click="loadEditUserForm(item.id)" color="blue"
+                <v-icon small class="mr-0" v-on:click="loadEditUserForm(item.id)" color="#01A1FF"
                   >mdi-pencil
                 </v-icon>
                 <v-tooltip bottom v-if="item.status === 'disabled'">
@@ -124,7 +127,7 @@ onMounted(() => {
                     <v-icon
                       small
                       class="mr-0"
-                      color="green"
+                      color="#01A1FF"
                       v-on:click="activateUser(item.id)"
                       v-bind="attrs"
                       >mdi-account-off</v-icon
@@ -137,7 +140,7 @@ onMounted(() => {
                     <v-icon
                       small
                       class="mr-0"
-                      color="red"
+                      color="#ff6692"
                       v-on:click="disableUser(item.id)"
                       v-bind="attrs"
                       >mdi-account-lock</v-icon

@@ -84,7 +84,7 @@ const login = async () => {
 
       <v-btn
         class="mb-8"
-        color="#365B73"
+        color="#01A1FF"
         size="large"
         variant="tonal"
         block

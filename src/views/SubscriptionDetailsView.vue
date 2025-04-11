@@ -38,8 +38,8 @@ onMounted(() => {
 <template>
   <v-row>
     <v-col cols="12">
-      <v-card class="pa-4" elevation="2" v-if="!loading && subscription">
-        <v-card-title class="text-h6 px-0 d-flex justify-space-between"
+      <v-card rounded="xl" class="pa-4" elevation="2" v-if="!loading && subscription">
+        <v-card-title class="text-h6 px-0 d-flex justify-space-between text-black font-weight-bold"
           >Subscription Details
           <v-btn color="#365B73" class="text-capitalize" variant="outlined" v-on:click=""
             >Renew Subscription</v-btn
@@ -84,6 +84,7 @@ onMounted(() => {
                 <h2 class="font-weight-light">Payments</h2>
                 <v-col cols="3">
                   <v-text-field
+                    rounded="xl"
                     append-inner-icon="mdi-magnify"
                     clearable
                     label="Search Payment"
@@ -96,8 +97,9 @@ onMounted(() => {
               </div>
             </div>
             <v-data-table
+              :header-props="{ class: 'text-black font-weight-bold' }"
               density="comfortable"
-              class="elevation-1"
+              class="elevation-1 rounded-xl"
               :headers
               :items="payments"
               :search

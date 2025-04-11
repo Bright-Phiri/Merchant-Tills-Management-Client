@@ -69,12 +69,13 @@ const createSubscription = async () => {
   <div class="NewSubscription">
     <v-row>
       <v-col cols="12">
-        <v-card>
-          <v-card-title>Create New Subscription</v-card-title>
+        <v-card rounded="xl">
+          <v-card-title class="text-black font-weight-bold">Subscription Details</v-card-title>
           <v-card-text>
             <v-form ref="subscriptionForm" v-on:submit.prevent="createSubscription">
               <v-col sm="12" lg="6" md="6">
                 <v-text-field
+                  rounded="lg"
                   label="Duration (Months)"
                   v-model="subscription.months"
                   variant="outlined"
@@ -85,6 +86,7 @@ const createSubscription = async () => {
 
               <v-col sm="12" lg="6" md="6">
                 <v-text-field
+                  rounded="lg"
                   label="Payment Date"
                   v-model="payment.payment_date"
                   variant="outlined"
@@ -95,6 +97,7 @@ const createSubscription = async () => {
 
               <v-col sm="12" lg="6" md="6">
                 <v-text-field
+                  rounded="lg"
                   label="Amount (MW)"
                   v-model="payment.amount"
                   variant="outlined"
@@ -105,6 +108,7 @@ const createSubscription = async () => {
 
               <v-col sm="12" lg="6" md="6">
                 <v-select
+                  rounded="lg"
                   :items="paymentMethods"
                   v-model="payment.payment_method"
                   label="Payment Method"
@@ -115,6 +119,7 @@ const createSubscription = async () => {
 
               <v-col sm="12" lg="6" md="6">
                 <v-text-field
+                  rounded="lg"
                   label="Transaction ID"
                   v-model="payment.transaction_id"
                   variant="outlined"
@@ -123,11 +128,22 @@ const createSubscription = async () => {
               </v-col>
               <v-col sm="12" lg="6" md="6">
                 <div>
-                  <v-btn color="black" variant="flat" v-on:click="cancelCreateSubscription"
-                    >Cancel</v-btn
-                  >
-                  <v-btn color="#365B73" variant="outlined" class="ml-2" type="submit" :loading
+                  <v-btn
+                    color="#01A1FF"
+                    variant="flat"
+                    rounded="xl"
+                    class="text-capitalize"
+                    type="submit"
+                    :loading
                     >Submit</v-btn
+                  >
+                  <v-btn
+                    variant="tonal"
+                    color="#ff6692"
+                    rounded="xl"
+                    class="ml-2 text-capitalize"
+                    v-on:click="cancelCreateSubscription"
+                    >Cancel</v-btn
                   >
                 </div>
               </v-col>

@@ -61,11 +61,12 @@ const loadClientTerminalsView = (id, name) => {
   <div class="Clients">
     <v-row>
       <v-col cols="12">
-        <v-card>
+        <v-card rounded="xl">
           <v-card-title class="d-flex justify-space-between">
-            <span>Clients</span>
+            <span class="text-black font-weight-bold">Clients</span>
             <v-col cols="3">
               <v-text-field
+                rounded="xl"
                 append-inner-icon="mdi-magnify"
                 clearable
                 v-model="search"
@@ -79,7 +80,8 @@ const loadClientTerminalsView = (id, name) => {
           <v-card-text>
             <v-data-table-server
               density="comfortable"
-              class="elevation-1"
+              :header-props="{ class: 'text-black font-weight-bold' }"
+              class="elevation-1 rounded-xl"
               v-model:items-per-page="itemsPerPage"
               :headers
               :items="clients"
@@ -96,7 +98,7 @@ const loadClientTerminalsView = (id, name) => {
                     variant="text"
                     prepend-icon="mdi-eye"
                     class="text-capitalize"
-                    color="#365B73"
+                    color="#01A1FF"
                     v-on:click="loadClientTerminalsView(item.id, item.name)"
                     >View Terminals</v-btn
                   >
@@ -105,7 +107,7 @@ const loadClientTerminalsView = (id, name) => {
                     variant="text"
                     prepend-icon="mdi-plus-circle-multiple-outline"
                     class="text-capitalize ml-2"
-                    color="#365B73"
+                    color="#01A1FF"
                     v-on:click="loadNewSubscriptionForm(item.id)"
                     >Create Subscription</v-btn
                   >
