@@ -3,6 +3,11 @@ import { ref, onMounted } from 'vue'
 import ApexChart from 'vue3-apexcharts'
 const value = [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0]
 
+const allClients = ref(0)
+const allSubscriptions = ref(0)
+const activeSubscriptions = ref(0)
+const allTerminals = ref(0)
+const activeTerminals = ref(0)
 const headers = [
   {
     align: 'start',
@@ -143,7 +148,7 @@ onMounted(() => {
 <template>
   <div class="Home">
     <v-row>
-      <v-col cols="8" lg="8" sm="12" xs="12">
+      <v-col cols="9" lg="9" md="8" sm="12" xs="12">
         <v-card rounded="xl" height="400">
           <v-card-title class="text-grey-darken-2">
             Client Subscription Growth (Monthly)
@@ -160,8 +165,74 @@ onMounted(() => {
         </v-card>
       </v-col>
 
-      <v-col cols="4" lg="4" sm="12" xs="12">
-        <v-card rounded="xl" height="400" color="#00A1FF" variant="tonal"> </v-card>
+      <v-col cols="3" lg="3" md="4" sm="12" xs="12">
+        <v-card rounded="xl" height="400" color="#00A1FF" variant="tonal">
+          <v-card-text
+            ><v-card rounded="lg" elevation="0" color="#EFF4FA">
+              <v-card-text class="d-flex">
+                <v-avatar color="#FFE4EC" size="50" rounded="xl">
+                  <v-icon icon="mdi-cash" size="28" color="#ff6692"></v-icon>
+                </v-avatar>
+                <div class="d-flex flex-column justify-center">
+                  <span class="ml-3 font-weight-medium text-h6 text-grey-darken-2"
+                    >Total Revenue</span
+                  >
+                  <span class="ml-3 font-weight-medium text-h7 text-center text-grey-darken-2"
+                    >90,000,000,000,000</span
+                  >
+                </div>
+              </v-card-text>
+            </v-card>
+
+            <v-card rounded="lg" elevation="0" class="mt-2" color="#EFF4FA">
+              <v-card-text class="d-flex">
+                <v-avatar color="#FFE4EC" size="50" rounded="xl">
+                  <v-icon icon="mdi-cash" size="28" color="#ff6692"></v-icon>
+                </v-avatar>
+                <div class="d-flex flex-column justify-center">
+                  <span class="ml-3 font-weight-medium text-h6 text-grey-darken-2"
+                    >Total Revenue</span
+                  >
+                  <span class="ml-3 font-weight-medium text-h7 text-center text-grey-darken-2"
+                    >90,000,000,000,000</span
+                  >
+                </div>
+              </v-card-text>
+            </v-card>
+
+            <v-card rounded="lg" elevation="0" color="#EFF4FA">
+              <v-card-text class="d-flex">
+                <v-avatar color="#FFE4EC" size="50" rounded="xl">
+                  <v-icon icon="mdi-cash" size="28" color="#ff6692"></v-icon>
+                </v-avatar>
+                <div class="d-flex flex-column justify-center">
+                  <span class="ml-3 font-weight-medium text-h6 text-grey-darken-2"
+                    >Total Revenue</span
+                  >
+                  <span class="ml-3 font-weight-medium text-h7 text-center text-grey-darken-2"
+                    >90,000,000,000,000</span
+                  >
+                </div>
+              </v-card-text>
+            </v-card>
+
+            <v-card rounded="lg" elevation="0" color="#EFF4FA">
+              <v-card-text class="d-flex">
+                <v-avatar color="#FFE4EC" size="50" rounded="xl">
+                  <v-icon icon="mdi-cash" size="28" color="#ff6692"></v-icon>
+                </v-avatar>
+                <div class="d-flex flex-column justify-center">
+                  <span class="ml-3 font-weight-medium text-h6 text-grey-darken-2"
+                    >Total Revenue</span
+                  >
+                  <span class="ml-3 font-weight-medium text-h7 text-center text-grey-darken-2"
+                    >90,000,000,000,000</span
+                  >
+                </div>
+              </v-card-text>
+            </v-card></v-card-text
+          >
+        </v-card>
       </v-col>
     </v-row>
     <v-row>
@@ -177,7 +248,7 @@ onMounted(() => {
 
           <v-card-text class="d-flex justify-space-between align-end">
             <div>
-              <span class="text-h6 text-md-h5 text-lg-h4">4,000</span>
+              <span class="text-h6 text-md-h5 text-lg-h4">{{ allClients }}</span>
             </div>
             <div style="width: 200px; height: 60px">
               <apexchart type="area" :options="chartOptions" :series="series" height="60" />
@@ -199,7 +270,7 @@ onMounted(() => {
 
           <v-card-text class="d-flex justify-space-between align-end">
             <div>
-              <span class="text-h6 text-md-h5 text-lg-h4">2,000</span>
+              <span class="text-h6 text-md-h5 text-lg-h4">{{ allSubscriptions }}</span>
               <v-chip
                 class="d-flex justify-center mt-3"
                 size="small"
@@ -207,7 +278,7 @@ onMounted(() => {
                 variant="outlined"
                 color="#8565E9"
               >
-                <span style="color: #526b7a"> 10000 Active</span>
+                <span style="color: #526b7a"> {{ activeSubscriptions }} Active</span>
               </v-chip>
             </div>
             <div style="width: 200px; height: 60px">
@@ -231,7 +302,7 @@ onMounted(() => {
 
           <v-card-text class="d-flex align-center justify-space-between px-4">
             <div>
-              <span class="text-h4">20</span>
+              <span class="text-h4">{{ allTerminals }}</span>
               <v-chip
                 class="d-flex justify-center"
                 size="small"
@@ -239,7 +310,7 @@ onMounted(() => {
                 variant="outlined"
                 color="#8565E9"
               >
-                <span style="color: #526b7a"> 5 Active</span>
+                <span style="color: #526b7a"> {{ activeTerminals }} Active</span>
               </v-chip>
             </div>
             <v-progress-circular :model-value="20" size="90" width="6" color="#00CBE6" rotate="-90">
