@@ -24,7 +24,7 @@ const login = async () => {
     if (response.status === 200) {
       localStorage.setItem('token', response.data.data.token)
       console.log('Token' + response.data.data.token)
-      router.push({ path: '/' })
+      router.push({ path: '/dashboard' })
     }
   } catch (err) {
     if (err.response) {

@@ -75,6 +75,10 @@ const logout = () => {
       </template>
 
       <v-app-bar-title>Terminal Control</v-app-bar-title>
+      <template v-slot:append>
+        <v-icon icon="mdi-account-circle"></v-icon>
+        <span class="mr-5 ml-1">Bright Issah</span>
+      </template>
     </v-app-bar>
     <router-view v-slot="{ Component, route }">
       <Transition name="slide-fade" mode="out-in">

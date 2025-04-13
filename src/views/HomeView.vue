@@ -143,7 +143,7 @@ onMounted(() => {
 <template>
   <div class="Home">
     <v-row>
-      <v-col cols="8">
+      <v-col cols="8" lg="8" sm="12" xs="12">
         <v-card rounded="xl" height="400">
           <v-card-title class="text-grey-darken-2">
             Client Subscription Growth (Monthly)
@@ -160,12 +160,12 @@ onMounted(() => {
         </v-card>
       </v-col>
 
-      <v-col cols="4">
+      <v-col cols="4" lg="4" sm="12" xs="12">
         <v-card rounded="xl" height="400" color="#00A1FF" variant="tonal"> </v-card>
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="4">
+      <v-col cols="4" lg="4" sm="12" xs="12">
         <v-card color="#FFE4EC" rounded="xl" height="200">
           <v-card-title class="d-flex justify-space-between py-6">
             <div class="d-flex align-center">
@@ -185,7 +185,7 @@ onMounted(() => {
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col cols="4">
+      <v-col cols="4" lg="4" sm="12" xs="12">
         <v-card color="#E7E2F3" rounded="xl" height="200">
           <v-card-title class="d-flex justify-space-between py-6">
             <div class="d-flex align-center">
@@ -216,7 +216,7 @@ onMounted(() => {
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col cols="4">
+      <v-col cols="4" lg="4" sm="12" xs="12">
         <v-card color="#D2F9F4" rounded="xl" height="200">
           <v-card-title class="d-flex justify-space-between align-center py-6">
             <div class="d-flex align-center">
