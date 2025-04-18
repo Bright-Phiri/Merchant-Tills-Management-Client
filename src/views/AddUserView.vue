@@ -142,14 +142,13 @@ const cancelAddUser = () => {
                         color="#01A1FF"
                         rounded="xl"
                         variant="flat"
-                        class="text-capitalize"
                         v-on:click="addUser"
                         :loading
                         >Submit</v-btn
                       >
                       <v-btn
                         color="#ff6692"
-                        class="ml-2 text-capitalize"
+                        class="ml-2"
                         rounded="xl"
                         variant="tonal"
                         v-on:click="cancelAddUser"

@@ -20,6 +20,9 @@ import App from './App.vue'
 const vuetify = createVuetify({
   components,
   directives,
+  defaults: {
+    VBtn: { class: 'text-capitalize' },
+  },
 })
 
 createApp(App)

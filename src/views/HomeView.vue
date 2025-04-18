@@ -148,7 +148,7 @@ onMounted(() => {
 <template>
   <div class="Home">
     <v-row>
-      <v-col cols="9" lg="9" md="8" sm="12" xs="12">
+      <v-col cols="12" lg="9" md="8" sm="12" xs="12">
         <v-card rounded="xl" height="400">
           <v-card-title class="text-grey-darken-2">
             Client Subscription Growth (Monthly)
@@ -165,13 +165,13 @@ onMounted(() => {
         </v-card>
       </v-col>
 
-      <v-col cols="3" lg="3" md="4" sm="12" xs="12">
-        <v-card rounded="xl" height="400" color="#00A1FF" variant="tonal">
+      <v-col cols="12" lg="3" md="4" sm="12" xs="12">
+        <v-card rounded="xl" height="400">
           <v-card-text
-            ><v-card rounded="lg" elevation="0" color="#EFF4FA">
+            ><v-card rounded="xl" elevation="0" class="mt-1" color="#EFF4FA">
               <v-card-text class="d-flex">
-                <v-avatar color="#FFE4EC" size="50" rounded="xl">
-                  <v-icon icon="mdi-cash" size="28" color="#ff6692"></v-icon>
+                <v-avatar color="#FFF1CC" size="50" rounded="xl">
+                  <v-icon icon="mdi-cash" size="28" color="#ffA31F"></v-icon>
                 </v-avatar>
                 <div class="d-flex flex-column justify-center">
                   <span class="ml-3 font-weight-medium text-h6 text-grey-darken-2"
@@ -184,10 +184,10 @@ onMounted(() => {
               </v-card-text>
             </v-card>
 
-            <v-card rounded="lg" elevation="0" class="mt-2" color="#EFF4FA">
+            <v-card rounded="xl" elevation="0" class="mt-2" color="#EFF4FA">
               <v-card-text class="d-flex">
-                <v-avatar color="#FFE4EC" size="50" rounded="xl">
-                  <v-icon icon="mdi-cash" size="28" color="#ff6692"></v-icon>
+                <v-avatar color="#D2F9F4" size="50" rounded="xl">
+                  <v-icon icon="mdi-cash" size="28" color="#00cb36"></v-icon>
                 </v-avatar>
                 <div class="d-flex flex-column justify-center">
                   <span class="ml-3 font-weight-medium text-h6 text-grey-darken-2"
@@ -200,10 +200,10 @@ onMounted(() => {
               </v-card-text>
             </v-card>
 
-            <v-card rounded="lg" elevation="0" color="#EFF4FA">
+            <v-card rounded="xl" elevation="0" class="mt-2" color="#EFF4FA">
               <v-card-text class="d-flex">
-                <v-avatar color="#FFE4EC" size="50" rounded="xl">
-                  <v-icon icon="mdi-cash" size="28" color="#ff6692"></v-icon>
+                <v-avatar color="#EFF5FF" size="50" rounded="xl">
+                  <v-icon icon="mdi-cash" size="28" color="#00A1FF"></v-icon>
                 </v-avatar>
                 <div class="d-flex flex-column justify-center">
                   <span class="ml-3 font-weight-medium text-h6 text-grey-darken-2"
@@ -216,7 +216,7 @@ onMounted(() => {
               </v-card-text>
             </v-card>
 
-            <v-card rounded="lg" elevation="0" color="#EFF4FA">
+            <v-card rounded="xl" elevation="0" class="mt-2" color="#EFF4FA">
               <v-card-text class="d-flex">
                 <v-avatar color="#FFE4EC" size="50" rounded="xl">
                   <v-icon icon="mdi-cash" size="28" color="#ff6692"></v-icon>
@@ -236,7 +236,7 @@ onMounted(() => {
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="4" lg="4" sm="12" xs="12">
+      <v-col cols="12" lg="4" sm="12" xs="12">
         <v-card color="#FFE4EC" rounded="xl" height="200">
           <v-card-title class="d-flex justify-space-between py-6">
             <div class="d-flex align-center">
@@ -256,7 +256,7 @@ onMounted(() => {
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col cols="4" lg="4" sm="12" xs="12">
+      <v-col cols="12" lg="4" sm="12" xs="12">
         <v-card color="#E7E2F3" rounded="xl" height="200">
           <v-card-title class="d-flex justify-space-between py-6">
             <div class="d-flex align-center">
@@ -287,7 +287,7 @@ onMounted(() => {
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col cols="4" lg="4" sm="12" xs="12">
+      <v-col cols="12" lg="4" sm="12" xs="12">
         <v-card color="#D2F9F4" rounded="xl" height="200">
           <v-card-title class="d-flex justify-space-between align-center py-6">
             <div class="d-flex align-center">
