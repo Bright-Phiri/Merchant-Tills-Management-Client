@@ -1,11 +1,22 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import cable from '@/lib/cable'
-import ApexChart from 'vue3-apexcharts'
 
 const value = [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0]
+const series = [
+  {
+    data: value,
+  },
+]
+
+const series1 = [
+  {
+    data: [9, 5, 10, 3, 5, 7, 10, 5, 7, 9],
+  },
+]
 
 const dashboardData = ref({})
+const clients = ref(0)
 
 const headers = [
   {
@@ -21,19 +32,56 @@ const headers = [
   { key: 'transaction_id', title: 'Transaction ID' },
 ]
 
-const series = [
-  {
-    name: 'Clients',
-    data: value,
-  },
-]
+const monthlySubscriptions = new Array(12).fill(0)
+const monthlyPayments = new Array(12).fill(0)
 
-const series1 = [
+const growthSeries = ref([
   {
-    name: 'Clients',
-    data: [9, 5, 10, 3, 5, 7, 10, 5, 7, 9],
+    name: 'Subscriptions',
+    data: monthlySubscriptions, // Dynamic array for subscriptions
   },
-]
+  {
+    name: 'Payments',
+    data: monthlyPayments, // Dynamic array for payments
+  },
+])
+
+const growthChartOptions = ref({
+  chart: {
+    animations: {
+      enabled: true,
+      easing: 'easeinout',
+      speed: 800,
+      animateGradually: { enabled: true, delay: 150 },
+      dynamicAnimation: { enabled: true, speed: 350 },
+    },
+    toolbar: { show: false },
+  },
+  stroke: { curve: 'smooth', width: 4 },
+  fill: {
+    type: 'gradient',
+    gradient: { shadeIntensity: 1, opacityFrom: 0.6, opacityTo: 0.05, stops: [0, 100] },
+  },
+  colors: ['#01A1FF', '#E3E9F1'],
+  dataLabels: { enabled: false },
+  xaxis: {
+    categories: [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ],
+  },
+  tooltip: { enabled: true },
+})
 
 const chartOptions = {
   chart: {
@@ -88,54 +136,6 @@ const chartOptions1 = {
     enabled: false,
   },
 }
-
-const growthSeries = ref([
-  {
-    name: 'Clients',
-    data: [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8],
-  },
-  {
-    name: 'Subscriptions',
-    data: [1, 3, 4, 6, 8, 9, 4, 6, 2, 1, 3, 7],
-  },
-])
-
-const growthChartOptions = ref({
-  chart: {
-    animations: {
-      enabled: true,
-      easing: 'easeinout',
-      speed: 800,
-      animateGradually: { enabled: true, delay: 150 },
-      dynamicAnimation: { enabled: true, speed: 350 },
-    },
-    toolbar: { show: false },
-  },
-  stroke: { curve: 'smooth', width: 4 },
-  fill: {
-    type: 'gradient',
-    gradient: { shadeIntensity: 1, opacityFrom: 0.6, opacityTo: 0.05, stops: [0, 100] },
-  },
-  colors: ['#01A1FF', '#E3E9F1'],
-  dataLabels: { enabled: false },
-  xaxis: {
-    categories: [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ],
-  },
-  tooltip: { enabled: true },
-})
 let subscription = null
 onMounted(() => {
   subscription = cable.subscriptions.create(
@@ -150,12 +150,25 @@ onMounted(() => {
       received(data) {
         console.log('Received:', data)
         dashboardData.value = data
+        clients.value = data.total_clients
+        const monthlySubscriptions = new Array(12).fill(0)
+        const monthlyPayments = new Array(12).fill(0)
+
+        data.subscription_trends.forEach((trend) => {
+          const month = new Date(trend.created_at).getMonth()
+          monthlySubscriptions[month] += trend.count
+        })
+
+        data.payment_trends.forEach((trend) => {
+          const month = new Date(trend.created_at).getMonth()
+          monthlyPayments[month] += trend.count
+        })
+
+        growthSeries.value[0].data = monthlySubscriptions
+        growthSeries.value[1].data = monthlyPayments
       },
     },
   )
-  setTimeout(() => {
-    growthSeries.value[0].data = [2, 4, 7, 12, 7, 13, 5, 6, 2, 1, 3, 10]
-  }, 2000)
 })
 
 function formatCurrency(amount) {
@@ -271,8 +284,8 @@ onBeforeUnmount(() => {
             <div>
               <span class="text-h6 text-md-h5 text-lg-h4">
                 <AnimatedCounter
-                  :key="dashboardData.total_terminals"
-                  :value="dashboardData.total_terminals"
+                  :key="dashboardData.total_clients"
+                  :value="dashboardData.total_clients"
                   :duration="500"
                 />
               </span>

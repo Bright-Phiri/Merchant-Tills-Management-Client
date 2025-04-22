@@ -69,14 +69,26 @@ const logout = () => {
 
       <template v-slot:append>
         <div class="pa-2">
-          <v-btn theme="dark" block v-on:click="logout" class="text-capitalize"> Logout </v-btn>
+          <v-btn
+            color="#01A1FF"
+            prepend-icon="mdi-logout"
+            block
+            v-on:click="logout"
+            class="text-capitalize"
+          >
+            Logout
+          </v-btn>
         </div>
       </template>
     </v-navigation-drawer>
 
     <v-app-bar :elevation="0" color="#f9fafe">
       <template v-slot:prepend>
-        <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon
+          size="large"
+          variant="text"
+          @click.stop="drawer = !drawer"
+        ></v-app-bar-nav-icon>
       </template>
 
       <v-app-bar-title>Terminal Control</v-app-bar-title>
