@@ -1,8 +1,9 @@
 <script setup>
 import { ref } from 'vue'
-import { showAlert } from '@/utils/utils'
+import { showAlert, showToast } from '@/utils/utils'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/useAuthStore'
+
 import api from '@/services/api'
 
 const visible = ref(false)
@@ -27,6 +28,7 @@ const login = async () => {
       auth.setToken(response.data.data.token)
       auth.setUserName(response.data.data.user.user_name)
       router.push({ path: '/dashboard' })
+      showToast(`👋 Welcome back ${response.data.data.user.user_name}!!`)
     }
   } catch (err) {
     if (err.response) {
