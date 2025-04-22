@@ -1,19 +1,11 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+import cable from '@/lib/cable'
 import ApexChart from 'vue3-apexcharts'
 
 const value = [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0]
 
-const allClients = ref(0)
-const allSubscriptions = ref(0)
-const activeSubscriptions = ref(0)
-const allTerminals = ref(0)
-const activeTerminals = ref(0)
-
-const totalRevenue = ref(0)
-const monthlyRevenue = ref(0)
-const todaysRevenue = ref(0)
-const weekklyRevenue = ref(0)
+const dashboardData = ref({})
 
 const headers = [
   {
@@ -144,11 +136,37 @@ const growthChartOptions = ref({
   },
   tooltip: { enabled: true },
 })
-
+let subscription = null
 onMounted(() => {
+  subscription = cable.subscriptions.create(
+    { channel: 'DashboardChannel' },
+    {
+      connected() {
+        console.log('Connected to DashboardChannel')
+      },
+      disconnected() {
+        console.log('Disconnected from DashboardChannel')
+      },
+      received(data) {
+        console.log('Received:', data)
+        dashboardData.value = data
+      },
+    },
+  )
   setTimeout(() => {
     growthSeries.value[0].data = [2, 4, 7, 12, 7, 13, 5, 6, 2, 1, 3, 10]
   }, 2000)
+})
+
+function formatCurrency(amount) {
+  if (!amount) return 'MW 0.00'
+  return `MW${Number(amount).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+}
+
+onBeforeUnmount(() => {
+  if (subscription) {
+    subscription.unsubscribe()
+  }
 })
 </script>
 
@@ -174,67 +192,63 @@ onMounted(() => {
 
       <v-col cols="12" lg="3" md="4" sm="12" xs="12">
         <v-card rounded="xl" height="400">
-          <v-card-text
-            ><v-card rounded="xl" elevation="0" class="mt-1" color="#EFF4FA">
-              <v-card-text class="d-flex">
+          <v-card-text>
+            <v-card rounded="xl" elevation="0" class="mt-1" color="#EFF4FA">
+              <v-card-text class="d-flex align-center">
                 <v-avatar color="#FFF1CC" size="50" rounded="xl">
                   <v-icon icon="mdi-cash" size="28" color="#ffA31F"></v-icon>
                 </v-avatar>
-                <div class="d-flex flex-column justify-center">
-                  <span class="ml-3 font-weight-medium text-h7 text-grey-darken-2"
-                    >Total Revenue</span
-                  >
-                  <span class="ml-3 font-weight-medium text-h7 text-center text-grey-darken-2">{{
-                    totalRevenue
-                  }}</span>
+                <div class="d-flex flex-column justify-center ml-3">
+                  <span class="font-weight-medium text-h7 text-grey-darken-2">Total Revenue</span>
+                  <span class="font-weight-medium text-h7 text-grey-darken-2">
+                    {{ formatCurrency(dashboardData.total_payments) }}
+                  </span>
                 </div>
               </v-card-text>
             </v-card>
 
             <v-card rounded="xl" elevation="0" class="mt-2" color="#EFF4FA">
-              <v-card-text class="d-flex">
+              <v-card-text class="d-flex align-center">
                 <v-avatar color="#D2F9F4" size="50" rounded="xl">
                   <v-icon icon="mdi-cash" size="28" color="#00cb36"></v-icon>
                 </v-avatar>
-                <div class="d-flex flex-column justify-center">
-                  <span class="ml-3 font-weight-medium text-h7 text-grey-darken-2"
+                <div class="d-flex flex-column justify-center ml-3">
+                  <span class="font-weight-medium text-h7 text-grey-darken-2"
                     >Total Revenue This Month</span
                   >
-                  <span class="ml-3 font-weight-medium text-h7 text-center text-grey-darken-2">{{
-                    monthlyRevenue
-                  }}</span>
+                  <span class="font-weight-medium text-h7 text-grey-darken-2">
+                    {{ formatCurrency(dashboardData.monthly_revenue) }}
+                  </span>
                 </div>
               </v-card-text>
             </v-card>
 
             <v-card rounded="xl" elevation="0" class="mt-2" color="#EFF4FA">
-              <v-card-text class="d-flex">
+              <v-card-text class="d-flex align-center">
                 <v-avatar color="#FFE4EC" size="50" rounded="xl">
                   <v-icon icon="mdi-cash" size="28" color="#ff6692"></v-icon>
                 </v-avatar>
-                <div class="d-flex flex-column justify-center">
-                  <span class="ml-3 font-weight-medium text-h7 text-grey-darken-2"
+                <div class="d-flex flex-column justify-center ml-3">
+                  <span class="font-weight-medium text-h7 text-grey-darken-2"
                     >Total Revenue This Week</span
                   >
-                  <span class="ml-3 font-weight-medium text-h7 text-center text-grey-darken-2">{{
-                    weekklyRevenue
-                  }}</span>
+                  <span class="font-weight-medium text-h7 text-grey-darken-2">
+                    {{ formatCurrency(dashboardData.weekly_revenue) }}
+                  </span>
                 </div>
               </v-card-text>
             </v-card>
 
             <v-card rounded="xl" elevation="0" class="mt-2" color="#EFF4FA">
-              <v-card-text class="d-flex">
+              <v-card-text class="d-flex align-center">
                 <v-avatar color="#EFF5FF" size="50" rounded="xl">
                   <v-icon icon="mdi-cash" size="28" color="#00A1FF"></v-icon>
                 </v-avatar>
-                <div class="d-flex flex-column justify-center">
-                  <span class="ml-3 font-weight-medium text-h7 text-grey-darken-2"
-                    >Today's Revenue</span
-                  >
-                  <span class="ml-3 font-weight-medium text-h7 text-center text-grey-darken-2">{{
-                    todaysRevenue
-                  }}</span>
+                <div class="d-flex flex-column justify-center ml-3">
+                  <span class="font-weight-medium text-h7 text-grey-darken-2">Today's Revenue</span>
+                  <span class="font-weight-medium text-h7 text-grey-darken-2">
+                    {{ formatCurrency(dashboardData.daily_revenue) }}
+                  </span>
                 </div>
               </v-card-text>
             </v-card>
@@ -255,7 +269,13 @@ onMounted(() => {
 
           <v-card-text class="d-flex justify-space-between align-end">
             <div>
-              <span class="text-h6 text-md-h5 text-lg-h4">{{ allClients }}</span>
+              <span class="text-h6 text-md-h5 text-lg-h4">
+                <AnimatedCounter
+                  :key="dashboardData.total_terminals"
+                  :value="dashboardData.total_terminals"
+                  :duration="500"
+                />
+              </span>
             </div>
             <div style="width: 200px; height: 60px">
               <apexchart type="area" :options="chartOptions" :series="series" height="60" />
@@ -277,7 +297,12 @@ onMounted(() => {
 
           <v-card-text class="d-flex justify-space-between align-end">
             <div>
-              <span class="text-h6 text-md-h5 text-lg-h4">{{ allSubscriptions }}</span>
+              <span class="text-h6 text-md-h5 text-lg-h4"
+                ><AnimatedCounter
+                  :key="dashboardData.total_subscriptions"
+                  :value="dashboardData.total_subscriptions"
+                  :duration="700"
+              /></span>
               <v-chip
                 class="d-flex justify-center mt-3"
                 size="small"
@@ -285,7 +310,7 @@ onMounted(() => {
                 variant="outlined"
                 color="#8565E9"
               >
-                <span style="color: #526b7a"> {{ activeSubscriptions }} Active</span>
+                <span style="color: #526b7a"> {{ dashboardData.active_subscriptions }} Active</span>
               </v-chip>
             </div>
             <div style="width: 200px; height: 60px">
@@ -309,7 +334,12 @@ onMounted(() => {
 
           <v-card-text class="d-flex align-center justify-space-between px-4">
             <div>
-              <span class="text-h4">{{ allTerminals }}</span>
+              <span class="text-h4"
+                ><AnimatedCounter
+                  :key="dashboardData.total_terminals"
+                  :value="dashboardData.total_terminals"
+                  :duration="800"
+              /></span>
               <v-chip
                 class="d-flex justify-center"
                 size="small"
@@ -317,10 +347,16 @@ onMounted(() => {
                 variant="outlined"
                 color="#8565E9"
               >
-                <span style="color: #526b7a"> {{ activeTerminals }} Active</span>
+                <span style="color: #526b7a"> {{ dashboardData.active_terminals }} Active</span>
               </v-chip>
             </div>
-            <v-progress-circular :model-value="20" size="90" width="6" color="#00CBE6" rotate="-90">
+            <v-progress-circular
+              :model-value="dashboardData.active_terminals"
+              size="90"
+              width="6"
+              color="#00CBE6"
+              rotate="-90"
+            >
             </v-progress-circular>
           </v-card-text>
         </v-card>
@@ -329,15 +365,20 @@ onMounted(() => {
     <v-row>
       <v-col cols="12">
         <v-card rounded="xl">
-          <v-card-title>Recent Payments</v-card-title>
+          <v-card-title class="text-subtitle-1">Recent Payments</v-card-title>
           <v-card-text>
             <v-data-table
               hide-default-footer
               density="comfortable"
               class="elevation-0 rounded-xl"
               :headers
+              :items="dashboardData.recent_payments"
               hover
-            ></v-data-table>
+            >
+              <template v-slot:item.amount="{ item }">
+                {{ formatCurrency(item.amount) }}
+              </template>
+            </v-data-table>
           </v-card-text>
         </v-card>
       </v-col>

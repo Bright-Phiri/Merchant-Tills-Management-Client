@@ -13,6 +13,7 @@ import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import VueApexCharts from 'vue3-apexcharts'
+import AnimatedCounter from 'vue-animated-counter'
 
 // Components
 import App from './App.vue'
@@ -31,5 +32,6 @@ createApp(App)
   .use(VueSweetalert2)
   .use(vuetify)
   .use(createPinia())
+  .component('AnimatedCounter', AnimatedCounter)
   .component('apexchart', VueApexCharts)
   .mount('#app')
