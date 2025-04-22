@@ -69,15 +69,7 @@ const logout = () => {
 
       <template v-slot:append>
         <div class="pa-2">
-          <v-btn
-            color="#01A1FF"
-            prepend-icon="mdi-logout"
-            block
-            v-on:click="logout"
-            class="text-capitalize"
-          >
-            Logout
-          </v-btn>
+          <v-btn color="#01A1FF" block v-on:click="logout" class="text-capitalize"> Logout </v-btn>
         </div>
       </template>
     </v-navigation-drawer>
