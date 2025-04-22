@@ -258,7 +258,7 @@ onBeforeUnmount(() => {
     </v-row>
     <v-row>
       <v-col cols="12" lg="4" sm="12" xs="12">
-        <v-card color="#FFE4EC" rounded="xl" height="200">
+        <v-card color="#FFE4EC" rounded="xl" height="200" to="/clients">
           <v-card-title class="d-flex justify-space-between py-6">
             <div class="d-flex align-center">
               <v-avatar color="#ff6692" size="50" rounded="xl" icon="mdi-account-multiple" />
@@ -284,7 +284,7 @@ onBeforeUnmount(() => {
         </v-card>
       </v-col>
       <v-col cols="12" lg="4" sm="12" xs="12">
-        <v-card color="#E7E2F3" rounded="xl" height="200">
+        <v-card color="#E7E2F3" rounded="xl" height="200" to="/subscriptions">
           <v-card-title class="d-flex justify-space-between py-6">
             <div class="d-flex align-center">
               <v-avatar color="#8565E9" size="50" rounded="xl" icon="mdi-playlist-check" />
@@ -320,7 +320,7 @@ onBeforeUnmount(() => {
         </v-card>
       </v-col>
       <v-col cols="12" lg="4" sm="12" xs="12">
-        <v-card color="#D2F9F4" rounded="xl" height="200">
+        <v-card color="#D2F9F4" rounded="xl" height="200" to="/terminals">
           <v-card-title class="d-flex justify-space-between align-center py-6">
             <div class="d-flex align-center">
               <v-avatar color="#00CEB6" size="50" rounded="xl">
