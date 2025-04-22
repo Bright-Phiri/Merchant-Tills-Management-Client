@@ -50,7 +50,7 @@ const logout = () => {
 
 <template>
   <div class="NavBar">
-    <v-navigation-drawer color="#ffffff" :width="280" permanent v-model="drawer">
+    <v-navigation-drawer color="#ffffff" :width="280" v-model="drawer">
       <v-list nav>
         <v-list-item
           v-for="link in navBarItems"
