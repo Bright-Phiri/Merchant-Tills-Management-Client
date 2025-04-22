@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import router from './router'
 import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueSweetalert2 from 'vue-sweetalert2'
@@ -26,12 +27,15 @@ const vuetify = createVuetify({
   },
 })
 
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
+
 createApp(App)
   .use(VueAxios, axios)
   .use(router)
   .use(VueSweetalert2)
   .use(vuetify)
-  .use(createPinia())
+  .use(pinia)
   .component('AnimatedCounter', AnimatedCounter)
   .component('apexchart', VueApexCharts)
   .mount('#app')

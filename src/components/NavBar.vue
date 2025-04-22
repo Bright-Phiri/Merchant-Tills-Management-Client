@@ -1,8 +1,11 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/useAuthStore'
 
 const router = useRouter()
+const auth = useAuthStore()
+const user_name = computed(() => auth.user_name)
 const drawer = ref(true)
 const navBarItems = [
   {
@@ -43,7 +46,8 @@ const navBarItems = [
 ]
 
 const logout = () => {
-  localStorage.removeItem('token')
+  const auth = useAuthStore()
+  auth.logout()
   router.push({ path: '/sign-in' })
 }
 </script>
@@ -77,7 +81,7 @@ const logout = () => {
       <v-app-bar-title>Terminal Control</v-app-bar-title>
       <template v-slot:append>
         <v-icon icon="mdi-account-circle"></v-icon>
-        <span class="mr-5 ml-1">Bright Issah</span>
+        <span class="mr-5 ml-1">{{ user_name }}</span>
       </template>
     </v-app-bar>
     <router-view v-slot="{ Component, route }">

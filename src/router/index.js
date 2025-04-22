@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '@/stores/useAuthStore'
 import Navbar from '@/components/NavBar.vue'
 
 const router = createRouter({
@@ -89,8 +90,9 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const token = localStorage.getItem('token')
-  if (to.name !== 'sign-in' && to.name !== 'sign-up' && !token) {
+  const auth = useAuthStore()
+
+  if (to.name !== 'sign-in' && to.name !== 'sign-up' && !auth.isUserLoggedIn) {
     next({ name: 'sign-in' })
   } else {
     next()

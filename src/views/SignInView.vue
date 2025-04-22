@@ -2,11 +2,13 @@
 import { ref } from 'vue'
 import { showAlert } from '@/utils/utils'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/useAuthStore'
 import api from '@/services/api'
 
 const visible = ref(false)
 const loading = ref(false)
 const router = useRouter()
+const auth = useAuthStore()
 const user = ref({
   user_name: '',
   password: '',
@@ -22,8 +24,8 @@ const login = async () => {
     loading.value = true
     const response = await api.post('authentication/login', user.value)
     if (response.status === 200) {
-      localStorage.setItem('token', response.data.data.token)
-      console.log('Token' + response.data.data.token)
+      auth.setToken(response.data.data.token)
+      auth.setUserName(response.data.data.user.user_name)
       router.push({ path: '/dashboard' })
     }
   } catch (err) {
