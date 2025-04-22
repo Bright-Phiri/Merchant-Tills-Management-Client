@@ -7,7 +7,7 @@ const router = useRouter()
 const auth = useAuthStore()
 const user_name = computed(() => auth.user_name)
 const drawer = ref(true)
-const navBarItems = [
+const links = [
   {
     text: 'Dashboard',
     icon: 'mdi-view-dashboard',
@@ -57,7 +57,7 @@ const logout = () => {
     <v-navigation-drawer color="#ffffff" :width="280" v-model="drawer">
       <v-list nav>
         <v-list-item
-          v-for="link in navBarItems"
+          v-for="link in links"
           :prepend-icon="link.icon"
           :title="link.text"
           :key="link.text"
@@ -73,6 +73,7 @@ const logout = () => {
         </div>
       </template>
     </v-navigation-drawer>
+
     <v-app-bar :elevation="0" color="#f9fafe">
       <template v-slot:prepend>
         <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
@@ -84,6 +85,7 @@ const logout = () => {
         <span class="mr-5 ml-1">{{ user_name }}</span>
       </template>
     </v-app-bar>
+
     <router-view v-slot="{ Component, route }">
       <Transition name="slide-fade" mode="out-in">
         <component :is="Component" :key="route.fullPath" />
