@@ -8,6 +8,12 @@ const allSubscriptions = ref(0)
 const activeSubscriptions = ref(0)
 const allTerminals = ref(0)
 const activeTerminals = ref(0)
+
+const totalRevenue = ref(0)
+const monthlyRevenue = ref(0)
+const todaysRevenue = ref(0)
+const weekklyRevenue = ref(0)
+
 const headers = [
   {
     align: 'start',
@@ -174,12 +180,12 @@ onMounted(() => {
                   <v-icon icon="mdi-cash" size="28" color="#ffA31F"></v-icon>
                 </v-avatar>
                 <div class="d-flex flex-column justify-center">
-                  <span class="ml-3 font-weight-medium text-h6 text-grey-darken-2"
+                  <span class="ml-3 font-weight-medium text-h7 text-grey-darken-2"
                     >Total Revenue</span
                   >
-                  <span class="ml-3 font-weight-medium text-h7 text-center text-grey-darken-2"
-                    >90,000,000,000,000</span
-                  >
+                  <span class="ml-3 font-weight-medium text-h7 text-center text-grey-darken-2">{{
+                    totalRevenue
+                  }}</span>
                 </div>
               </v-card-text>
             </v-card>
@@ -190,28 +196,12 @@ onMounted(() => {
                   <v-icon icon="mdi-cash" size="28" color="#00cb36"></v-icon>
                 </v-avatar>
                 <div class="d-flex flex-column justify-center">
-                  <span class="ml-3 font-weight-medium text-h6 text-grey-darken-2"
-                    >Total Revenue</span
+                  <span class="ml-3 font-weight-medium text-h7 text-grey-darken-2"
+                    >Total Revenue This Month</span
                   >
-                  <span class="ml-3 font-weight-medium text-h7 text-center text-grey-darken-2"
-                    >90,000,000,000,000</span
-                  >
-                </div>
-              </v-card-text>
-            </v-card>
-
-            <v-card rounded="xl" elevation="0" class="mt-2" color="#EFF4FA">
-              <v-card-text class="d-flex">
-                <v-avatar color="#EFF5FF" size="50" rounded="xl">
-                  <v-icon icon="mdi-cash" size="28" color="#00A1FF"></v-icon>
-                </v-avatar>
-                <div class="d-flex flex-column justify-center">
-                  <span class="ml-3 font-weight-medium text-h6 text-grey-darken-2"
-                    >Total Revenue</span
-                  >
-                  <span class="ml-3 font-weight-medium text-h7 text-center text-grey-darken-2"
-                    >90,000,000,000,000</span
-                  >
+                  <span class="ml-3 font-weight-medium text-h7 text-center text-grey-darken-2">{{
+                    monthlyRevenue
+                  }}</span>
                 </div>
               </v-card-text>
             </v-card>
@@ -222,16 +212,32 @@ onMounted(() => {
                   <v-icon icon="mdi-cash" size="28" color="#ff6692"></v-icon>
                 </v-avatar>
                 <div class="d-flex flex-column justify-center">
-                  <span class="ml-3 font-weight-medium text-h6 text-grey-darken-2"
-                    >Total Revenue</span
+                  <span class="ml-3 font-weight-medium text-h7 text-grey-darken-2"
+                    >Total Revenue This Week</span
                   >
-                  <span class="ml-3 font-weight-medium text-h7 text-center text-grey-darken-2"
-                    >90,000,000,000,000</span
-                  >
+                  <span class="ml-3 font-weight-medium text-h7 text-center text-grey-darken-2">{{
+                    weekklyRevenue
+                  }}</span>
                 </div>
               </v-card-text>
-            </v-card></v-card-text
-          >
+            </v-card>
+
+            <v-card rounded="xl" elevation="0" class="mt-2" color="#EFF4FA">
+              <v-card-text class="d-flex">
+                <v-avatar color="#EFF5FF" size="50" rounded="xl">
+                  <v-icon icon="mdi-cash" size="28" color="#00A1FF"></v-icon>
+                </v-avatar>
+                <div class="d-flex flex-column justify-center">
+                  <span class="ml-3 font-weight-medium text-h7 text-grey-darken-2"
+                    >Today's Revenue</span
+                  >
+                  <span class="ml-3 font-weight-medium text-h7 text-center text-grey-darken-2">{{
+                    todaysRevenue
+                  }}</span>
+                </div>
+              </v-card-text>
+            </v-card>
+          </v-card-text>
         </v-card>
       </v-col>
     </v-row>
