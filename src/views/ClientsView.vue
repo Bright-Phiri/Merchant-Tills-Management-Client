@@ -3,8 +3,9 @@ import { ref, watch } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
 import { useRouter } from 'vue-router'
 import api from '@/services/api'
-import { showAlert } from '@/utils/utils'
+import { useErrorHandler } from '@/composables/useErrorHandler'
 
+const { handleError } = useErrorHandler()
 const loading = ref(false)
 const clients = ref([])
 const search = ref('')
@@ -34,7 +35,7 @@ const fetchClients = async ({ page, itemsPerPage, search }) => {
     clients.value = response.data.data.taxpayers
     totalItems.value = response.data.data.total
   } catch (err) {
-    showAlert('error', 'Unable to Reach Server', err + ", Couldn't reach API")
+    handleError(err)
   } finally {
     loading.value = false
   }

@@ -3,7 +3,9 @@ import { useRoute, useRouter } from 'vue-router'
 import { ref, useTemplateRef, onMounted } from 'vue'
 import api from '@/services/api'
 import { showAlert } from '@/utils/utils'
+import { useErrorHandler } from '@/composables/useErrorHandler'
 
+const { handleError } = useErrorHandler()
 const user = ref({
   first_name: '',
   last_name: '',
@@ -26,7 +28,7 @@ const fetchUserDetails = async (id) => {
       user.value = response.data.data
     }
   } catch (err) {
-    showAlert('error', 'Unable to Reach Server', err + ", Couldn't reach API")
+    handleError(err)
   }
 }
 
@@ -68,10 +70,9 @@ const updateUser = async () => {
       })
     }
   } catch (error) {
+    handleError(err)
+  } finally {
     loading.value = false
-    const message = error?.response?.data?.message || "Couldn't reach API"
-    const errors = error?.response?.data?.errors || ''
-    showAlert('error', 'Error', `${message}${errors ? `: ${errors}` : ''}`)
   }
 }
 

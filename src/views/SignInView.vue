@@ -1,11 +1,12 @@
 <script setup>
 import { ref } from 'vue'
-import { showAlert, showToast } from '@/utils/utils'
+import { showToast } from '@/utils/utils'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/useAuthStore'
-
+import { useErrorHandler } from '@/composables/useErrorHandler'
 import api from '@/services/api'
 
+const { handleError } = useErrorHandler()
 const visible = ref(false)
 const loading = ref(false)
 const router = useRouter()
@@ -32,11 +33,7 @@ const login = async () => {
       })
     }
   } catch (err) {
-    if (err.response) {
-      showToast(`😕 Oops! ${err.response.data.message}`, 'error')
-    } else {
-      showAlert('error', 'Unable to Reach Server', err + ", Couldn't reach API")
-    }
+    handleError(err)
   } finally {
     loading.value = false
   }

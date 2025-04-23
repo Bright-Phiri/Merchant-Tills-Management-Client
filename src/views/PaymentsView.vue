@@ -2,8 +2,10 @@
 import { ref, watch } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
 import api from '@/services/api'
-import { showAlert, formatCurrency } from '@/utils/utils'
+import { formatCurrency } from '@/utils/utils'
+import { useErrorHandler } from '@/composables/useErrorHandler'
 
+const { handleError } = useErrorHandler()
 const loading = ref(false)
 const payments = ref([])
 const search = ref('')
@@ -32,7 +34,7 @@ const fetchPayments = async ({ page, itemsPerPage, search }) => {
     payments.value = response.data.data.payments
     totalItems.value = response.data.data.total
   } catch (err) {
-    showAlert('error', 'Unable to Reach Server', err + ", Couldn't reach API")
+    handleError(err)
   } finally {
     loading.value = false
   }

@@ -2,7 +2,9 @@
 import { ref, useTemplateRef } from 'vue'
 import api from '@/services/api'
 import { showAlert, showToast } from '@/utils/utils'
+import { useErrorHandler } from '@/composables/useErrorHandler'
 
+const { handleError } = useErrorHandler()
 const user = ref({
   first_name: '',
   last_name: '',
@@ -52,9 +54,7 @@ const addUser = async () => {
       userForm.value.reset()
     }
   } catch (error) {
-    const message = error?.response?.data?.message || "Couldn't reach API"
-    const errors = error?.response?.data?.errors || ''
-    showAlert('error', 'Error', `${message}${errors ? `: ${errors}` : ''}`)
+    handleError(error)
   } finally {
     loading.value = false
   }

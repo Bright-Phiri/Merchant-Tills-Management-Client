@@ -1,9 +1,11 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import api from '@/services/api'
-import { showAlert, formatCurrency } from '@/utils/utils'
+import { formatCurrency } from '@/utils/utils'
 import { useRoute, useRouter } from 'vue-router'
+import { useErrorHandler } from '@/composables/useErrorHandler'
 
+const { handleError } = useErrorHandler()
 const route = useRoute()
 const router = useRouter()
 const subscription_id = ref(0)
@@ -27,7 +29,7 @@ const fetchSubscriptionDetails = async () => {
     subscription.value = response.data.data
     payments.value = response.data.data.payments
   } catch (err) {
-    showAlert('error', 'Unable to Reach Server', err + ", Couldn't reach API")
+    handleError(err)
   } finally {
     loading.value = false
   }

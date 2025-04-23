@@ -3,7 +3,9 @@ import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import api from '@/services/api'
 import { showAlert, getColor } from '@/utils/utils'
+import { useErrorHandler } from '@/composables/useErrorHandler'
 
+const { handleError } = useErrorHandler()
 const router = useRouter()
 const fetchUsesLoading = ref(false)
 const users = ref([])
@@ -30,7 +32,7 @@ const fetchSystemUsers = async () => {
     const response = await api.get('users')
     users.value = response.data.data
   } catch (err) {
-    showAlert('error', 'Unable to Reach Server', err + ", Couldn't reach API")
+    handleError(err)
   } finally {
     fetchUsesLoading.value = false
   }
@@ -47,7 +49,7 @@ const activateUser = async (id) => {
       )
     }
   } catch (err) {
-    showAlert('error', 'Unable to Reach Server', err + ", Couldn't reach API")
+    handleError(err)
   }
 }
 
@@ -60,7 +62,7 @@ const disableUser = async (id) => {
       })
     }
   } catch (err) {
-    showAlert('error', 'Unable to Reach Server', err + ", Couldn't reach API")
+    handleError(err)
   }
 }
 

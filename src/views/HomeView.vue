@@ -143,13 +143,12 @@ onMounted(() => {
     { channel: 'DashboardChannel' },
     {
       connected() {
-        console.log('Connected to DashboardChannel')
+        console.log('Connected to Dashboard Channel')
       },
       disconnected() {
-        console.log('Disconnected from DashboardChannel')
+        console.log('Disconnected from Dashboard Channel')
       },
       received(data) {
-        console.log('Received:', data)
         dashboardData.value = data
         clients.value = data.total_clients
         const monthlySubscriptions = new Array(12).fill(0)

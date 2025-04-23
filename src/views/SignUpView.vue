@@ -3,7 +3,9 @@ import { ref } from 'vue'
 import { showAlert, showToast } from '@/utils/utils'
 import { useRouter } from 'vue-router'
 import api from '@/services/api'
+import { useErrorHandler } from '@/composables/useErrorHandler'
 
+const { handleError } = useErrorHandler()
 const visible = ref(false)
 const loading = ref(false)
 const router = useRouter()
@@ -29,11 +31,7 @@ const signUp = async () => {
       })
     }
   } catch (err) {
-    if (err.response) {
-      showToast(`😕 Oops! ${err.response.data.errors}`, 'error')
-    } else {
-      showAlert('error', 'Unable to Reach Server', err + ", Couldn't reach API")
-    }
+    handleError(err)
   } finally {
     loading.value = false
   }

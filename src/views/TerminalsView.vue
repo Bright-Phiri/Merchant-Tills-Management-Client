@@ -2,8 +2,10 @@
 import { ref, watch } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
 import api from '@/services/api'
-import { showAlert, getColor } from '@/utils/utils'
+import { getColor } from '@/utils/utils'
+import { useErrorHandler } from '@/composables/useErrorHandler'
 
+const { handleError } = useErrorHandler()
 const loading = ref(true)
 const terminals = ref([])
 const search = ref('')
@@ -31,7 +33,7 @@ const fetchTerminals = async ({ page, itemsPerPage, search }) => {
     terminals.value = response.data.data.terminals
     totalItems.value = response.data.data.total
   } catch (err) {
-    showAlert('error', 'Unable to Reach Server', err + ", Couldn't reach API")
+    handleError(err)
   } finally {
     loading.value = false
   }

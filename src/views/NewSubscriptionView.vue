@@ -3,7 +3,9 @@ import { ref, useTemplateRef } from 'vue'
 import { useRoute } from 'vue-router'
 import { showAlert, showToast } from '@/utils/utils'
 import api from '@/services/api'
+import { useErrorHandler } from '@/composables/useErrorHandler'
 
+const { handleError } = useErrorHandler()
 const route = useRoute()
 const loading = ref(false)
 const subscriptionForm = useTemplateRef('subscriptionForm')
@@ -51,15 +53,7 @@ const createSubscription = async () => {
       subscriptionForm.value.reset()
     }
   } catch (err) {
-    if (err.response.status === 422 || err.response.status === 400) {
-      const data = err.response.data
-      const errorText = data.errors || data.message || 'An unknown error occurred'
-      showAlert(
-        'error',
-        'Failed to create subscription',
-        Array.isArray(errorText) ? errorText.join(', ') : errorText,
-      )
-    }
+    handleError(err)
   } finally {
     loading.value = false
   }

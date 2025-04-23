@@ -4,7 +4,9 @@ import { useDebounceFn } from '@vueuse/core'
 import api from '@/services/api'
 import { showAlert, getColor } from '@/utils/utils'
 import { useRouter } from 'vue-router'
+import { useErrorHandler } from '@/composables/useErrorHandler'
 
+const { handleError } = useErrorHandler()
 const router = useRouter()
 const loading = ref(false)
 const subscriptions = ref([])
@@ -35,7 +37,7 @@ const fetchSubscriptions = async ({ page, itemsPerPage, search }) => {
     subscriptions.value = response.data.data.subscriptions
     totalItems.value = response.data.data.total
   } catch (err) {
-    showAlert('error', 'Unable to Reach Server', err + ", Couldn't reach API")
+    handleError(err)
   } finally {
     loading.value = false
   }
@@ -62,7 +64,7 @@ const deleteSubscription = async (id) => {
       })
     }
   } catch (err) {
-    showAlert('error', 'Unable to Reach Server', err + ", Couldn't reach API")
+    handleError(err)
   }
 }
 </script>
