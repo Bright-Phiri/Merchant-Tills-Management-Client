@@ -2,9 +2,11 @@
 import { onMounted, ref } from 'vue'
 import api from '@/services/api'
 import { showAlert } from '@/utils/utils'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
+const router = useRouter()
+const subscription_id = ref(0)
 const subscription = ref(null)
 const loading = ref(true)
 const search = ref('')
@@ -21,6 +23,7 @@ const fetchSubscriptionDetails = async () => {
   try {
     loading.value = true
     const response = await api.get(`subscriptions/${route.params.id}`)
+    subscription_id.value = route.params.id
     subscription.value = response.data.data
     payments.value = response.data.data.payments
   } catch (err) {
@@ -28,6 +31,10 @@ const fetchSubscriptionDetails = async () => {
   } finally {
     loading.value = false
   }
+}
+
+const loadRenewSubPage = () => {
+  router.push({ name: 'renew-subscription', params: { id: subscription_id.value }, replace: true })
 }
 
 onMounted(() => {
@@ -41,7 +48,9 @@ onMounted(() => {
       <v-card rounded="xl" class="pa-4" elevation="2" v-if="!loading && subscription">
         <v-card-title class="text-h6 px-0 d-flex justify-space-between text-black font-weight-bold"
           >Subscription Details
-          <v-btn color="#01A1FF" rounded="xl" variant="outlined">Renew Subscription</v-btn>
+          <v-btn color="#01A1FF" rounded="xl" variant="outlined" v-on:click="loadRenewSubPage"
+            >Renew Subscription</v-btn
+          >
         </v-card-title>
         <v-divider class="my-2" />
 
