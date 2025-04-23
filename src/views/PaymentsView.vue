@@ -2,7 +2,7 @@
 import { ref, watch } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
 import api from '@/services/api'
-import { showAlert } from '@/utils/utils'
+import { showAlert, formatCurrency } from '@/utils/utils'
 
 const loading = ref(false)
 const payments = ref([])
@@ -18,7 +18,7 @@ const headers = [
   },
   { key: 'taxpayer', title: 'Customer Name' },
   { key: 'payment_date', title: 'Payment Date' },
-  { key: 'amount', title: 'Amount (MK)' },
+  { key: 'amount', title: 'Amount' },
   { key: 'payment_method', title: 'Payment Method' },
   { key: 'transaction_id', title: 'Transaction ID' },
 ]
@@ -80,6 +80,7 @@ watch(search, () => {
               loading-text="Loading payments..."
               hover
             >
+              <template v-slot:item.amount="{ item }"> {{ formatCurrency(item.amount) }} </template>
               <template v-slot:loader>
                 <v-progress-linear
                   height="3"

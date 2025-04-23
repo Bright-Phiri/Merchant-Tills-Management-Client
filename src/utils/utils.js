@@ -30,3 +30,8 @@ export function getColor(status) {
   if (status === 'active') return '#01A1FF'
   else return '#ff6692'
 }
+
+export function formatCurrency(amount) {
+  if (!amount) return 'MW 0.00'
+  return `MW${Number(amount).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+}

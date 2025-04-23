@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { formatCurrency } from '@/utils/utils'
 import cable from '@/lib/cable'
 
 const value = [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0]
@@ -27,7 +28,7 @@ const headers = [
   },
   { key: 'taxpayer', title: 'Customer Name' },
   { key: 'payment_date', title: 'Payment Date' },
-  { key: 'amount', title: 'Amount (MK)' },
+  { key: 'amount', title: 'Amount' },
   { key: 'payment_method', title: 'Payment Method' },
   { key: 'transaction_id', title: 'Transaction ID' },
 ]
@@ -170,11 +171,6 @@ onMounted(() => {
     },
   )
 })
-
-function formatCurrency(amount) {
-  if (!amount) return 'MW 0.00'
-  return `MW${Number(amount).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-}
 
 onBeforeUnmount(() => {
   if (subscription) {

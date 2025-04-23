@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import api from '@/services/api'
-import { showAlert } from '@/utils/utils'
+import { showAlert, formatCurrency } from '@/utils/utils'
 import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
@@ -14,7 +14,7 @@ const payments = ref([])
 
 const headers = [
   { align: 'start', key: 'payment_date', sortable: false, title: 'Payment Date' },
-  { key: 'amount', title: 'Amount (MK)' },
+  { key: 'amount', title: 'Amount' },
   { key: 'payment_method', title: 'Payment Method' },
   { key: 'transaction_id', title: 'Transaction ID' },
 ]
@@ -114,6 +114,7 @@ onMounted(() => {
               loading-text="Loading payments..."
               hover
             >
+              <template v-slot:item.amount="{ item }"> {{ formatCurrency(item.amount) }} </template>
               <template v-slot:loader>
                 <v-progress-linear
                   height="3"

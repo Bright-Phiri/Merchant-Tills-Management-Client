@@ -45,9 +45,9 @@ const renewSubscription = async () => {
 
   try {
     loading.value = true
-    const response = await api.post(`taxpayers/${route.params.id}/subscriptions`, payload)
-    if (response.status === 201) {
-      showAlert('success', 'Subscription Created', response.data.message)
+    const response = await api.post(`/subscriptions/${route.params.id}/renew`, payload)
+    if (response.status === 200) {
+      showAlert('success', 'Subscription Renewed', response.data.message)
       subscriptionForm.value.reset()
     }
   } catch (err) {
