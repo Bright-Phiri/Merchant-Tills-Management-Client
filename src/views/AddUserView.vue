@@ -110,6 +110,7 @@ const cancelAddUser = () => {
                       rounded="lg"
                       v-model="user.role"
                       label="Select Role"
+                      chips
                       :items="roles"
                       variant="outlined"
                       density="comfortable"
