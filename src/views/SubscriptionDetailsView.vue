@@ -94,7 +94,7 @@ onMounted(() => {
                 <v-col cols="3">
                   <v-text-field
                     rounded="xl"
-                    append-inner-icon="mdi-magnify"
+                    prepend-inner-icon="mdi-magnify"
                     clearable
                     label="Search Payment"
                     v-model="search"

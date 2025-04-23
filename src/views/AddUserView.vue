@@ -111,6 +111,7 @@ const cancelAddUser = () => {
                       v-model="user.role"
                       label="Select Role"
                       chips
+                      placeholder="Select Role"
                       :items="roles"
                       variant="outlined"
                       density="comfortable"
