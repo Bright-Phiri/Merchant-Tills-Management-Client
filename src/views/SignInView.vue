@@ -17,7 +17,7 @@ const user = ref({
 
 const login = async () => {
   if (!user.value.user_name || !user.value.password) {
-    showAlert('warning', 'Missing Fields', 'Please enter all required fields')
+    showToast('⚠️ Please enter all required fields.', 'error')
     return
   }
 
@@ -28,12 +28,12 @@ const login = async () => {
       auth.setToken(response.data.data.token)
       auth.setUserName(response.data.data.user.user_name)
       router.push({ path: '/dashboard' }).then(() => {
-        showToast(`👋 Welcome back ${response.data.data.user.user_name}!!`)
+        showToast(`👋 Welcome back ${response.data.data.user.user_name}!!`, 'success')
       })
     }
   } catch (err) {
     if (err.response) {
-      showAlert('error', 'Failed to Login', err.response.data.message)
+      showToast(`😕 Oops! ${err.response.data.message}`, 'error')
     } else {
       showAlert('error', 'Unable to Reach Server', err + ", Couldn't reach API")
     }
