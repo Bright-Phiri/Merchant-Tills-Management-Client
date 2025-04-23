@@ -65,6 +65,11 @@ const router = createRouter({
           component: () => import('../views/NewSubscriptionView.vue'),
         },
         {
+          path: '/renew-subscription/:id',
+          name: 'renew-subscription',
+          component: () => import('../views/RenewSubscriptionView.vue'),
+        },
+        {
           path: '/subscriptions/:id',
           name: 'subscription-details',
           component: () => import('@/views/SubscriptionDetailsView.vue'),
