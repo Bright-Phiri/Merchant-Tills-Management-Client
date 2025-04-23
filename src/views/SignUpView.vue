@@ -43,7 +43,7 @@ const signUp = async () => {
 <template>
   <div class="d-flex flex-column align-center my-6">
     <v-card class="pa-12 pb-8 mt-6" elevation="8" width="448" rounded="lg">
-      <div class="text-center text-h6 mt-2">Terminal Control | Sign Up</div>
+      <v-img class="mx-auto my-1" max-width="70" src="/LOGO.png" />
       <div class="text-subtitle-1 text-medium-emphasis mt-4">Account</div>
 
       <v-text-field
@@ -91,7 +91,7 @@ const signUp = async () => {
       ></v-text-field>
 
       <v-btn
-        class="mb-8"
+        class="mb-8 text-uppercase"
         color="#01A1FF"
         size="large"
         variant="tonal"

@@ -94,7 +94,7 @@ watch(search, () => {
                 <v-progress-linear
                   height="3"
                   indeterminate
-                  color="#365B73"
+                  color="#01A1FF"
                 ></v-progress-linear> </template
             ></v-data-table-server>
           </v-card-text>

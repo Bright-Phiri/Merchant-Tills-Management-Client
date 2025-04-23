@@ -27,8 +27,9 @@ const login = async () => {
     if (response.status === 200) {
       auth.setToken(response.data.data.token)
       auth.setUserName(response.data.data.user.user_name)
-      router.push({ path: '/dashboard' })
-      showToast(`👋 Welcome back ${response.data.data.user.user_name}!!`)
+      router.push({ path: '/dashboard' }).then(() => {
+        showToast(`👋 Welcome back ${response.data.data.user.user_name}!!`)
+      })
     }
   } catch (err) {
     if (err.response) {
@@ -45,7 +46,7 @@ const login = async () => {
 <template>
   <div class="d-flex flex-column align-center my-6">
     <v-card class="pa-12 pb-8 mt-6" elevation="8" max-width="448" rounded="lg">
-      <div class="text-center text-h6 mt-2">Terminal Control | Sign In</div>
+      <v-img class="mx-auto my-1" max-width="70" src="/LOGO.png" />
       <div class="text-subtitle-1 text-medium-emphasis mt-4">Account</div>
 
       <v-text-field
@@ -87,7 +88,7 @@ const login = async () => {
       </v-card>
 
       <v-btn
-        class="mb-8"
+        class="mb-8 text-uppercase"
         color="#01A1FF"
         size="large"
         variant="tonal"
