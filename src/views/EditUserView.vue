@@ -43,7 +43,7 @@ const updateUser = async () => {
   const missingField = requiredFields.find((field) => !user.value[field])
 
   if (missingField) {
-    showAlert('warning', 'Missing Fields', 'Please enter all required fields')
+    showToast('⚠️ Please enter all required fields.', 'warning')
     return
   }
 

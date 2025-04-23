@@ -1,7 +1,7 @@
 <script setup>
 import { ref, useTemplateRef } from 'vue'
 import api from '@/services/api'
-import { showAlert } from '@/utils/utils'
+import { showAlert, showToast } from '@/utils/utils'
 
 const user = ref({
   first_name: '',
@@ -30,7 +30,7 @@ const addUser = async () => {
   const missingField = requiredFields.find((field) => !user.value[field])
 
   if (missingField) {
-    showAlert('warning', 'Missing Fields', 'Please enter all required fields')
+    showToast('⚠️ Please enter all required fields.', 'warning')
     return
   }
 

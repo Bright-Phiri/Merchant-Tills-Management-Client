@@ -17,7 +17,7 @@ const user = ref({
 
 const login = async () => {
   if (!user.value.user_name || !user.value.password) {
-    showToast('⚠️ Please enter all required fields.', 'error')
+    showToast('⚠️ Please enter all required fields.', 'warning')
     return
   }
 

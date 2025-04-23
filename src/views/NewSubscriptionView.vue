@@ -1,7 +1,7 @@
 <script setup>
 import { ref, useTemplateRef } from 'vue'
 import { useRoute } from 'vue-router'
-import { showAlert } from '@/utils/utils'
+import { showAlert, showToast } from '@/utils/utils'
 import api from '@/services/api'
 
 const route = useRoute()
@@ -34,7 +34,7 @@ const createSubscription = async () => {
   const allFieldsFilled = requiredFields.every((field) => !!field)
 
   if (!allFieldsFilled) {
-    showAlert('warning', 'Missing Fields', 'Please enter all required fields')
+    showToast('⚠️ Please enter all required fields.', 'warning')
     return
   }
 

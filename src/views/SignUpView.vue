@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { showAlert } from '@/utils/utils'
+import { showAlert, showToast } from '@/utils/utils'
 import { useRouter } from 'vue-router'
 import api from '@/services/api'
 
@@ -16,7 +16,7 @@ const user = ref({
 
 const signUp = async () => {
   if (!user.value.user_name || !user.value.password) {
-    showAlert('warning', 'Missing Fields', 'Please enter all required fields')
+    showToast('⚠️ Please enter all required fields.', 'warning')
     return
   }
 
@@ -30,7 +30,7 @@ const signUp = async () => {
     }
   } catch (err) {
     if (err.response) {
-      showAlert('error', 'Failed to create an account', err.response.data.errors)
+      showToast(`😕 Oops! ${err.response.data.errors}`, 'error')
     } else {
       showAlert('error', 'Unable to Reach Server', err + ", Couldn't reach API")
     }
