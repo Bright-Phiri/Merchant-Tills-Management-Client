@@ -25,9 +25,12 @@ const login = async () => {
   try {
     loading.value = true
     const response = await api.post('authentication/login', user.value)
+
     if (response.status === 200) {
       auth.setToken(response.data.data.token)
       auth.setUserName(response.data.data.user.user_name)
+      auth.setUserRole(response.data.data.role)
+
       router.push({ path: '/dashboard' }).then(() => {
         showToast(`👋 Welcome back ${response.data.data.user.user_name}!!`, 'success')
       })

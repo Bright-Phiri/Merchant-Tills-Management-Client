@@ -45,6 +45,10 @@ const links = [
   },
 ]
 
+const isAdmin = auth.role === 'Admin'
+
+const filteredLinks = isAdmin ? links : links.filter((link) => link.text !== 'Users')
+
 const logout = () => {
   const auth = useAuthStore()
   auth.logout()
@@ -57,7 +61,7 @@ const logout = () => {
     <v-navigation-drawer color="#ffffff" :width="280" v-model="drawer">
       <v-list nav>
         <v-list-item
-          v-for="link in links"
+          v-for="link in filteredLinks"
           :prepend-icon="link.icon"
           :title="link.text"
           :key="link.text"

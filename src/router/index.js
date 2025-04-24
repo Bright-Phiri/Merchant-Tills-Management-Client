@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/useAuthStore'
-import Navbar from '@/components/NavBar.vue'
+import Navbar from '@/components/NavigationDrawer.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
