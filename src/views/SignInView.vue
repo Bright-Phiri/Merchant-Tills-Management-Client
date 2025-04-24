@@ -51,7 +51,7 @@ const login = async () => {
         placeholder="User name"
         prepend-inner-icon="mdi-account-outline"
         variant="outlined"
-        v-model="user.user_name"
+        v-model.trim="user.user_name"
       ></v-text-field>
 
       <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
@@ -75,7 +75,8 @@ const login = async () => {
         prepend-inner-icon="mdi-lock-outline"
         variant="outlined"
         @click:append-inner="visible = !visible"
-        v-model="user.password"
+        @keyup.enter="login"
+        v-model.trim="user.password"
       ></v-text-field>
 
       <v-card class="mb-12" color="surface-variant" variant="tonal">
