@@ -188,7 +188,7 @@ onBeforeUnmount(() => {
           </v-card-title>
 
           <v-card-text class="px-4 pb-4">
-            <apexchart
+            <apex-chart
               type="area"
               height="320"
               :options="growthChartOptions"
