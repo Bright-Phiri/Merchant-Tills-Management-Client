@@ -1,7 +1,8 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
-import { formatCurrency } from '@/utils/utils'
 import cable from '@/lib/cable'
+import DashboardCard from '@/components/DashboardCard.vue'
+import RevenueCard from '@/components/RevenueCard.vue'
 
 const value = [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0]
 const series = [
@@ -18,7 +19,40 @@ const series1 = [
 
 const dashboardData = ref({})
 const clients = ref(0)
-
+const revenueCards = [
+  {
+    label: 'Total Revenue',
+    valueKey: 'total_payments',
+    icon: 'mdi-cash',
+    iconColor: '#ffA31F',
+    avatarColor: '#FFF1CC',
+    cardColor: '#EFF4FA',
+  },
+  {
+    label: 'Total Revenue This Month',
+    valueKey: 'monthly_revenue',
+    icon: 'mdi-cash',
+    iconColor: '#00cb36',
+    avatarColor: '#D2F9F4',
+    cardColor: '#EFF4FA',
+  },
+  {
+    label: 'Total Revenue This Week',
+    valueKey: 'weekly_revenue',
+    icon: 'mdi-cash',
+    iconColor: '#ff6692',
+    avatarColor: '#FFE4EC',
+    cardColor: '#EFF4FA',
+  },
+  {
+    label: "Today's Revenue",
+    valueKey: 'daily_revenue',
+    icon: 'mdi-cash',
+    iconColor: '#00A1FF',
+    avatarColor: '#EFF5FF',
+    cardColor: '#EFF4FA',
+  },
+]
 const headers = [
   {
     align: 'start',
@@ -143,12 +177,13 @@ onMounted(() => {
     { channel: 'DashboardChannel' },
     {
       connected() {
-        console.log('Connected to Dashboard Channel')
+        console.log('Connected to DashboardChannel')
       },
       disconnected() {
-        console.log('Disconnected from Dashboard Channel')
+        console.log('Disconnected from DashboardChannel')
       },
       received(data) {
+        console.log('Received:', data)
         dashboardData.value = data
         clients.value = data.total_clients
         const monthlySubscriptions = new Array(12).fill(0)
@@ -171,6 +206,11 @@ onMounted(() => {
   )
 })
 
+function formatCurrency(amount) {
+  if (!amount) return 'MW 0.00'
+  return `MW${Number(amount).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+}
+
 onBeforeUnmount(() => {
   if (subscription) {
     subscription.unsubscribe()
@@ -188,7 +228,7 @@ onBeforeUnmount(() => {
           </v-card-title>
 
           <v-card-text class="px-4 pb-4">
-            <apex-chart
+            <apexchart
               type="area"
               height="320"
               :options="growthChartOptions"
@@ -201,175 +241,115 @@ onBeforeUnmount(() => {
       <v-col cols="12" lg="3" md="4" sm="12" xs="12">
         <v-card rounded="xl" height="400">
           <v-card-text>
-            <v-card rounded="xl" elevation="0" class="mt-1" color="#EFF4FA">
-              <v-card-text class="d-flex align-center">
-                <v-avatar color="#FFF1CC" size="50" rounded="xl">
-                  <v-icon icon="mdi-cash" size="28" color="#ffA31F"></v-icon>
-                </v-avatar>
-                <div class="d-flex flex-column justify-center ml-3">
-                  <span class="font-weight-medium text-h7 text-grey-darken-2">Total Revenue</span>
-                  <span class="font-weight-medium text-h7 text-grey-darken-2">
-                    {{ formatCurrency(dashboardData.total_payments) }}
-                  </span>
-                </div>
-              </v-card-text>
-            </v-card>
-
-            <v-card rounded="xl" elevation="0" class="mt-2" color="#EFF4FA">
-              <v-card-text class="d-flex align-center">
-                <v-avatar color="#D2F9F4" size="50" rounded="xl">
-                  <v-icon icon="mdi-cash" size="28" color="#00cb36"></v-icon>
-                </v-avatar>
-                <div class="d-flex flex-column justify-center ml-3">
-                  <span class="font-weight-medium text-h7 text-grey-darken-2"
-                    >Total Revenue This Month</span
-                  >
-                  <span class="font-weight-medium text-h7 text-grey-darken-2">
-                    {{ formatCurrency(dashboardData.monthly_revenue) }}
-                  </span>
-                </div>
-              </v-card-text>
-            </v-card>
-
-            <v-card rounded="xl" elevation="0" class="mt-2" color="#EFF4FA">
-              <v-card-text class="d-flex align-center">
-                <v-avatar color="#FFE4EC" size="50" rounded="xl">
-                  <v-icon icon="mdi-cash" size="28" color="#ff6692"></v-icon>
-                </v-avatar>
-                <div class="d-flex flex-column justify-center ml-3">
-                  <span class="font-weight-medium text-h7 text-grey-darken-2"
-                    >Total Revenue This Week</span
-                  >
-                  <span class="font-weight-medium text-h7 text-grey-darken-2">
-                    {{ formatCurrency(dashboardData.weekly_revenue) }}
-                  </span>
-                </div>
-              </v-card-text>
-            </v-card>
-
-            <v-card rounded="xl" elevation="0" class="mt-2" color="#EFF4FA">
-              <v-card-text class="d-flex align-center">
-                <v-avatar color="#EFF5FF" size="50" rounded="xl">
-                  <v-icon icon="mdi-cash" size="28" color="#00A1FF"></v-icon>
-                </v-avatar>
-                <div class="d-flex flex-column justify-center ml-3">
-                  <span class="font-weight-medium text-h7 text-grey-darken-2">Today's Revenue</span>
-                  <span class="font-weight-medium text-h7 text-grey-darken-2">
-                    {{ formatCurrency(dashboardData.daily_revenue) }}
-                  </span>
-                </div>
-              </v-card-text>
-            </v-card>
+            <v-row no-gutters>
+              <v-col v-for="(card, index) in revenueCards" :key="index" cols="12">
+                <RevenueCard
+                  :label="card.label"
+                  :value="dashboardData[card.valueKey]"
+                  :icon="card.icon"
+                  :iconColor="card.iconColor"
+                  :avatarColor="card.avatarColor"
+                  :cardColor="card.cardColor"
+                />
+              </v-col>
+            </v-row>
           </v-card-text>
         </v-card>
       </v-col>
     </v-row>
+
     <v-row>
-      <v-col cols="12" lg="4" sm="12" xs="12">
-        <v-card color="#FFE4EC" rounded="xl" height="200" to="/clients">
-          <v-card-title class="d-flex justify-space-between py-6">
-            <div class="d-flex align-center">
-              <v-avatar color="#ff6692" size="50" rounded="xl" icon="mdi-account-multiple" />
-              <span class="ml-3 font-weight-medium text-h6 text-grey-darken-2">All Clients</span>
-            </div>
-            <v-icon class="mt-2" icon="mdi-dots-vertical" />
-          </v-card-title>
-
-          <v-card-text class="d-flex justify-space-between align-end">
-            <div>
-              <span class="text-h6 text-md-h5 text-lg-h4">
-                <AnimatedCounter
-                  :key="dashboardData.total_clients"
-                  :value="dashboardData.total_clients"
-                  :duration="500"
-                />
-              </span>
-            </div>
-            <div style="width: 200px; height: 60px">
-              <apexchart type="area" :options="chartOptions" :series="series" height="60" />
-            </div>
-          </v-card-text>
-        </v-card>
+      <v-col cols="12" lg="4">
+        <DashboardCard
+          to="/clients"
+          title="All Clients"
+          icon="mdi-account-multiple"
+          iconColor="white"
+          avatarColor="#ff6692"
+          cardColor="#FFE4EC"
+          :value="dashboardData.total_clients"
+        >
+          <template #chart>
+            <apexchart
+              type="area"
+              :options="chartOptions"
+              :series="series"
+              height="60"
+              style="width: 200px"
+            />
+          </template>
+        </DashboardCard>
       </v-col>
-      <v-col cols="12" lg="4" sm="12" xs="12">
-        <v-card color="#E7E2F3" rounded="xl" height="200" to="/subscriptions">
-          <v-card-title class="d-flex justify-space-between py-6">
-            <div class="d-flex align-center">
-              <v-avatar color="#8565E9" size="50" rounded="xl" icon="mdi-playlist-check" />
-              <span class="ml-3 font-weight-medium text-h6 text-grey-darken-2"
-                >All Subscriptions</span
-              >
-            </div>
-            <v-icon class="mt-2" icon="mdi-dots-vertical" />
-          </v-card-title>
 
-          <v-card-text class="d-flex justify-space-between align-end">
-            <div>
-              <span class="text-h6 text-md-h5 text-lg-h4"
-                ><AnimatedCounter
-                  :key="dashboardData.total_subscriptions"
-                  :value="dashboardData.total_subscriptions"
-                  :duration="700"
-              /></span>
-              <v-chip
-                class="d-flex justify-center mt-3"
-                size="small"
-                style="width: 90px; border: 1px solid #526b7a; color: #8565e9"
-                variant="outlined"
-                color="#8565E9"
-              >
-                <span style="color: #526b7a"> {{ dashboardData.active_subscriptions }} Active</span>
-              </v-chip>
-            </div>
-            <div style="width: 200px; height: 60px">
-              <apexchart type="area" :options="chartOptions1" :series="series1" height="60" />
-            </div>
-          </v-card-text>
-        </v-card>
+      <v-col cols="12" lg="4">
+        <DashboardCard
+          to="/subscriptions"
+          title="All Subscriptions"
+          icon="mdi-playlist-check"
+          iconColor="white"
+          avatarColor="#8565E9"
+          cardColor="#E7E2F3"
+          :value="dashboardData.total_subscriptions"
+          :duration="700"
+        >
+          <template #extra>
+            <v-chip
+              class="d-flex justify-center mt-3"
+              size="small"
+              variant="outlined"
+              color="#8565E9"
+              style="width: 90px; border: 1px solid #526b7a"
+            >
+              <span style="color: #526b7a">{{ dashboardData.active_subscriptions }} Active</span>
+            </v-chip>
+          </template>
+          <template #chart>
+            <apexchart
+              type="area"
+              :options="chartOptions1"
+              :series="series1"
+              height="60"
+              style="width: 200px"
+            />
+          </template>
+        </DashboardCard>
       </v-col>
-      <v-col cols="12" lg="4" sm="12" xs="12">
-        <v-card color="#D2F9F4" rounded="xl" height="200" to="/terminals">
-          <v-card-title class="d-flex justify-space-between align-center py-6">
-            <div class="d-flex align-center">
-              <v-avatar color="#00CEB6" size="50" rounded="xl">
-                <v-icon color="white" icon="mdi-sitemap" />
-              </v-avatar>
 
-              <span class="ml-3 font-weight-medium text-h6 text-grey-darken-2">All Terminals</span>
-            </div>
-            <v-icon icon="mdi-dots-vertical" />
-          </v-card-title>
-
-          <v-card-text class="d-flex align-center justify-space-between px-4">
-            <div>
-              <span class="text-h4"
-                ><AnimatedCounter
-                  :key="dashboardData.total_terminals"
-                  :value="dashboardData.total_terminals"
-                  :duration="800"
-              /></span>
-              <v-chip
-                class="d-flex justify-center"
-                size="small"
-                style="width: 90px; border: 1px solid #526b7a; color: #8565e9"
-                variant="outlined"
-                color="#8565E9"
-              >
-                <span style="color: #526b7a"> {{ dashboardData.active_terminals }} Active</span>
-              </v-chip>
-            </div>
+      <v-col cols="12" lg="4">
+        <DashboardCard
+          to="/terminals"
+          title="All Terminals"
+          icon="mdi-sitemap"
+          icon-color="#ffffff"
+          avatarColor="#00CEB6"
+          cardColor="#D2F9F4"
+          :value="dashboardData.total_terminals"
+          :duration="800"
+        >
+          <template #extra>
+            <v-chip
+              class="d-flex justify-center mt-2"
+              size="small"
+              variant="outlined"
+              color="#8565E9"
+              style="width: 90px; border: 1px solid #526b7a"
+            >
+              <span style="color: #526b7a">{{ dashboardData.active_terminals }} Active</span>
+            </v-chip>
+          </template>
+          <template #chart>
             <v-progress-circular
               :model-value="dashboardData.active_terminals"
               size="90"
               width="6"
               color="#00CBE6"
               rotate="-90"
-            >
-            </v-progress-circular>
-          </v-card-text>
-        </v-card>
+            />
+          </template>
+        </DashboardCard>
       </v-col>
     </v-row>
+
     <v-row>
       <v-col cols="12">
         <v-card rounded="xl">
