@@ -64,6 +64,7 @@ const updateUser = async () => {
 
     if (response.status === 200) {
       loading.value = false
+
       showAlert('success', 'User Updated', response.data.message).then(() => {
         userForm.value.reset()
         router.push({ name: 'users' })
