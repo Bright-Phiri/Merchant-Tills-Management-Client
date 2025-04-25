@@ -67,7 +67,7 @@ const disableUser = async (id) => {
 }
 
 const loadEditUserForm = (id) => {
-  router.push({ name: 'edit-user', params: { id }, replace: true })
+  router.push({ name: 'edit-user', params: { id } })
 }
 
 onMounted(() => {

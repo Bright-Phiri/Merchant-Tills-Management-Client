@@ -36,7 +36,7 @@ const fetchSubscriptionDetails = async () => {
 }
 
 const loadRenewSubPage = () => {
-  router.push({ name: 'renew-subscription', params: { id: subscription_id.value }, replace: true })
+  router.push({ name: 'renew-subscription', params: { id: subscription_id.value } })
 }
 
 onMounted(() => {

@@ -52,7 +52,7 @@ watch(search, () => {
 })
 
 const viewSubscription = (id) => {
-  router.push({ name: 'subscription-details', params: { id }, replace: true })
+  router.push({ name: 'subscription-details', params: { id } })
 }
 
 const deleteSubscription = async (id) => {
