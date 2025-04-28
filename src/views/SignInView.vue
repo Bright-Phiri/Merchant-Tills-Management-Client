@@ -60,14 +60,9 @@ const login = async () => {
       <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
         Password
 
-        <a
-          class="text-caption text-decoration-none text-blue"
-          href="#"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
+        <router-link class="text-caption text-decoration-none text-blue" to="/forgot-password">
           Forgot login password?
-        </a>
+        </router-link>
       </div>
 
       <v-text-field
