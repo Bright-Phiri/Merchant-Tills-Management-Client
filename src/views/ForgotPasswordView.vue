@@ -20,6 +20,8 @@ const resetAccountPassword = () => {
     step.value++
   } else if (step.value == 2) {
     step.value++
+  } else {
+    router.push({ path: '/sign-in' })
   }
 }
 
