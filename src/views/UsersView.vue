@@ -42,11 +42,8 @@ const activateUser = async (id) => {
   try {
     const response = await api.patch(`users/${id}/activate`)
     if (response.status === 200) {
-      showAlert('success', 'User Activated', 'The user has been successfully activated').then(
-        () => {
-          fetchSystemUsers()
-        },
-      )
+      await showAlert('success', 'User Activated', 'The user has been successfully activated')
+      fetchSystemUsers()
     }
   } catch (err) {
     handleError(err)
@@ -57,9 +54,8 @@ const disableUser = async (id) => {
   try {
     const response = await api.patch(`users/${id}/disable`)
     if (response.status === 200) {
-      showAlert('success', 'User Disabled', 'Use has been sucessfully disabled').then(() => {
-        fetchSystemUsers()
-      })
+      await showAlert('success', 'User Disabled', 'Use has been sucessfully disabled')
+      fetchSystemUsers()
     }
   } catch (err) {
     handleError(err)

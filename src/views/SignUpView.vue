@@ -26,9 +26,9 @@ const signUp = async () => {
     loading.value = true
     const response = await api.post('users/register', user.value)
     if (response.status === 201) {
-      showAlert('success', 'Account Created', response.data.message).then(() => {
-        router.push({ path: '/sign-in' })
-      })
+      await showAlert('success', 'Account Created', response.data.message)
+
+      router.push({ path: '/sign-in' })
     }
   } catch (err) {
     handleError(err)
