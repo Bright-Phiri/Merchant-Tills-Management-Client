@@ -52,7 +52,7 @@ const signUp = async () => {
         v-model="user.user_name"
       ></v-text-field>
 
-      <div class="text-subtitle-1 text-medium-emphasis">Email Address</div>
+      <div class="text-subtitle-1 text-medium-emphasis mt-4">Email Address</div>
 
       <v-text-field
         density="compact"
