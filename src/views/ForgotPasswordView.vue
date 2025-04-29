@@ -1,6 +1,6 @@
 <script setup>
-import { ref, computed } from 'vue'
-import { showAlert, showToast } from '@/utils/utils'
+import { ref } from 'vue'
+import { showToast } from '@/utils/utils'
 import { useRouter } from 'vue-router'
 import api from '@/services/api'
 import { useErrorHandler } from '@/composables/useErrorHandler'

@@ -11,7 +11,7 @@ const loading = ref(false)
 const subscriptionForm = useTemplateRef('renewSubscriptionForm')
 const paymentMethods = ref(['CASH', 'TNM MPAMBA', 'AIRTEL MONEY', 'VISA'])
 const subscription = ref({
-  months: '',
+  days: '',
 })
 
 const payment = ref({
@@ -27,7 +27,7 @@ const cancelRenewSubscription = () => {
 
 const renewSubscription = async () => {
   const requiredFields = [
-    subscription.value.months,
+    subscription.value.days,
     payment.value.payment_date,
     payment.value.amount,
     payment.value.payment_method,
@@ -70,8 +70,8 @@ const renewSubscription = async () => {
               <v-col sm="12" lg="6" md="6">
                 <v-text-field
                   rounded="lg"
-                  label="Duration (Months)"
-                  v-model="subscription.months"
+                  label="Duration (Days)"
+                  v-model="subscription.days"
                   variant="outlined"
                   density="comfortable"
                   type="number"
