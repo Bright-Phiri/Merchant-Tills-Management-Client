@@ -11,38 +11,68 @@ const loading = ref(false)
 const router = useRouter()
 const user = ref({
   email_address: '',
+  reset_password_token: '',
   password: '',
   password_confirmation: '',
 })
 
-const resetAccountPassword = () => {
-  if (step.value == 1) {
-    step.value++
-  } else if (step.value == 2) {
-    step.value++
-  } else {
-    router.push({ path: '/sign-in' })
-  }
-}
-
-const signUp = async () => {
-  if (!user.value.user_name || !user.value.password) {
-    showToast('⚠️ Please enter all required fields.', 'warning')
-    return
-  }
-
+const makeApiRequest = async (url, payload, successCallback) => {
   try {
     loading.value = true
-    const response = await api.post('users/register', user.value)
-    if (response.status === 201) {
-      showAlert('success', 'Account Created', response.data.message).then(() => {
-        router.push({ path: '/sign-in' })
-      })
+    const response = await api.post(url, payload)
+    if (response.status == 200) {
+      showToast(response.data.message, 'success')
+      successCallback()
     }
   } catch (err) {
     handleError(err)
   } finally {
     loading.value = false
+  }
+}
+
+const resetAccountPassword = async () => {
+  switch (step.value) {
+    case 1:
+      if (!user.value.email_address) {
+        showToast('⚠️ Please enter the email address.', 'warning')
+        return
+      }
+      const payloadStep1 = {
+        email_address: user.value.email_address,
+      }
+      makeApiRequest('passwords/forgot_password', payloadStep1, () => {
+        step.value++
+      })
+      break
+
+    case 2:
+      if (!user.value.reset_password_token) {
+        showToast('⚠️ Please enter the reset token.', 'warning')
+        return
+      }
+      const payloadStep2 = {
+        reset_password_token: user.value.reset_password_token,
+      }
+      makeApiRequest('passwords/verify_password_reset_token', payloadStep2, () => {
+        step.value++
+      })
+      break
+
+    default:
+      if (!user.value.password || !user.value.password_confirmation) {
+        showToast('⚠️ Please enter all required fields.', 'warning')
+        return
+      }
+      const payloadStep3 = {
+        email_address: user.value.email_address,
+        password: user.value.password,
+        password_confirmation: user.value.password_confirmation,
+      }
+      makeApiRequest('passwords/reset_password', payloadStep3, () => {
+        router.push({ path: '/sign-in' })
+      })
+      break
   }
 }
 </script>
@@ -77,7 +107,7 @@ const signUp = async () => {
               placeholder="Reset Token"
               prepend-inner-icon="mdi-email-outline"
               variant="outlined"
-              v-model="user.email_address"
+              v-model="user.reset_password_token"
             ></v-text-field>
           </v-card-text>
         </v-window-item>
@@ -115,7 +145,13 @@ const signUp = async () => {
       </v-window>
       <v-card-actions class="mx-o">
         <v-spacer></v-spacer>
-        <v-btn v-if="step < 4" color="primary" variant="flat" @click="resetAccountPassword">
+        <v-btn
+          v-if="step < 4"
+          color="primary"
+          variant="flat"
+          :loading
+          @click="resetAccountPassword"
+        >
           Next
         </v-btn>
       </v-card-actions>

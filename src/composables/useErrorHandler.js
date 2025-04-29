@@ -20,7 +20,7 @@ export function useErrorHandler() {
 
     switch (status) {
       case 400:
-        showAlert('error', message, errors ? `${errors}` : '')
+        showToast(errors ? `${errors}` : '', 'warning')
         break
 
       case 401:
@@ -34,7 +34,7 @@ export function useErrorHandler() {
         break
 
       case 403:
-        showAlert('warning', message, errors ? `${errors}` : '')
+        showToast(message, 'warning')
         break
 
       case 422:
@@ -42,12 +42,11 @@ export function useErrorHandler() {
         break
 
       case 423:
-        showAlert('info', message, errors ? `${errors}` : '')
+        showToast(message, 'info')
         break
 
       default:
-        showAlert('error', message, errors ? `${errors}` : '')
-
+        showToast(message, 'error')
         break
     }
   }
