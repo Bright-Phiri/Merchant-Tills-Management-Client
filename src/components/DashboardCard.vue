@@ -30,7 +30,8 @@ defineProps({
       <div>
         <slot name="value">
           <span class="text-h6 text-md-h5 text-lg-h4">
-            <AnimatedCounter :key="value" :value="value" :duration="duration" />
+            <AnimatedCounter v-if="value" :key="value" :value="value" :duration="duration" />
+            <span v-else>0</span>
           </span>
         </slot>
         <slot name="extra" />
