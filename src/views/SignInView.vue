@@ -28,9 +28,11 @@ const login = async () => {
 
     if (response.status === 200) {
       const user_name = response.data.data.user.user_name
+      const user_Id = response.data.data.user.id
       const { token, role } = response.data.data
 
       auth.setToken(token)
+      auth.setUserId(user_Id)
       auth.setUserName(user_name)
       auth.setUserRole(role)
 

@@ -6,15 +6,23 @@ export function useErrorHandler() {
   const router = useRouter()
 
   const handleError = (error) => {
+    const isNetworkError = !error.response && error.message === 'Network Error'
     const status = error?.response?.status
     const resData = error?.response?.data
 
     const message = resData?.message || 'An error occurred'
     const errors = resData?.errors
 
-    // Server unreachable
-    if (!status) {
+    // Handle network/unreachable error
+    if (isNetworkError) {
       showAlert('error', 'Error', "Couldn't reach API")
+      return
+    }
+
+    // Handle other unexpected cases where status is undefined
+    if (!status) {
+      console.error('Unexpected error structure:', error)
+      showAlert('error', 'Unexpected Error', error.message || 'Unknown error')
       return
     }
 
@@ -24,7 +32,6 @@ export function useErrorHandler() {
         break
 
       case 401:
-        // Check if it's a session expiration
         if (message.includes('Invalid or expired token')) {
           const auth = useAuthStore()
           auth.logout()

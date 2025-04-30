@@ -5,9 +5,14 @@ export const useAuthStore = defineStore(
   'auth',
   () => {
     const token = ref(null)
+    const user_id = ref(null)
     const user_name = ref(null)
     const role = ref(null)
     const isUserLoggedIn = ref(false)
+
+    function setUserId(new_userId) {
+      user_id.value = new_userId
+    }
 
     function setToken(new_token) {
       token.value = new_token
@@ -29,7 +34,18 @@ export const useAuthStore = defineStore(
       isUserLoggedIn.value = false
     }
 
-    return { token, user_name, role, isUserLoggedIn, setToken, setUserName, setUserRole, logout }
+    return {
+      token,
+      user_id,
+      user_name,
+      role,
+      isUserLoggedIn,
+      setUserId,
+      setToken,
+      setUserName,
+      setUserRole,
+      logout,
+    }
   },
   {
     persist: true,

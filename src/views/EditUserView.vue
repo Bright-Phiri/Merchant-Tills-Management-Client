@@ -63,8 +63,6 @@ const updateUser = async () => {
     const response = await api.put(`users/${user_id.value}`, payload)
 
     if (response.status === 200) {
-      loading.value = false
-
       await showAlert('success', 'User Updated', response.data.message)
       userForm.value.reset()
       router.push({ name: 'users' })
