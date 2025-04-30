@@ -105,7 +105,7 @@ const resetAccountPassword = async () => {
             <v-text-field
               density="compact"
               placeholder="Reset Token"
-              prepend-inner-icon="mdi-email-outline"
+              prepend-inner-icon="mdi-key-chain"
               variant="outlined"
               v-model="user.reset_password_token"
             ></v-text-field>

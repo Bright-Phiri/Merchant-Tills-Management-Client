@@ -20,7 +20,7 @@ export function useErrorHandler() {
 
     switch (status) {
       case 400:
-        showToast(errors ? `${errors}` : '', 'warning')
+        showToast(message, 'warning')
         break
 
       case 401:
