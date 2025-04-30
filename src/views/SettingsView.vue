@@ -1,11 +1,12 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, useTemplateRef } from 'vue'
 import { useAuthStore } from '@/stores/useAuthStore'
 import api from '@/services/api'
-import { showToast } from '@/utils/utils'
+import { showToast, decryptPassword } from '@/utils/utils'
 import { useErrorHandler } from '@/composables/useErrorHandler'
 
 const store = useAuthStore()
+const passwordForm = useTemplateRef('passwordForm')
 const { handleError } = useErrorHandler()
 const tab = ref('Profile Information')
 const user = ref({
@@ -28,6 +29,46 @@ const fetchUserDetails = async (id) => {
     }
   } catch (err) {
     handleError(err)
+  }
+}
+
+const updatePassword = async () => {
+  const requiredFields = ['old_password', 'password', 'password_confirmation']
+
+  const missingField = requiredFields.find((field) => !user.value[field])
+  if (missingField) {
+    showToast('⚠️ Please enter all required fields.', 'warning')
+    return
+  }
+  const password = await decryptPassword(store.secret)
+
+  if (password !== user.value.old_password) {
+    showToast('❌ Old password is incorrect.', 'error')
+    return
+  }
+
+  if (user.value.password !== user.value.password_confirmation) {
+    showToast('❌ Oops! Your passwords don’t match.', 'error')
+    return
+  }
+
+  const payload = {
+    email_address: store.email,
+    password: user.value.password,
+    password_confirmation: user.value.password_confirmation,
+  }
+  try {
+    loading.value = true
+    const response = await api.post('passwords/reset_password', payload)
+
+    if (response.status == 200) {
+      showToast(response.data.message, 'success')
+      passwordForm.value.reset()
+    }
+  } catch (err) {
+    handleError(err)
+  } finally {
+    loading.value = false
   }
 }
 

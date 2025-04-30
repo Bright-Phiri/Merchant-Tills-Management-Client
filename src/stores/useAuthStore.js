@@ -7,7 +7,9 @@ export const useAuthStore = defineStore(
     const token = ref(null)
     const user_id = ref(null)
     const user_name = ref(null)
+    const email = ref(null)
     const role = ref(null)
+    const secret = ref(null)
     const isUserLoggedIn = ref(false)
 
     function setUserId(new_userId) {
@@ -23,14 +25,24 @@ export const useAuthStore = defineStore(
       user_name.value = name
     }
 
+    function setEmail(newEmail) {
+      email.value = newEmail
+    }
+
     function setUserRole(userRole) {
       role.value = userRole
+    }
+
+    function setSecret(newSecret) {
+      secret.value = newSecret
     }
 
     function logout() {
       token.value = null
       user_name.value = null
       role.value = null
+      user_id.value = null
+      secret.value = null
       isUserLoggedIn.value = false
     }
 
@@ -38,12 +50,16 @@ export const useAuthStore = defineStore(
       token,
       user_id,
       user_name,
+      email,
       role,
+      secret,
       isUserLoggedIn,
       setUserId,
       setToken,
       setUserName,
+      setEmail,
       setUserRole,
+      setSecret,
       logout,
     }
   },

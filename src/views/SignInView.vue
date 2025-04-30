@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { showToast } from '@/utils/utils'
+import { showToast, encryptPassword } from '@/utils/utils'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/useAuthStore'
 import { useErrorHandler } from '@/composables/useErrorHandler'
@@ -27,7 +27,10 @@ const login = async () => {
     const response = await api.post('authentication/login', user.value)
 
     if (response.status === 200) {
+      const secret = await encryptPassword(user.value.password)
+
       const user_name = response.data.data.user.user_name
+      const email = response.data.data.user.email_address
       const user_Id = response.data.data.user.id
       const { token, role } = response.data.data
 
@@ -35,6 +38,8 @@ const login = async () => {
       auth.setUserId(user_Id)
       auth.setUserName(user_name)
       auth.setUserRole(role)
+      auth.setEmail(email)
+      auth.setSecret(secret)
 
       await router.push({ path: '/dashboard' })
       showToast(`👋 Welcome back ${response.data.data.user.user_name}!!`, 'success')
