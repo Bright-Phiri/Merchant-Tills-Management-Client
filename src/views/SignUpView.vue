@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { showAlert, showToast } from '@/utils/utils'
+import { showToast } from '@/utils/utils'
 import { useRouter } from 'vue-router'
 import api from '@/services/api'
 import { useErrorHandler } from '@/composables/useErrorHandler'
@@ -26,8 +26,7 @@ const signUp = async () => {
     loading.value = true
     const response = await api.post('users/register', user.value)
     if (response.status === 201) {
-      await showAlert('success', 'Account Created', response.data.message)
-
+      showToast(response.data.message, 'success')
       router.push({ path: '/sign-in' })
     }
   } catch (err) {

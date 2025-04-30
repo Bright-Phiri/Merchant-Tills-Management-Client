@@ -2,7 +2,7 @@
 import { useRoute, useRouter } from 'vue-router'
 import { ref, useTemplateRef, onMounted } from 'vue'
 import api from '@/services/api'
-import { showAlert } from '@/utils/utils'
+import { showToast } from '@/utils/utils'
 import { useErrorHandler } from '@/composables/useErrorHandler'
 
 const { handleError } = useErrorHandler()
@@ -63,7 +63,7 @@ const updateUser = async () => {
     const response = await api.put(`users/${user_id.value}`, payload)
 
     if (response.status === 200) {
-      await showAlert('success', 'User Updated', response.data.message)
+      showToast(response.data.message, 'success')
       userForm.value.reset()
       router.push({ name: 'users' })
     }

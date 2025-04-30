@@ -1,7 +1,7 @@
 <script setup>
 import { ref, useTemplateRef } from 'vue'
 import { useRoute } from 'vue-router'
-import { showAlert, showToast } from '@/utils/utils'
+import { showToast } from '@/utils/utils'
 import api from '@/services/api'
 import { useErrorHandler } from '@/composables/useErrorHandler'
 
@@ -50,7 +50,7 @@ const createSubscription = async () => {
     const response = await api.post(`taxpayers/${route.params.id}/subscriptions`, payload)
 
     if (response.status === 201) {
-      showAlert('success', 'Subscription Created', response.data.message)
+      showToast(response.data.message, 'success')
       subscriptionForm.value.reset()
     }
   } catch (err) {

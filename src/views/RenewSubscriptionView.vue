@@ -1,7 +1,7 @@
 <script setup>
 import { ref, useTemplateRef } from 'vue'
 import { useRoute } from 'vue-router'
-import { showAlert } from '@/utils/utils'
+import { showToast } from '@/utils/utils'
 import api from '@/services/api'
 import { useErrorHandler } from '@/composables/useErrorHandler'
 
@@ -22,7 +22,7 @@ const payment = ref({
 })
 
 const cancelRenewSubscription = () => {
-  renewSubscriptionForm.value.reset()
+  subscriptionForm.value.reset()
 }
 
 const renewSubscription = async () => {
@@ -36,7 +36,7 @@ const renewSubscription = async () => {
   const allFieldsFilled = requiredFields.every((field) => !!field)
 
   if (!allFieldsFilled) {
-    showAlert('warning', 'Missing Fields', 'Please enter all required fields')
+    showToast('⚠️ Please enter all required fields.', 'warning')
     return
   }
 
@@ -49,7 +49,7 @@ const renewSubscription = async () => {
     loading.value = true
     const response = await api.post(`/subscriptions/${route.params.id}/renew`, payload)
     if (response.status === 200) {
-      showAlert('success', 'Subscription Renewed', response.data.message)
+      showToast(response.data.message, 'success')
       subscriptionForm.value.reset()
     }
   } catch (err) {

@@ -1,7 +1,7 @@
 <script setup>
 import { ref, useTemplateRef } from 'vue'
 import api from '@/services/api'
-import { showAlert, showToast } from '@/utils/utils'
+import { showToast } from '@/utils/utils'
 import { useErrorHandler } from '@/composables/useErrorHandler'
 
 const { handleError } = useErrorHandler()
@@ -50,7 +50,7 @@ const addUser = async () => {
     const response = await api.post('users', payload)
 
     if (response.status === 201) {
-      showAlert('success', 'User Created', response.data.message)
+      showToast(response.data.message, 'success')
       userForm.value.reset()
     }
   } catch (error) {

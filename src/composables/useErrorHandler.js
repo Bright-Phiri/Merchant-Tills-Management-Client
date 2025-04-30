@@ -1,5 +1,5 @@
 import { useRouter } from 'vue-router'
-import { showAlert, showToast } from '@/utils/utils'
+import { showToast } from '@/utils/utils'
 import { useAuthStore } from '@/stores/useAuthStore'
 
 export function useErrorHandler() {
@@ -38,7 +38,7 @@ export function useErrorHandler() {
         break
 
       case 422:
-        showAlert('error', message, errors ? `${errors}` : '')
+        showToast(errors ? `${errors}` : '', 'error')
         break
 
       case 423:
