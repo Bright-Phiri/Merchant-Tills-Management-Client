@@ -14,7 +14,7 @@ export function useErrorHandler() {
 
     // Server unreachable
     if (!status) {
-      showAlert('error', 'Error', "Couldn't reach API")
+      showToast('🔌 Hmm… something went wrong. Couldn’t reach the server.', 'error')
       return
     }
 
