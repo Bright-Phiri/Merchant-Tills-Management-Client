@@ -352,7 +352,7 @@ onBeforeUnmount(() => {
 
     <v-row>
       <v-col cols="12">
-        <v-card rounded="xl">
+        <v-card rounded="xl" to="/payments">
           <v-card-title class="text-subtitle-1">Recent Payments</v-card-title>
           <v-card-text>
             <v-data-table
