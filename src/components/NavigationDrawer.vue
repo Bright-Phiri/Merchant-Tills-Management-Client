@@ -51,7 +51,9 @@ const links = [
 
 const isAdmin = authStore.getRole === 'Admin'
 
-const filteredLinks = isAdmin ? links : links.filter((link) => link.text !== 'Users')
+const filteredLinks = isAdmin
+  ? links
+  : links.filter((link) => link.text !== 'Users' && link.text !== 'Activity Logs')
 
 const logout = () => {
   authStore.logout()
