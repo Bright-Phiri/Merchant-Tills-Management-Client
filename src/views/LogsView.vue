@@ -15,24 +15,24 @@ const router = useRouter()
 const headers = [
   {
     align: 'start',
-    key: 'tin',
+    key: 'user',
     sortable: false,
-    title: 'Client TIN',
+    title: 'User',
   },
-  { key: 'name', title: 'Client Name' },
-  { key: 'email_address', title: 'Email Address' },
-  { key: 'phone_number', title: 'Phone Number' },
-  { key: 'terminals_count', title: 'Terminals Count' },
   { key: 'action', title: 'Action' },
+  { key: 'resource_type', title: 'Resource Type' },
+  { key: 'resource_id', title: 'Phone Number' },
+  { key: 'resource_id', title: 'Resource ID' },
+  { key: 'description', title: 'Description' },
 ]
 
-const fetchClients = async ({ page, itemsPerPage, search }) => {
+const fetchLogs = async ({ page, itemsPerPage, search }) => {
   loading.value = true
   try {
-    const response = await api.get('taxpayers', {
+    const response = await api.get('logs', {
       params: { page, per_page: itemsPerPage, search },
     })
-    clients.value = response.data.data.taxpayers
+    clients.value = response.data.data.logs
     totalItems.value = response.data.data.total
   } catch (err) {
     handleError(err)
@@ -42,20 +42,12 @@ const fetchClients = async ({ page, itemsPerPage, search }) => {
 }
 
 const debouncedSearch = useDebounceFn(() => {
-  fetchClients({ page: 1, itemsPerPage: itemsPerPage.value, search: search.value })
+  fetchLogs({ page: 1, itemsPerPage: itemsPerPage.value, search: search.value })
 }, 400)
 
 watch(search, () => {
   debouncedSearch()
 })
-
-const loadNewSubscriptionForm = (id) => {
-  router.push({ name: 'new-subscription', params: { id }, replace: true })
-}
-
-const loadClientTerminalsView = (id, name) => {
-  router.push({ name: 'client-terminals', params: { id, name }, replace: true })
-}
 </script>
 
 <template>
@@ -89,31 +81,10 @@ const loadClientTerminalsView = (id, name) => {
               :items-length="totalItems"
               :loading
               :items-per-page="itemsPerPage"
-              @update:options="fetchClients"
+              @update:options="fetchLogs"
               loading-text="Loading clients..."
               hover
             >
-              <template v-slot:item.action="{ item }">
-                <div class="d-flex">
-                  <v-btn
-                    variant="text"
-                    prepend-icon="mdi-eye"
-                    class="text-capitalize"
-                    color="#01A1FF"
-                    v-on:click="loadClientTerminalsView(item.id, item.name)"
-                    >View Terminals</v-btn
-                  >
-
-                  <v-btn
-                    variant="text"
-                    prepend-icon="mdi-plus-circle-multiple-outline"
-                    class="text-capitalize ml-2"
-                    color="#01A1FF"
-                    v-on:click="loadNewSubscriptionForm(item.id)"
-                    >Create Subscription</v-btn
-                  >
-                </div>
-              </template>
               <template v-slot:loader>
                 <v-progress-linear height="3" indeterminate color="#01A1FF"></v-progress-linear>
               </template>

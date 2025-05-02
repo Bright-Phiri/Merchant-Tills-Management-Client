@@ -38,7 +38,7 @@ const links = [
     to: '/users',
   },
   {
-    text: 'Logs',
+    text: 'Activity Logs',
     icon: 'mdi-history',
     to: '/logs',
   },
