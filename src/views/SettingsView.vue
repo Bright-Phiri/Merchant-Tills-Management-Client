@@ -5,7 +5,7 @@ import api from '@/services/api'
 import { showToast, decryptPassword } from '@/utils/utils'
 import { useErrorHandler } from '@/composables/useErrorHandler'
 
-const store = useAuthStore()
+const authStore = useAuthStore()
 const passwordForm = useTemplateRef('passwordForm')
 const { handleError } = useErrorHandler()
 const tab = ref('Profile Information')
@@ -40,7 +40,7 @@ const updatePassword = async () => {
     showToast('⚠️ Please enter all required fields.', 'warning')
     return
   }
-  const password = await decryptPassword(store.secret)
+  const password = await decryptPassword(authStore.getSecret)
 
   if (password !== user.value.old_password) {
     showToast('❌ Old password is incorrect.', 'error')
@@ -53,7 +53,7 @@ const updatePassword = async () => {
   }
 
   const payload = {
-    email_address: store.email,
+    email_address: authStore.getEmail,
     password: user.value.password,
     password_confirmation: user.value.password_confirmation,
   }
@@ -92,11 +92,14 @@ const updateUserDetails = async () => {
 
   try {
     loading.value = true
-    const response = await api.put(`users/${store.user_id}`, payload)
+    const response = await api.put(`users/${authStore.getUserId}`, payload)
 
     if (response.status === 200) {
+      const user_name = response.data.data.user_name
+      authStore.setUserName(user_name)
+
       showToast(response.data.message, 'success')
-      fetchUserDetails(store.user_id)
+      fetchUserDetails(authStore.getUserId)
     }
   } catch (error) {
     handleError(error)
@@ -106,7 +109,7 @@ const updateUserDetails = async () => {
 }
 
 onMounted(() => {
-  fetchUserDetails(store.user_id)
+  fetchUserDetails(authStore.getUserId)
 })
 </script>
 
@@ -195,7 +198,7 @@ onMounted(() => {
                                 >Update</v-btn
                               >
                               <v-btn
-                                v-on:click="fetchUserDetails(store.user_id)"
+                                v-on:click="fetchUserDetails(authStore.getUserId)"
                                 color="#ff6692"
                                 class="ml-2 text-capitalize"
                                 rounded="xl"

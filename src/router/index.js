@@ -100,13 +100,13 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const auth = useAuthStore()
+  const authStore = useAuthStore()
 
   if (
     to.name !== 'sign-in' &&
     to.name !== 'sign-up' &&
     to.name !== 'forgot-password' &&
-    !auth.isUserLoggedIn
+    !authStore.getIsUserLoggedIn
   ) {
     next({ name: 'sign-in' })
   } else {

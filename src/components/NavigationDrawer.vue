@@ -1,11 +1,10 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/useAuthStore'
 
 const router = useRouter()
-const auth = useAuthStore()
-const user_name = computed(() => auth.user_name)
+const authStore = useAuthStore()
 const drawer = ref(true)
 const links = [
   {
@@ -45,13 +44,12 @@ const links = [
   },
 ]
 
-const isAdmin = auth.role === 'Admin'
+const isAdmin = authStore.getRole === 'Admin'
 
 const filteredLinks = isAdmin ? links : links.filter((link) => link.text !== 'Users')
 
 const logout = () => {
-  const auth = useAuthStore()
-  auth.logout()
+  authStore.logout()
   router.push({ path: '/sign-in' })
 }
 </script>
@@ -90,7 +88,7 @@ const logout = () => {
       <v-app-bar-title>Terminal Control</v-app-bar-title>
       <template v-slot:append>
         <v-icon icon="mdi-account-circle"></v-icon>
-        <span class="mr-5 ml-1">{{ user_name }}</span>
+        <span class="mr-5 ml-1">{{ authStore.getUserName }}</span>
       </template>
     </v-app-bar>
 

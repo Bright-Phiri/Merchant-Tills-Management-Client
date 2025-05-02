@@ -10,7 +10,7 @@ const { handleError } = useErrorHandler()
 const visible = ref(false)
 const loading = ref(false)
 const router = useRouter()
-const auth = useAuthStore()
+const authStore = useAuthStore()
 const user = ref({
   user_name: '',
   password: '',
@@ -34,12 +34,12 @@ const login = async () => {
       const user_Id = response.data.data.user.id
       const { token, role } = response.data.data
 
-      auth.setToken(token)
-      auth.setUserId(user_Id)
-      auth.setUserName(user_name)
-      auth.setUserRole(role)
-      auth.setEmail(email)
-      auth.setSecret(secret)
+      authStore.setToken(token)
+      authStore.setUserId(user_Id)
+      authStore.setUserName(user_name)
+      authStore.setUserRole(role)
+      authStore.setEmail(email)
+      authStore.setSecret(secret)
 
       await router.push({ path: '/dashboard' })
       showToast(`👋 Welcome back ${response.data.data.user.user_name}!!`, 'success')
