@@ -38,6 +38,11 @@ const links = [
     to: '/users',
   },
   {
+    text: 'Logs',
+    icon: 'mdi-history',
+    to: '/logs',
+  },
+  {
     text: 'Settings',
     icon: 'mdi-cog-outline',
     to: '/settings',
