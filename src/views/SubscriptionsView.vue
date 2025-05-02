@@ -73,22 +73,20 @@ const deleteSubscription = async (id) => {
     <v-row>
       <v-col cols="12">
         <v-card rounded="xl">
-          <v-card-title>
+          <v-card-title class="d-flex justify-space-between">
             <span class="text-black font-weight-bold">Subscriptions</span>
-            <div class="d-flex justify-space-between mt-2">
-              <v-col cols="3" class="pa-0">
-                <v-text-field
-                  rounded="xl"
-                  prepend-inner-icon="mdi-magnify"
-                  clearable
-                  label="Search Subscription"
-                  placeholder="Search subscription"
-                  v-model="search"
-                  variant="outlined"
-                  density="compact"
-                ></v-text-field>
-              </v-col>
-            </div>
+            <v-col cols="3" class="pa-0">
+              <v-text-field
+                rounded="xl"
+                prepend-inner-icon="mdi-magnify"
+                clearable
+                label="Search Subscription"
+                placeholder="Search subscription"
+                v-model="search"
+                variant="outlined"
+                density="compact"
+              ></v-text-field>
+            </v-col>
           </v-card-title>
           <v-card-text>
             <v-data-table-server
