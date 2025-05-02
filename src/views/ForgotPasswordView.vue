@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { showToast } from '@/utils/utils'
 import { useRouter } from 'vue-router'
 import api from '@/services/api'
@@ -30,6 +30,20 @@ const makeApiRequest = async (url, payload, successCallback) => {
     loading.value = false
   }
 }
+
+watch(
+  () => user.value.reset_password_token,
+  (newToken) => {
+    if (newToken.length === 8) {
+      const payloadStep2 = {
+        reset_password_token: newToken,
+      }
+      makeApiRequest('passwords/verify_password_reset_token', payloadStep2, () => {
+        step.value++
+      })
+    }
+  },
+)
 
 const resetAccountPassword = async () => {
   switch (step.value) {
