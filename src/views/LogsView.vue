@@ -21,15 +21,14 @@ const headers = [
   },
   { key: 'action', title: 'Action' },
   { key: 'resource_type', title: 'Resource Type' },
-  { key: 'resource_id', title: 'Phone Number' },
-  { key: 'resource_id', title: 'Resource ID' },
   { key: 'description', title: 'Description' },
+  { key: 'created_at', title: 'Performed At' },
 ]
 
 const fetchLogs = async ({ page, itemsPerPage, search }) => {
   loading.value = true
   try {
-    const response = await api.get('logs', {
+    const response = await api.get('activity_logs', {
       params: { page, per_page: itemsPerPage, search },
     })
     clients.value = response.data.data.logs

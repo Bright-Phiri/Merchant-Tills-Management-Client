@@ -21,6 +21,7 @@ const headers = [
   { key: 'terminal_label', title: 'Terminal Label' },
   { key: 'activation_date', title: 'Activation Date' },
   { key: 'taxpayer', title: 'Owner' },
+  { key: 'posted_on', title: 'Posted On' },
   { key: 'status', title: 'Status' },
 ]
 
