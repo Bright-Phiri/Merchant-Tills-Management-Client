@@ -2,7 +2,7 @@
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import api from '@/services/api'
-import { showAlert, getColor } from '@/utils/utils'
+import { showToast, getColor } from '@/utils/utils'
 import { useErrorHandler } from '@/composables/useErrorHandler'
 
 const { handleError } = useErrorHandler()
@@ -42,7 +42,7 @@ const activateUser = async (id) => {
   try {
     const response = await api.patch(`users/${id}/activate`)
     if (response.status === 200) {
-      await showAlert('success', 'User Activated', 'The user has been successfully activated')
+      showToast('The user has been successfully activated','success')
       fetchSystemUsers()
     }
   } catch (err) {
@@ -54,7 +54,7 @@ const disableUser = async (id) => {
   try {
     const response = await api.patch(`users/${id}/disable`)
     if (response.status === 200) {
-      await showAlert('success', 'User Disabled', 'Use has been sucessfully disabled')
+      showToast('Use has been sucessfully disabled','success')
       fetchSystemUsers()
     }
   } catch (err) {

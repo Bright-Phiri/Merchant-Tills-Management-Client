@@ -2,7 +2,7 @@
 import { ref, watch } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
 import api from '@/services/api'
-import { showAlert, getColor } from '@/utils/utils'
+import { showToast, getColor } from '@/utils/utils'
 import { useRouter } from 'vue-router'
 import { useErrorHandler } from '@/composables/useErrorHandler'
 
@@ -60,9 +60,8 @@ const deleteSubscription = async (id) => {
   try {
     const response = await api.delete(`subscriptions/${id}`)
     if (response.status === 204) {
-      showAlert('success', 'Message', 'Subscription successfully deleted').then(() => {
-        fetchSubscriptions(tableOptions.value)
-      })
+      showToast('Subscription successfully deleted','success')
+      fetchSubscriptions(tableOptions.value)
     }
   } catch (err) {
     handleError(err)

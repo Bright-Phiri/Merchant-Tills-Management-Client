@@ -1,7 +1,6 @@
 <script setup>
 import { ref, watch } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
-import { useRouter } from 'vue-router'
 import api from '@/services/api'
 import { useErrorHandler } from '@/composables/useErrorHandler'
 
@@ -11,7 +10,6 @@ const clients = ref([])
 const search = ref('')
 const itemsPerPage = ref(16)
 const totalItems = ref(0)
-const router = useRouter()
 const headers = [
   {
     align: 'start',
