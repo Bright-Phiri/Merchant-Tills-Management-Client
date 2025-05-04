@@ -55,7 +55,9 @@ const login = async () => {
 <template>
   <div class="d-flex flex-column align-center my-6">
     <v-card class="pa-12 pb-8 mt-6" elevation="8" max-width="448" rounded="lg">
-      <v-img class="mx-auto my-1" max-width="70" src="/LOGO.png" />
+      <v-img class="mx-auto my-1" height="50" src="/LOGO.png" />
+      <p class="mx-auto text-center text-h7 font-weight-bold">Welcome to T-Control</p>
+      <p class="mx-auto text-center text-body-2">Please log in using the form below</p>
       <div class="text-subtitle-1 text-medium-emphasis mt-4">Account</div>
 
       <v-text-field
@@ -105,11 +107,11 @@ const login = async () => {
       </v-btn>
 
       <v-card-text class="text-center">
-        <router-link
+        Don't have account? <router-link
           to="/sign-up"
           class="text-blue text-decoration-none d-inline-flex align-center"
         >
-          Sign up now <v-icon icon="mdi-chevron-right" />
+          Sign up
         </router-link>
       </v-card-text>
     </v-card>
