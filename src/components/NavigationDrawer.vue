@@ -51,13 +51,13 @@ const links = [
 
 const isAdmin = authStore.getRole === 'Admin'
 
-const filteredLinks = links.filter(link => {
-  if (link.text === 'Settings') return false;
-  if (!isAdmin && (link.text === 'Users' || link.text === 'Activity Logs')) return false;
-  return true;
-});
+const filteredLinks = links.filter((link) => {
+  if (link.text === 'Settings') return false
+  if (!isAdmin && (link.text === 'Users' || link.text === 'Activity Logs')) return false
+  return true
+})
 
-const settingsLinkOnly = links.filter(link => link.text === 'Settings');
+const settingsLinkOnly = links.filter((link) => link.text === 'Settings')
 
 const logout = () => {
   authStore.logout()
@@ -68,10 +68,10 @@ const logout = () => {
 <template>
   <div class="NavBar">
     <v-navigation-drawer color="#ffffff" :width="280" v-model="drawer">
-     <div class="d-flex justify-start py-2">
+      <div class="d-flex justify-start py-2">
         <v-img class="my-1 ml-2" max-width="40" src="/LOGO.png" />
-        <span class="text-h6 mt-2 ml-1" style="color: #01A1FF;">T-Control</span>
-     </div>
+        <span class="text-h6 mt-2 ml-1" style="color: #01a1ff">T-Control</span>
+      </div>
 
       <v-list nav>
         <v-list-item
@@ -87,17 +87,16 @@ const logout = () => {
 
       <template v-slot:append>
         <v-list nav class="mb-15">
-        <v-list-item
-          v-for="link in settingsLinkOnly"
-          :prepend-icon="link.icon"
-          :title="link.text"
-          :key="link.text"
-          :to="link.to"
-          rounded="xl"
-          color="#01A1FF"
-        ></v-list-item>
-        <v-divider></v-divider>
-      </v-list>
+          <v-list-item
+            v-for="link in settingsLinkOnly"
+            :prepend-icon="link.icon"
+            :title="link.text"
+            :key="link.text"
+            :to="link.to"
+            rounded="xl"
+            color="#01A1FF"
+          ></v-list-item>
+        </v-list>
         <div class="pa-1">
           <v-btn color="#01A1FF" block v-on:click="logout"> Logout </v-btn>
         </div>
