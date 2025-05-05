@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import api from '@/services/api'
-import { formatCurrency } from '@/utils/utils'
+import { formatCurrency, getColor } from '@/utils/utils'
 import { useRoute, useRouter } from 'vue-router'
 import { useErrorHandler } from '@/composables/useErrorHandler'
 
@@ -76,12 +76,17 @@ onMounted(() => {
             <strong>Status</strong>
             <br />
             <v-chip
-              class="mt-1"
-              :color="subscription.status === 'active' ? 'success' : 'red'"
-              small
-              dark
+              class="d-flex justify-center"
+              size="small"
+              style="width: 80px"
+              variant="tonal"
+              :color="getColor(subscription.status)"
             >
-              {{ subscription.status }}
+              <v-icon
+                :icon="subscription.status === 'active' ? 'mdi-check-circle' : 'mdi-close-circle'"
+                start
+              ></v-icon>
+              {{ subscription.status === 'expired' ? 'Expired' : 'Active' }}
             </v-chip>
           </v-col>
         </v-row>

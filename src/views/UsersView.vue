@@ -42,7 +42,7 @@ const activateUser = async (id) => {
   try {
     const response = await api.patch(`users/${id}/activate`)
     if (response.status === 200) {
-      showToast('The user has been successfully activated','success')
+      showToast('The user has been successfully activated', 'success')
       fetchSystemUsers()
     }
   } catch (err) {
@@ -54,7 +54,7 @@ const disableUser = async (id) => {
   try {
     const response = await api.patch(`users/${id}/disable`)
     if (response.status === 200) {
-      showToast('Use has been sucessfully disabled','success')
+      showToast('Use has been sucessfully disabled', 'success')
       fetchSystemUsers()
     }
   } catch (err) {
@@ -151,6 +151,10 @@ onMounted(() => {
                   variant="tonal"
                   :color="getColor(item.status)"
                 >
+                  <v-icon
+                    :icon="item.status === 'active' ? 'mdi-check-circle' : 'mdi-alert-circle'"
+                    start
+                  />
                   {{ item.status === 'active' ? 'Active' : 'Inactive' }}
                 </v-chip>
               </template>

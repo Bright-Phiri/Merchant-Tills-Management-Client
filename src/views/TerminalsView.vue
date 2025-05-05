@@ -90,6 +90,10 @@ watch(search, () => {
                   variant="tonal"
                   :color="getColor(item.status)"
                 >
+                  <v-icon
+                    :icon="item.status === 'active' ? 'mdi-check-circle' : 'mdi-cancel'"
+                    start
+                  />
                   {{ item.status === 'active' ? 'Active' : 'Blocked' }}
                 </v-chip>
               </template>

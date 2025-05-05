@@ -60,7 +60,7 @@ const deleteSubscription = async (id) => {
   try {
     const response = await api.delete(`subscriptions/${id}`)
     if (response.status === 204) {
-      showToast('Subscription successfully deleted','success')
+      showToast('Subscription successfully deleted', 'success')
       fetchSubscriptions(tableOptions.value)
     }
   } catch (err) {
@@ -109,6 +109,10 @@ const deleteSubscription = async (id) => {
                   variant="tonal"
                   :color="getColor(item.status)"
                 >
+                  <v-icon
+                    :icon="item.status === 'active' ? 'mdi-check-circle' : 'mdi-close-circle'"
+                    start
+                  ></v-icon>
                   {{ item.status === 'active' ? 'Active' : 'Expired' }}
                 </v-chip>
               </template>
