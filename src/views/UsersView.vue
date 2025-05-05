@@ -96,6 +96,7 @@ onMounted(() => {
                 rounded="xl"
                 variant="outlined"
                 to="/new-user"
+                prepend-icon="mdi-account-plus"
                 >New User</v-btn
               >
             </div>

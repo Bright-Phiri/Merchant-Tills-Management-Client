@@ -50,7 +50,12 @@ onMounted(() => {
       <v-card rounded="xl" class="pa-4" elevation="2" v-if="!loading && subscription">
         <v-card-title class="text-h6 px-0 d-flex justify-space-between text-black font-weight-bold"
           >Subscription Details
-          <v-btn color="#01A1FF" rounded="xl" variant="outlined" v-on:click="loadRenewSubPage"
+          <v-btn
+            color="#01A1FF"
+            rounded="xl"
+            variant="outlined"
+            v-on:click="loadRenewSubPage"
+            prepend-icon="mdi-refresh"
             >Renew Subscription</v-btn
           >
         </v-card-title>
