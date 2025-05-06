@@ -111,7 +111,11 @@ const resetAccountPassword = async () => {
       <v-window v-model="step">
         <v-window-item :value="1">
           <v-card-text class="px-0">
-            <div class="text-subtitle-1 text-medium-emphasis mb-2">Email Address</div>
+            <p class="mx-auto text-center text-h7 font-weight-bold">Reset Your Password</p>
+            <p class="mx-auto text-center text-body-2">
+              Please enter the email address associated with your account and we’ll send you
+              instructions on how to reset your password.
+            </p>
             <v-text-field
               density="compact"
               placeholder="Email Address"
@@ -129,7 +133,11 @@ const resetAccountPassword = async () => {
 
         <v-window-item :value="2">
           <v-card-text class="px-0">
-            <div class="text-subtitle-1 text-medium-emphasis mb-2">Reset Token</div>
+            <p class="mx-auto text-center text-h7 font-weight-bold">Enter Reset Token</p>
+            <p class="mx-auto text-center text-body-2">
+              Please enter the reset token you received to continue. This helps us verify your
+              request before setting a new password.
+            </p>
             <v-text-field
               density="compact"
               placeholder="Reset Token"
@@ -142,6 +150,11 @@ const resetAccountPassword = async () => {
 
         <v-window-item :value="3">
           <v-card-text class="px-0">
+            <p class="mx-auto text-center text-h7 font-weight-bold">Set a New Password</p>
+            <p class="mx-auto text-center text-body-2">
+              Please enter your new password below. Make sure it’s strong and something you’ll
+              remember.
+            </p>
             <div class="text-subtitle-1 text-medium-emphasis mb-2">Password</div>
             <v-text-field
               :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
