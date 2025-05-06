@@ -43,6 +43,9 @@ const links = [
     to: '/logs',
   },
   {
+    divider: true, // <--- add this
+  },
+  {
     text: 'Settings',
     icon: 'mdi-cog-outline',
     to: '/settings',
@@ -71,22 +74,22 @@ const logout = () => {
       </div>
 
       <v-list nav>
-        <v-list-item
-          v-for="link in filteredLinks"
-          :prepend-icon="link.icon"
-          :title="link.text"
-          :key="link.text"
-          :to="link.to"
-          rounded="xl"
-          color="#01A1FF"
-        ></v-list-item>
+        <template v-for="link in filteredLinks" :key="link.text || 'divider'">
+          <v-divider v-if="link.divider" class="my-2" />
+          <v-list-item
+            v-else
+            :prepend-icon="link.icon"
+            :title="link.text"
+            :to="link.to"
+            rounded="xl"
+            color="#01A1FF"
+          />
+        </template>
       </v-list>
 
       <template v-slot:append>
         <div class="pa-1">
-          <v-btn color="#01A1FF" prepend-icon="mdi-logout" block v-on:click="logout">
-            Logout
-          </v-btn>
+          <v-btn color="#01A1FF" block v-on:click="logout"> Logout </v-btn>
         </div>
       </template>
     </v-navigation-drawer>
