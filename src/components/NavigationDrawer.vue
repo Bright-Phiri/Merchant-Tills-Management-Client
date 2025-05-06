@@ -52,12 +52,9 @@ const links = [
 const isAdmin = authStore.getRole === 'Admin'
 
 const filteredLinks = links.filter((link) => {
-  if (link.text === 'Settings') return false
   if (!isAdmin && (link.text === 'Users' || link.text === 'Activity Logs')) return false
   return true
 })
-
-const settingsLinkOnly = links.filter((link) => link.text === 'Settings')
 
 const logout = () => {
   authStore.logout()
@@ -86,19 +83,10 @@ const logout = () => {
       </v-list>
 
       <template v-slot:append>
-        <v-list nav class="mb-15">
-          <v-list-item
-            v-for="link in settingsLinkOnly"
-            :prepend-icon="link.icon"
-            :title="link.text"
-            :key="link.text"
-            :to="link.to"
-            rounded="xl"
-            color="#01A1FF"
-          ></v-list-item>
-        </v-list>
         <div class="pa-1">
-          <v-btn color="#01A1FF" block v-on:click="logout"> Logout </v-btn>
+          <v-btn color="#01A1FF" prepend-icon="mdi-logout" block v-on:click="logout">
+            Logout
+          </v-btn>
         </div>
       </template>
     </v-navigation-drawer>
