@@ -31,6 +31,19 @@ const makeApiRequest = async (url, payload, successCallback) => {
   }
 }
 
+const submitEmailAddress = async () => {
+  if (!user.value.email_address) {
+    showToast('⚠️ Please enter the email address.', 'warning')
+    return
+  }
+  const payloadStep1 = {
+    email_address: user.value.email_address,
+  }
+  makeApiRequest('passwords/forgot_password', payloadStep1, () => {
+    step.value++
+  })
+}
+
 watch(
   () => user.value.reset_password_token,
   (newToken) => {
@@ -104,6 +117,7 @@ const resetAccountPassword = async () => {
               placeholder="Email Address"
               prepend-inner-icon="mdi-email-outline"
               variant="outlined"
+              v-on:keyup.enter="submitEmailAddress"
               v-model="user.email_address"
             ></v-text-field>
             <span class="text-caption text-grey-darken-1">
