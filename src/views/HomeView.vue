@@ -224,7 +224,7 @@ onBeforeUnmount(() => {
       <v-col cols="12" lg="9" md="8" sm="12" xs="12">
         <v-card rounded="xl" height="400">
           <v-card-title class="text-grey-darken-2 text-subtitle-1">
-            New Subscriptions and Payment Trends
+            Subscription and Payment Trends
           </v-card-title>
 
           <v-card-text class="px-4 pb-4">
