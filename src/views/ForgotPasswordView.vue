@@ -91,6 +91,11 @@ const resetAccountPassword = async () => {
         showToast('⚠️ Please enter all required fields.', 'warning')
         return
       }
+
+      if (user.value.password !== user.value.password_confirmation) {
+        showToast('⚠️ Passwords don’t match.', 'warning');
+        return;
+      }
       const payloadStep3 = {
         email_address: user.value.email_address,
         password: user.value.password,
@@ -113,10 +118,10 @@ const resetAccountPassword = async () => {
           <v-card-text class="px-0">
             <p class="mx-auto text-center text-h7 font-weight-bold">Reset Your Password</p>
             <p class="mx-auto text-center text-body-2">
-              Please enter the email address associated with your account and we’ll send you
-              instructions on how to reset your password.
+              Enter the email linked to your account, and we’ll send you instructions to reset your password.
             </p>
             <v-text-field
+              class="mt-2"
               density="compact"
               placeholder="Email Address"
               prepend-inner-icon="mdi-email-outline"
@@ -124,10 +129,6 @@ const resetAccountPassword = async () => {
               v-on:keyup.enter="submitEmailAddress"
               v-model="user.email_address"
             ></v-text-field>
-            <span class="text-caption text-grey-darken-1">
-              Please enter the email address associated with your account. We'll send you a link to
-              create a new password.
-            </span>
           </v-card-text>
         </v-window-item>
 
@@ -139,6 +140,7 @@ const resetAccountPassword = async () => {
               request before setting a new password.
             </p>
             <v-text-field
+              class="mt-2"
               density="compact"
               placeholder="Reset Token"
               prepend-inner-icon="mdi-key-chain"
@@ -155,7 +157,7 @@ const resetAccountPassword = async () => {
               Please enter your new password below. Make sure it’s strong and something you’ll
               remember.
             </p>
-            <div class="text-subtitle-1 text-medium-emphasis mb-2">Password</div>
+            <div class="text-subtitle-1 text-medium-emphasis my-2">Password</div>
             <v-text-field
               :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
               :type="visible ? 'text' : 'password'"
@@ -178,9 +180,6 @@ const resetAccountPassword = async () => {
               @click:append-inner="visible = !visible"
               v-model="user.password_confirmation"
             ></v-text-field>
-            <span class="text-caption text-grey-darken-1">
-              Please enter a new password for your account and confirm it by entering it again."
-            </span>
           </v-card-text>
         </v-window-item>
       </v-window>
