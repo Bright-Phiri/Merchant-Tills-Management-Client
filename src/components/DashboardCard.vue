@@ -15,11 +15,11 @@ defineProps({
 </script>
 
 <template>
-  <v-card :color="cardColor" rounded="xl" height="200" :to="to">
+  <v-card :color="cardColor" rounded="xl" height="200" :to>
     <v-card-title class="d-flex justify-space-between py-6">
       <div class="d-flex align-center">
         <v-avatar :color="avatarColor" size="50" rounded="xl">
-          <v-icon v-if="icon" :icon="icon" :color="iconColor" />
+          <v-icon v-if="icon" :icon :color="iconColor" />
         </v-avatar>
         <span class="ml-3 font-weight-medium text-h6 text-grey-darken-2">{{ title }}</span>
       </div>
@@ -30,7 +30,7 @@ defineProps({
       <div>
         <slot name="value">
           <span class="text-h6 text-md-h5 text-lg-h4">
-            <AnimatedCounter v-if="value" :key="value" :value="value" :duration="duration" />
+            <AnimatedCounter v-if="value" :key="value" :value :duration />
             <span v-else>0</span>
           </span>
         </slot>
