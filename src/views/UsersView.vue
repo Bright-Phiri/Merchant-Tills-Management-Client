@@ -104,7 +104,7 @@ onMounted(() => {
           <v-card-text>
             <v-data-table
               :header-props="{ class: 'text-black font-weight-bold' }"
-              density="comfortable"
+              density="compact"
               class="elevation-1 rounded-xl"
               :headers
               :items="users"

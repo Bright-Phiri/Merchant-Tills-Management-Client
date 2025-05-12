@@ -9,7 +9,7 @@ const { handleError } = useErrorHandler()
 const loading = ref(false)
 const clients = ref([])
 const search = ref('')
-const itemsPerPage = ref(16)
+const itemsPerPage = ref(14)
 const totalItems = ref(0)
 const router = useRouter()
 const headers = [
@@ -80,7 +80,7 @@ const loadClientTerminalsView = (id, name) => {
           </v-card-title>
           <v-card-text>
             <v-data-table-server
-              density="comfortable"
+              density="compact"
               :header-props="{ class: 'text-black font-weight-bold' }"
               class="elevation-1 rounded-xl"
               v-model:items-per-page="itemsPerPage"
@@ -100,6 +100,7 @@ const loadClientTerminalsView = (id, name) => {
                     prepend-icon="mdi-eye"
                     class="text-capitalize"
                     color="#01A1FF"
+                    density="compact"
                     v-on:click="loadClientTerminalsView(item.id, item.name)"
                     >View Terminals</v-btn
                   >
@@ -109,6 +110,7 @@ const loadClientTerminalsView = (id, name) => {
                     prepend-icon="mdi-plus-circle-multiple-outline"
                     class="text-capitalize ml-2"
                     color="#01A1FF"
+                    density="compact"
                     v-on:click="loadNewSubscriptionForm(item.id)"
                     >Create Subscription</v-btn
                   >

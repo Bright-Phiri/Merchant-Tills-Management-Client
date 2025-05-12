@@ -11,7 +11,7 @@ const router = useRouter()
 const loading = ref(false)
 const subscriptions = ref([])
 const search = ref('')
-const itemsPerPage = ref(16)
+const itemsPerPage = ref(14)
 const totalItems = ref(0)
 const tableOptions = ref({ page: 1, itemsPerPage: itemsPerPage.value })
 const headers = [
@@ -90,7 +90,7 @@ const deleteSubscription = async (id) => {
           </v-card-title>
           <v-card-text>
             <v-data-table-server
-              density="comfortable"
+              density="compact"
               class="elevation-1 rounded-xl"
               :headers
               :items="subscriptions"

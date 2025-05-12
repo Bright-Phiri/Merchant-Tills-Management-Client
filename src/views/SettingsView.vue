@@ -189,21 +189,21 @@ onMounted(() => {
                           <v-col cols="12">
                             <div class="d-flex">
                               <v-btn
-                                color="#01A1FF"
-                                rounded="xl"
-                                variant="flat"
-                                class="text-capitalize"
-                                v-on:click="updateUserDetails"
-                                :loading
-                                >Update</v-btn
-                              >
-                              <v-btn
                                 v-on:click="fetchUserDetails(authStore.getUserId)"
                                 color="#ff6692"
-                                class="ml-2 text-capitalize"
+                                class="text-capitalize"
                                 rounded="xl"
                                 variant="tonal"
                                 >Cancel</v-btn
+                              >
+                              <v-btn
+                                color="#01A1FF"
+                                rounded="xl"
+                                variant="flat"
+                                class="ml-2 text-capitalize"
+                                v-on:click="updateUserDetails"
+                                :loading
+                                >Update</v-btn
                               >
                             </div>
                           </v-col>
@@ -252,20 +252,20 @@ onMounted(() => {
                           <v-col cols="12">
                             <div class="d-flex">
                               <v-btn
-                                color="#01A1FF"
-                                rounded="xl"
-                                variant="flat"
-                                class="text-capitalize"
-                                v-on:click="updatePassword"
-                                :loading
-                                >Update</v-btn
-                              >
-                              <v-btn
                                 color="#ff6692"
-                                class="ml-2 text-capitalize"
+                                class="text-capitalize"
                                 rounded="xl"
                                 variant="tonal"
                                 >Cancel</v-btn
+                              >
+                              <v-btn
+                                color="#01A1FF"
+                                rounded="xl"
+                                variant="flat"
+                                class="ml-2 text-capitalize"
+                                v-on:click="updatePassword"
+                                :loading
+                                >Update</v-btn
                               >
                             </div>
                           </v-col>

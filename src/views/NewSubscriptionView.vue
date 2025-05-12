@@ -123,16 +123,21 @@ const createSubscription = async () => {
               </v-col>
               <v-col sm="12" lg="6" md="6">
                 <div>
-                  <v-btn color="#01A1FF" variant="flat" rounded="xl" type="submit" :loading
-                    >Submit</v-btn
-                  >
                   <v-btn
                     variant="tonal"
                     color="#ff6692"
                     rounded="xl"
-                    class="ml-2"
                     v-on:click="cancelCreateSubscription"
                     >Cancel</v-btn
+                  >
+                  <v-btn
+                    color="#01A1FF"
+                    class="ml-2"
+                    variant="flat"
+                    rounded="xl"
+                    type="submit"
+                    :loading
+                    >Submit</v-btn
                   >
                 </div>
               </v-col>

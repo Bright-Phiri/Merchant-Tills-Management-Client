@@ -140,21 +140,17 @@ const cancelAddUser = () => {
 
                   <v-col cols="12">
                     <div class="d-flex">
+                      <v-btn color="#ff6692" rounded="xl" variant="tonal" v-on:click="cancelAddUser"
+                        >Cancel</v-btn
+                      >
                       <v-btn
                         color="#01A1FF"
                         rounded="xl"
+                        class="ml-2"
                         variant="flat"
                         v-on:click="addUser"
                         :loading
                         >Submit</v-btn
-                      >
-                      <v-btn
-                        color="#ff6692"
-                        class="ml-2"
-                        rounded="xl"
-                        variant="tonal"
-                        v-on:click="cancelAddUser"
-                        >Cancel</v-btn
                       >
                     </div>
                   </v-col>
