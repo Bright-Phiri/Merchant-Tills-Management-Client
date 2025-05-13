@@ -91,6 +91,8 @@ const deleteSubscription = async (id) => {
           <v-card-text>
             <v-data-table-server
               density="compact"
+              :hide-default-body="subscriptions.length === 0 && !loading"
+              :hide-default-footer="subscriptions.length === 0 && !loading"
               class="elevation-1 rounded-xl"
               :headers
               :items="subscriptions"
@@ -101,6 +103,7 @@ const deleteSubscription = async (id) => {
               loading-text="Loading subscriptions..."
               hover
             >
+              <template v-slot:no-data></template>
               <template v-slot:[`item.status`]="{ item }">
                 <v-chip
                   class="d-flex justify-center"
@@ -141,6 +144,21 @@ const deleteSubscription = async (id) => {
                   color="#01A1FF"
                 ></v-progress-linear> </template
             ></v-data-table-server>
+            <v-empty-state
+              v-if="!loading && subscriptions.length === 0 && search"
+              icon="mdi-magnify"
+              title="We couldn't find a match."
+              text="Try adjusting your filters or search terms to find what you're looking for."
+              class="mt-4"
+            />
+
+            <v-empty-state
+              v-else-if="!loading && subscriptions.length === 0"
+              icon="mdi-database-outline"
+              title="No subscriptions yet"
+              text="Subscriptions will show up here once you add some."
+              class="mt-4"
+            />
           </v-card-text>
         </v-card>
       </v-col>

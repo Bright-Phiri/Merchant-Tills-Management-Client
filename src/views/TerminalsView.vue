@@ -72,6 +72,8 @@ watch(search, () => {
             <v-data-table-server
               :header-props="{ class: 'text-black font-weight-bold' }"
               density="compact"
+              :hide-default-body="terminals.length === 0 && !loading"
+              :hide-default-footer="terminals.length === 0 && !loading"
               class="elevation-1 rounded-xl"
               :headers
               :items="terminals"
@@ -82,6 +84,7 @@ watch(search, () => {
               loading-text="Loading terminals..."
               hover
             >
+              <template v-slot:no-data></template>
               <template v-slot:[`item.status`]="{ item }">
                 <v-chip
                   class="d-flex justify-center"
@@ -104,6 +107,21 @@ watch(search, () => {
                   color="#01A1FF"
                 ></v-progress-linear> </template
             ></v-data-table-server>
+            <v-empty-state
+              v-if="!loading && terminals.length === 0 && search"
+              icon="mdi-magnify"
+              title="We couldn't find a match."
+              text="Try adjusting your filters or search terms to find what you're looking for."
+              class="mt-4"
+            />
+
+            <v-empty-state
+              v-else-if="!loading && terminals.length === 0"
+              icon="mdi-database-outline"
+              title="No terminals yet"
+              text="Terminals will show up here."
+              class="mt-4"
+            />
           </v-card-text>
         </v-card>
       </v-col>

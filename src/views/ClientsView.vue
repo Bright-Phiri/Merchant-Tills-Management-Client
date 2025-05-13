@@ -81,6 +81,8 @@ const loadClientTerminalsView = (id, name) => {
           <v-card-text>
             <v-data-table-server
               density="compact"
+              :hide-default-body="clients.length === 0 && !loading"
+              :hide-default-footer="clients.length === 0 && !loading"
               :header-props="{ class: 'text-black font-weight-bold' }"
               class="elevation-1 rounded-xl"
               v-model:items-per-page="itemsPerPage"
@@ -93,6 +95,7 @@ const loadClientTerminalsView = (id, name) => {
               loading-text="Loading clients..."
               hover
             >
+              <template v-slot:no-data></template>
               <template v-slot:item.action="{ item }">
                 <div class="d-flex">
                   <v-btn
@@ -120,6 +123,21 @@ const loadClientTerminalsView = (id, name) => {
                 <v-progress-linear height="3" indeterminate color="#01A1FF"></v-progress-linear>
               </template>
             </v-data-table-server>
+            <v-empty-state
+              v-if="!loading && clients.length === 0 && search"
+              icon="mdi-magnify"
+              title="We couldn't find a match."
+              text="Try adjusting your filters or search terms to find what you're looking for."
+              class="mt-4"
+            />
+
+            <v-empty-state
+              v-else-if="!loading && clients.length === 0"
+              icon="mdi-database-outline"
+              title="No clients yet"
+              text="Clients will show up here."
+              class="mt-4"
+            />
           </v-card-text>
         </v-card>
       </v-col>

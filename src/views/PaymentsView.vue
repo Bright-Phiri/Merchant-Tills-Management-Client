@@ -72,6 +72,8 @@ watch(search, () => {
             <v-data-table-server
               :header-props="{ class: 'text-black font-weight-bold' }"
               density="compact"
+              :hide-default-body="payments.length === 0 && !loading"
+              :hide-default-footer="payments.length === 0 && !loading"
               class="elevation-1 rounded-xl"
               :headers
               :items="payments"
@@ -82,6 +84,7 @@ watch(search, () => {
               loading-text="Loading payments..."
               hover
             >
+              <template v-slot:no-data></template>
               <template v-slot:item.amount="{ item }"> {{ formatCurrency(item.amount) }} </template>
               <template v-slot:loader>
                 <v-progress-linear
@@ -90,6 +93,21 @@ watch(search, () => {
                   color="#01A1FF"
                 ></v-progress-linear> </template
             ></v-data-table-server>
+            <v-empty-state
+              v-if="!loading && payments.length === 0 && search"
+              icon="mdi-magnify"
+              title="We couldn't find a match."
+              text="Try adjusting your filters or search terms to find what you're looking for."
+              class="mt-4"
+            />
+
+            <v-empty-state
+              v-else-if="!loading && payments.length === 0"
+              icon="mdi-database-outline"
+              title="No payments yet"
+              text="Payments will show up here."
+              class="mt-4"
+            />
           </v-card-text>
         </v-card>
       </v-col>
