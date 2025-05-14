@@ -9,10 +9,24 @@ const { handleError } = useErrorHandler()
 const route = useRoute()
 const loading = ref(false)
 const subscriptionForm = useTemplateRef('subscriptionForm')
-const paymentMethods = ref(['CASH', 'TNM MPAMBA', 'AIRTEL MONEY', 'VISA'])
 const subscription = ref({
   days: '',
 })
+
+const srcs = {
+  0: '/images/cash-logo.jpg',
+  1: '/images/tnm-logo.png',
+  2: '/images/airtel-logo.jpg',
+  3: '/images/visa-logo.png',
+}
+
+const paymentMethods = ref([
+  { name: 'CASH', src: srcs[0]}, 
+  { name: 'TNM MPAMBA', src: srcs[1] },
+  { name: 'AIRTEL MONEY', src: srcs[2] },
+  { name: 'VISA', src: srcs[3] },
+])
+
 
 const payment = ref({
   payment_date: '',
@@ -105,11 +119,23 @@ const createSubscription = async () => {
                 <v-select
                   rounded="lg"
                   :items="paymentMethods"
+                  item-title="name"
+                  item-value="name"
                   v-model="payment.payment_method"
                   label="Payment Method"
                   variant="outlined"
                   density="comfortable"
-                />
+                  chips
+                  closable-chips
+                > 
+                <template v-slot:chip="{ props, item }">
+                <v-chip
+                  v-bind="props"
+                  :prepend-avatar="item.raw.src"
+                  :text="item.raw.name"
+                ></v-chip>
+              </template>
+              </v-select>
               </v-col>
 
               <v-col sm="12" lg="6" md="6">

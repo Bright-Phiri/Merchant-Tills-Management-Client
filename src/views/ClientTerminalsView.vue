@@ -1,7 +1,8 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import api from '@/services/api'
 import { useRoute } from 'vue-router'
+import { useDebounceFn } from '@vueuse/core'
 import { getColor } from '@/utils/utils'
 import { useErrorHandler } from '@/composables/useErrorHandler'
 
@@ -25,11 +26,11 @@ const headers = [
   { key: 'status', title: 'Status' },
 ]
 
-const fetchClientTerminals = async ({ page, itemsPerPage }) => {
+const fetchClientTerminals = async ({ page, itemsPerPage, search }) => {
   loading.value = true
   try {
     const response = await api.get(`taxpayers/${route.params.id}/show_terminals`, {
-      params: { page, per_page: itemsPerPage },
+      params: { page, per_page: itemsPerPage , search},
     })
     terminals.value = response.data.data.terminals
     totalItems.value = response.data.data.total
@@ -39,6 +40,14 @@ const fetchClientTerminals = async ({ page, itemsPerPage }) => {
     loading.value = false
   }
 }
+
+const debouncedSearch = useDebounceFn(() => {
+  fetchClientTerminals({ page: 1, per_page: itemsPerPage.value, search: search.value })
+}, 400)
+
+watch(search, () => {
+  debouncedSearch()
+})
 </script>
 <template>
   <div class="Terminals">
