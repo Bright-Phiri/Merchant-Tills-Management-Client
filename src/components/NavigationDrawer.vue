@@ -69,7 +69,7 @@ const logout = () => {
   <div class="NavBar">
     <v-navigation-drawer color="#ffffff" :width="280" v-model="drawer">
       <div class="d-flex justify-start">
-        <v-img class="my-1 ml-2" max-width="40" src="/LOGO.png" />
+        <v-img class="my-2 ml-2" max-width="40" src="/LOGO.png" />
         <span class="text-h5 mt-2 ml-1" style="color: #01a1ff">T-Control</span>
       </div>
 
@@ -89,7 +89,9 @@ const logout = () => {
 
       <template v-slot:append>
         <div class="pa-1">
-          <v-btn color="#01A1FF"  prepend-icon="mdi-logout" block v-on:click="logout"> Logout </v-btn>
+          <v-btn color="#01A1FF" prepend-icon="mdi-logout" block v-on:click="logout">
+            Logout
+          </v-btn>
         </div>
       </template>
     </v-navigation-drawer>
