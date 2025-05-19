@@ -45,6 +45,7 @@ onBeforeUnmount(() => {
         v-if="authStore.isUserLoggedIn"
         color="#01A1FF"
         icon="mdi-cog"
+        size="large"
         class="fab"
         to="/settings"
       ></v-fab>
