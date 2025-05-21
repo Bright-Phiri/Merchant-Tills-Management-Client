@@ -93,8 +93,8 @@ const resetAccountPassword = async () => {
       }
 
       if (user.value.password !== user.value.password_confirmation) {
-        showToast('⚠️ Passwords don’t match.', 'warning');
-        return;
+        showToast('⚠️ Passwords don’t match.', 'warning')
+        return
       }
       const payloadStep3 = {
         email_address: user.value.email_address,
@@ -112,13 +112,14 @@ const resetAccountPassword = async () => {
 <template>
   <div class="d-flex flex-column align-center my-6">
     <v-card class="pa-12 pb-8 mt-6" elevation="8" width="448" rounded="lg">
-      <v-img class="mx-auto my-1" max-width="70" src="/LOGO.png" />
+      <v-img class="mx-auto my-1" max-width="70" src="/images/LOGO.png" />
       <v-window v-model="step">
         <v-window-item :value="1">
           <v-card-text class="px-0">
             <p class="mx-auto text-center text-h7 font-weight-bold">Reset Your Password</p>
             <p class="mx-auto text-center text-body-2">
-              Enter the email linked to your account, and we’ll send you instructions to reset your password.
+              Enter the email linked to your account, and we’ll send you instructions to reset your
+              password.
             </p>
             <v-text-field
               class="mt-2"

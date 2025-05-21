@@ -69,7 +69,7 @@ const logout = () => {
   <div class="NavBar">
     <v-navigation-drawer color="#ffffff" :width="280" v-model="drawer">
       <div class="d-flex justify-start">
-        <v-img class="my-2 ml-2" max-width="40" src="/LOGO.png" />
+        <v-img class="my-2 ml-2" max-width="40" src="/images/LOGO.png" />
         <span class="text-h5 mt-2 ml-1" style="color: #01a1ff">T-Control</span>
       </div>
 
