@@ -1,5 +1,5 @@
 import { createConsumer } from '@rails/actioncable'
 
-const cable = createConsumer('ws://127.0.0.1:3000/websocket')
+const cable = createConsumer('wss://terminalcontrol-api.onrender.com/websocket')
 
 export default cable
