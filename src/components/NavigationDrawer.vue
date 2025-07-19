@@ -5,13 +5,19 @@ import { useAuthStore } from '@/stores/useAuthStore'
 
 const router = useRouter()
 const authStore = useAuthStore()
+
 const drawer = ref(true)
+
+const isAdmin = authStore.getRole === 'Admin'
+
 const links = [
+  { header: 'MAIN' },
   {
     text: 'Dashboard',
     icon: 'mdi-view-dashboard',
     to: '/dashboard',
   },
+  { header: 'MANAGEMENT' },
   {
     text: 'Clients',
     icon: 'mdi-account-multiple',
@@ -42,17 +48,13 @@ const links = [
     icon: 'mdi-history',
     to: '/logs',
   },
-  {
-    divider: true, // <--- add this
-  },
+  { header: 'OTHER' },
   {
     text: 'Settings',
     icon: 'mdi-cog-outline',
     to: '/settings',
   },
 ]
-
-const isAdmin = authStore.getRole === 'Admin'
 
 const filteredLinks = links.filter((link) => {
   if (!isAdmin && (link.text === 'Users' || link.text === 'Activity Logs')) return false
@@ -67,14 +69,22 @@ const logout = () => {
 
 <template>
   <div class="NavBar">
-    <v-navigation-drawer color="#ffffff" :width="280" v-model="drawer">
+    <v-navigation-drawer v-model="drawer" color="white" :width="280" elevation="1" app class="pa-4">
+      <!-- Logo -->
       <div class="d-flex justify-start">
-        <v-img class="mt-2 ml-2" max-width="150" src="/images/LOGO.png" />
+        <v-img max-width="150" src="/images/LOGO.png" />
       </div>
 
-      <v-list nav>
-        <template v-for="link in filteredLinks" :key="link.text || 'divider'">
-          <v-divider v-if="link.divider" class="my-2" />
+      <!-- Navigation Links -->
+      <v-list nav dense>
+        <template v-for="(link, index) in filteredLinks" :key="index">
+          <v-list-subheader
+            v-if="link.header"
+            class="text-grey text-uppercase text-caption font-weight-bold"
+          >
+            {{ link.header }}
+          </v-list-subheader>
+
           <v-list-item
             v-else
             :prepend-icon="link.icon"
@@ -86,31 +96,33 @@ const logout = () => {
         </template>
       </v-list>
 
+      <!-- Footer User Info & Logout -->
       <template v-slot:append>
-        <div class="pa-1">
-          <v-btn color="#01A1FF" prepend-icon="mdi-logout" block v-on:click="logout">
-            Logout
-          </v-btn>
+        <div class="mt-auto pa-2">
+          <v-divider class="mb-2" />
+
+          <v-btn block color="#01A1FF" prepend-icon="mdi-logout" @click="logout"> Logout </v-btn>
         </div>
       </template>
     </v-navigation-drawer>
 
     <v-app-bar :elevation="0" color="#f9fafe">
       <template v-slot:prepend>
-        <v-app-bar-nav-icon
-          size="large"
-          variant="text"
-          @click.stop="drawer = !drawer"
-        ></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon size="large" variant="text" @click.stop="drawer = !drawer" />
       </template>
       <v-app-bar-title class="text-subtitle-1">Terminal Control</v-app-bar-title>
 
       <template v-slot:append>
-        <v-icon icon="mdi-account-circle"></v-icon>
+        <v-avatar size="35" color="blue" class="mr-2">
+          <span class="text-white text-subtitle-2">
+            {{ authStore.getUserName ? authStore.getUserName.charAt(0).toUpperCase() : '' }}
+          </span>
+        </v-avatar>
         <span class="mr-5 ml-1">{{ authStore.getUserName }}</span>
       </template>
     </v-app-bar>
 
+    <!-- Main Content -->
     <router-view v-slot="{ Component, route }">
       <Transition name="slide-fade" mode="out-in">
         <component :is="Component" :key="route.fullPath" />

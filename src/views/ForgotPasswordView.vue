@@ -112,7 +112,7 @@ const resetAccountPassword = async () => {
 <template>
   <div class="d-flex flex-column align-center my-6">
     <v-card class="pa-12 pb-8 mt-6" elevation="8" width="448" rounded="lg">
-      <v-img class="mx-auto my-1" max-width="70" src="/images/LOGO.png" />
+      <v-img class="mx-auto my-1" height="50" src="/images/LOGO.png" />
       <v-window v-model="step">
         <v-window-item :value="1">
           <v-card-text class="px-0">
