@@ -109,6 +109,7 @@ const signUp = async () => {
           class="text-blue text-decoration-none d-inline-flex align-center"
         >
           Sign in
+          <v-icon icon="mdi-chevron-right"></v-icon>
         </router-link>
       </v-card-text>
     </v-card>
