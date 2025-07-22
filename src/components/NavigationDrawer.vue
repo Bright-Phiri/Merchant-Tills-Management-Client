@@ -72,7 +72,7 @@ const logout = () => {
     <v-navigation-drawer v-model="drawer" color="white" :width="280" elevation="1" app class="pa-4">
       <!-- Logo -->
       <div class="d-flex justify-start">
-        <v-img max-width="150" src="/images/LOGO.png" />
+        <v-img max-width="177" src="/images/LOGO.png" />
       </div>
 
       <!-- Navigation Links -->
