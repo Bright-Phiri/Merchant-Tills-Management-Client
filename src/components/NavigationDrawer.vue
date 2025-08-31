@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/useAuthStore'
 
@@ -8,57 +8,52 @@ const authStore = useAuthStore()
 
 const drawer = ref(true)
 
-const isAdmin = authStore.getRole === 'Admin'
-
 const links = [
   { header: 'MAIN' },
-  {
-    text: 'Dashboard',
-    icon: 'mdi-view-dashboard',
-    to: '/dashboard',
-  },
+  { text: 'Dashboard', icon: 'mdi-view-dashboard', to: '/dashboard', resource: null, action: null },
   { header: 'MANAGEMENT' },
   {
     text: 'Clients',
     icon: 'mdi-account-multiple',
     to: '/clients',
+    resource: 'taxpayers',
+    action: 'view',
   },
   {
     text: 'Terminals',
     icon: 'mdi-sitemap',
     to: '/terminals',
+    resource: 'terminals',
+    action: 'view',
   },
   {
     text: 'Subscriptions',
     icon: 'mdi-playlist-check',
     to: '/subscriptions',
+    resource: 'subscriptions',
+    action: 'view',
   },
   {
     text: 'Payments',
     icon: 'mdi-credit-card-outline',
     to: '/payments',
+    resource: 'payments',
+    action: 'view',
   },
-  {
-    text: 'Users',
-    icon: 'mdi-account-multiple',
-    to: '/users',
-  },
-  {
-    text: 'Activity Logs',
-    icon: 'mdi-history',
-    to: '/logs',
-  },
+  { text: 'Users', icon: 'mdi-account-multiple', to: '/users', resource: 'users', action: 'view' },
+  { text: 'Activity Logs', icon: 'mdi-history', to: '/logs', resource: 'logs', action: 'view' },
   { header: 'OTHER' },
-  {
-    text: 'Settings',
-    icon: 'mdi-cog-outline',
-    to: '/settings',
-  },
+  { text: 'Settings', icon: 'mdi-cog-outline', to: '/settings', resource: null, action: null },
 ]
 
-const filteredLinks = links.filter((link) => {
-  if (!isAdmin && (link.text === 'Users' || link.text === 'Activity Logs')) return false
-  return true
+const filteredLinks = computed(() => {
+  const perms = authStore.getPermissions
+  return links.filter((link) => {
+    if (!link.resource) return true
+
+    const allowedActions = perms[link.resource] || []
+    return allowedActions.includes(link.action)
+  })
 })
 
 const logout = () => {

@@ -8,8 +8,8 @@ export const useAuthStore = defineStore(
     const user_id = ref(null)
     const user_name = ref(null)
     const email = ref(null)
-    const role = ref(null)
     const secret = ref(null)
+    const permissions = ref({})
     const isUserLoggedIn = ref(false)
 
     function setUserId(userId) {
@@ -29,18 +29,18 @@ export const useAuthStore = defineStore(
       email.value = emailValue
     }
 
-    function setUserRole(userRole) {
-      role.value = userRole
-    }
-
     function setSecret(secretValue) {
       secret.value = secretValue
     }
 
+    function setPermissions(perms) {
+      permissions.value = perms
+    }
+
+    const getPermissions = computed(() => permissions.value)
     const getToken = computed(() => token.value)
     const getUserId = computed(() => user_id.value)
     const getEmail = computed(() => email.value)
-    const getRole = computed(() => role.value)
     const getSecret = computed(() => secret.value)
     const getUserName = computed(() => user_name.value)
     const getIsUserLoggedIn = computed(() => isUserLoggedIn.value)
@@ -48,9 +48,9 @@ export const useAuthStore = defineStore(
     function logout() {
       token.value = null
       user_name.value = null
-      role.value = null
       user_id.value = null
       secret.value = null
+      permissions.value = {}
       isUserLoggedIn.value = false
     }
 
@@ -59,24 +59,24 @@ export const useAuthStore = defineStore(
       user_id,
       user_name,
       email,
-      role,
       secret,
+      permissions,
       isUserLoggedIn,
 
       getUserId,
       getToken,
       getUserName,
       getEmail,
-      getRole,
       getSecret,
+      getPermissions,
       getIsUserLoggedIn,
 
       setUserId,
       setToken,
       setUserName,
       setEmail,
-      setUserRole,
       setSecret,
+      setPermissions,
       logout,
     }
   },

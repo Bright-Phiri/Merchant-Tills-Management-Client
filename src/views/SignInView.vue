@@ -32,13 +32,13 @@ const login = async () => {
       const user_name = response.data.data.user.user_name
       const email = response.data.data.user.email_address
       const user_Id = response.data.data.user.id
-      const { token, role } = response.data.data
+      const { token, permissions } = response.data.data
 
       authStore.setToken(token)
       authStore.setUserId(user_Id)
       authStore.setUserName(user_name)
-      authStore.setUserRole(role)
       authStore.setEmail(email)
+      authStore.setPermissions(permissions)
       authStore.setSecret(secret)
 
       await router.push({ path: '/dashboard' })
