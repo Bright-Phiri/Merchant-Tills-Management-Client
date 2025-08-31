@@ -17,7 +17,7 @@ const links = [
     icon: 'mdi-account-multiple',
     to: '/clients',
     resource: 'taxpayers',
-    action: 'view',
+    action: 'read', // <-- match backend permission
   },
   {
     text: 'Terminals',
@@ -40,8 +40,20 @@ const links = [
     resource: 'payments',
     action: 'read',
   },
-  { text: 'Users', icon: 'mdi-account-multiple', to: '/users', resource: 'users', action: 'read' },
-  { text: 'Activity Logs', icon: 'mdi-history', to: '/logs', resource: 'logs', action: 'read' },
+  {
+    text: 'Users',
+    icon: 'mdi-account-multiple',
+    to: '/users',
+    resource: 'users',
+    action: 'read',
+  },
+  {
+    text: 'Activity Logs',
+    icon: 'mdi-history',
+    to: '/logs',
+    resource: 'logs',
+    action: 'read',
+  },
   { header: 'OTHER' },
   { text: 'Settings', icon: 'mdi-cog-outline', to: '/settings', resource: null, action: null },
 ]
@@ -50,7 +62,6 @@ const filteredLinks = computed(() => {
   const perms = authStore.getPermissions
   return links.filter((link) => {
     if (!link.resource) return true
-
     const allowedActions = perms[link.resource] || []
     return allowedActions.includes(link.action)
   })
