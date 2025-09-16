@@ -3,7 +3,7 @@ import { ref, watch } from 'vue'
 import api from '@/services/api'
 import { useRoute } from 'vue-router'
 import { useDebounceFn } from '@vueuse/core'
-import { getColor } from '@/utils/utils'
+import { getColor, showToast } from '@/utils/utils'
 import { useErrorHandler } from '@/composables/useErrorHandler'
 
 const { handleError } = useErrorHandler()
@@ -30,10 +30,40 @@ const fetchClientTerminals = async ({ page, itemsPerPage, search }) => {
   loading.value = true
   try {
     const response = await api.get(`taxpayers/${route.params.id}/show_terminals`, {
-      params: { page, per_page: itemsPerPage , search},
+      params: { page, per_page: itemsPerPage, search },
     })
     terminals.value = response.data.data.terminals
     totalItems.value = response.data.data.total
+  } catch (err) {
+    handleError(err)
+  } finally {
+    loading.value = false
+  }
+}
+
+const blockAllTerminals = async () => {
+  try {
+    loading.value = true
+    const response = await api.post(`taxpayers/${route.params.id}/block_terminals`)
+    if (response.status === 200) {
+      showToast(response.data.data.message, 'success')
+      fetchClientTerminals({ page: 1, itemsPerPage: itemsPerPage.value, search: search.value })
+    }
+  } catch (err) {
+    handleError(err)
+  } finally {
+    loading.value = false
+  }
+}
+
+const unblockAllTerminals = async () => {
+  try {
+    loading.value = true
+    const response = await api.post(`taxpayers/${route.params.id}/unblock_terminals`)
+    if (response.status === 200) {
+      showToast(response.data.data.message, 'success')
+      fetchClientTerminals({ page: 1, itemsPerPage: itemsPerPage.value, search: search.value })
+    }
   } catch (err) {
     handleError(err)
   } finally {
@@ -54,20 +84,38 @@ watch(search, () => {
     <v-row>
       <v-col cols="12">
         <v-card rounded="xl">
-          <v-card-title class="d-flex justify-space-between">
+          <v-card-title>
             <span class="text-black font-weight-bold">{{ route.params.name }} Terminals</span>
-            <v-col cols="3">
-              <v-text-field
-                rounded="xl"
-                prepend-inner-icon="mdi-magnify"
-                clearable
-                v-model="search"
-                label="Search Terminal"
-                placeholder="Search terminal"
-                variant="outlined"
-                density="compact"
-              ></v-text-field>
-            </v-col>
+            <div class="d-flex justify-space-between py-4">
+              <v-col cols="3" class="pa-0">
+                <v-text-field
+                  rounded="xl"
+                  prepend-inner-icon="mdi-magnify"
+                  clearable
+                  v-model="search"
+                  label="Search Terminal"
+                  placeholder="Search terminal"
+                  variant="outlined"
+                  density="compact"
+                ></v-text-field>
+              </v-col>
+              <div class="d-flex align-center">
+                <v-btn
+                  color="red"
+                  variant="text"
+                  prepend-icon="mdi-cancel"
+                  v-on:click="blockAllTerminals"
+                  >Block All Terminals</v-btn
+                >
+                <v-btn
+                  color="#01A1FF"
+                  variant="text"
+                  prepend-icon="mdi-redo"
+                  v-on:click="unblockAllTerminals"
+                  >Unblock All Terminals</v-btn
+                >
+              </div>
+            </div>
           </v-card-title>
           <v-card-text>
             <v-data-table-server
