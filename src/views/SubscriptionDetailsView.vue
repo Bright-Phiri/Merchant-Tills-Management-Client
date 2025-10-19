@@ -96,46 +96,53 @@ onMounted(() => {
           </v-col>
         </v-row>
         <v-divider class="my-2" />
-        <v-row>
-          <v-col cols="12">
-            <div class="d-flex column">
-              <div class="d-flex justify-space-between w-100">
-                <h2 class="font-weight-light">Payments</h2>
-                <v-col cols="3">
-                  <v-text-field
-                    rounded="xl"
-                    prepend-inner-icon="mdi-magnify"
-                    clearable
-                    label="Search Payment"
-                    v-model="search"
-                    placeholder="Search payment"
-                    variant="outlined"
-                    density="compact"
-                  ></v-text-field>
-                </v-col>
+      </v-card>
+
+      <v-card rounded="xl" class="pa-4 mt-5" elevation="2" v-if="!loading && subscription">
+        <v-card-text>
+          <v-row>
+            <v-col cols="12">
+              <div class="d-flex column">
+                <div class="d-flex justify-space-between w-100">
+                  <h2 class="font-weight-light">Payments</h2>
+                  <v-col cols="3">
+                    <v-text-field
+                      rounded="xl"
+                      prepend-inner-icon="mdi-magnify"
+                      clearable
+                      label="Search Payment"
+                      v-model="search"
+                      placeholder="Search payment"
+                      variant="outlined"
+                      density="compact"
+                    ></v-text-field>
+                  </v-col>
+                </div>
               </div>
-            </div>
-            <v-data-table
-              :header-props="{ class: 'text-black font-weight-bold' }"
-              density="compact"
-              class="elevation-1 rounded-xl"
-              :headers
-              :items="payments"
-              :search
-              :loading
-              loading-text="Loading payments..."
-              hover
-            >
-              <template v-slot:item.amount="{ item }"> {{ formatCurrency(item.amount) }} </template>
-              <template v-slot:loader>
-                <v-progress-linear
-                  height="3"
-                  indeterminate
-                  color="#01A1FF"
-                ></v-progress-linear> </template
-            ></v-data-table>
-          </v-col>
-        </v-row>
+              <v-data-table
+                :header-props="{ class: 'text-black font-weight-bold' }"
+                density="compact"
+                class="elevation-1 rounded-xl"
+                :headers
+                :items="payments"
+                :search
+                :loading
+                loading-text="Loading payments..."
+                hover
+              >
+                <template v-slot:item.amount="{ item }">
+                  {{ formatCurrency(item.amount) }}
+                </template>
+                <template v-slot:loader>
+                  <v-progress-linear
+                    height="3"
+                    indeterminate
+                    color="#01A1FF"
+                  ></v-progress-linear> </template
+              ></v-data-table>
+            </v-col>
+          </v-row>
+        </v-card-text>
       </v-card>
 
       <v-skeleton-loader type="card" v-if="loading" />

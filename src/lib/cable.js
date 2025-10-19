@@ -3,8 +3,6 @@ import { useAuthStore } from '@/stores/useAuthStore'
 
 const authStore = useAuthStore()
 
-const cable = createConsumer(
-  'wss://terminalcontrol-api.onrender.com/websocket?token=' + authStore.getToken,
-)
+const cable = createConsumer('ws://127.0.0.1:3000/websocket?token=' + authStore.getToken)
 
 export default cable
