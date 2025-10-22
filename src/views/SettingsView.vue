@@ -218,56 +218,96 @@ onMounted(() => {
                     <v-card-title class="text-black">Change Password</v-card-title>
                     <v-card-text class="mt-2">
                       <v-form ref="passwordForm">
-                        <v-row no-gutters>
-                          <v-col cols="12">
-                            <v-text-field
-                              label="Old Password"
-                              v-model="user.old_password"
-                              variant="outlined"
-                              density="comfortable"
-                              type="password"
-                            ></v-text-field>
-                          </v-col>
+                        <v-row>
+                          <v-col cols="12" md="8">
+                            <v-row no-gutters>
+                              <v-col cols="12">
+                                <v-text-field
+                                  label="Old Password"
+                                  v-model="user.old_password"
+                                  variant="outlined"
+                                  density="comfortable"
+                                  type="password"
+                                ></v-text-field>
+                              </v-col>
 
-                          <v-col cols="12">
-                            <v-text-field
-                              label="New Password"
-                              v-model="user.password"
-                              variant="outlined"
-                              density="comfortable"
-                              type="password"
-                            ></v-text-field>
-                          </v-col>
+                              <v-col cols="12">
+                                <v-text-field
+                                  label="New Password"
+                                  v-model="user.password"
+                                  variant="outlined"
+                                  density="comfortable"
+                                  type="password"
+                                ></v-text-field>
+                              </v-col>
 
-                          <v-col cols="12">
-                            <v-text-field
-                              label="Password Confirmation"
-                              v-model="user.password_confirmation"
-                              variant="outlined"
-                              density="comfortable"
-                              type="password"
-                            ></v-text-field>
-                          </v-col>
+                              <v-col cols="12">
+                                <v-text-field
+                                  label="Password Confirmation"
+                                  v-model="user.password_confirmation"
+                                  variant="outlined"
+                                  density="comfortable"
+                                  type="password"
+                                ></v-text-field>
+                              </v-col>
 
-                          <v-col cols="12">
-                            <div class="d-flex">
-                              <v-btn
-                                color="#ff6692"
-                                class="text-capitalize"
-                                rounded="xl"
-                                variant="tonal"
-                                >Cancel</v-btn
-                              >
-                              <v-btn
-                                color="#01A1FF"
-                                rounded="xl"
-                                variant="flat"
-                                class="ml-2 text-capitalize"
-                                v-on:click="updatePassword"
-                                :loading
-                                >Update</v-btn
-                              >
-                            </div>
+                              <v-col cols="12">
+                                <div class="d-flex">
+                                  <v-btn
+                                    color="#ff6692"
+                                    class="text-capitalize"
+                                    rounded="xl"
+                                    variant="tonal"
+                                    >Cancel</v-btn
+                                  >
+                                  <v-btn
+                                    color="#01A1FF"
+                                    rounded="xl"
+                                    variant="flat"
+                                    class="ml-2 text-capitalize"
+                                    v-on:click="updatePassword"
+                                    :loading
+                                    >Update</v-btn
+                                  >
+                                </div>
+                              </v-col>
+                            </v-row>
+                          </v-col>
+                          <v-col cols="12" md="4">
+                            <v-card color="bg-surface" variant="flat" class="pa-4">
+                              <h3 class="text-subtitle-1 font-weight-medium mb-3">
+                                Password Requirements
+                              </h3>
+                              <div class="d-flex flex-column gap-2">
+                                <div class="d-flex align-center text-caption">
+                                  <v-icon
+                                    icon="mdi-check"
+                                    size="small"
+                                    color="success"
+                                    class="mr-2"
+                                  />
+                                  Minimum 8 characters
+                                </div>
+                                <div class="d-flex align-center text-caption">
+                                  <v-icon
+                                    icon="mdi-check"
+                                    size="small"
+                                    color="success"
+                                    class="mr-2"
+                                  />
+                                  At least one uppercase letter
+                                </div>
+                                <div class="d-flex align-center text-caption">
+                                  <v-icon
+                                    icon="mdi-check"
+                                    size="small"
+                                    color="success"
+                                    class="mr-2"
+                                  />
+                                  At least one number
+                                </div>
+                              </div>
+                            </v-card>
                           </v-col>
                         </v-row>
                       </v-form>

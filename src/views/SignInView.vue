@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { showToast, encryptPassword } from '@/utils/utils'
+import { showToast, encryptPassword, showPersistentToast, closeToast } from '@/utils/utils'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/useAuthStore'
 import { useErrorHandler } from '@/composables/useErrorHandler'
@@ -22,8 +22,10 @@ const login = async () => {
     return
   }
 
+  let toastRef = null
   try {
     loading.value = true
+    toastRef = showPersistentToast('Signing in…', 'info')
     const response = await api.post('authentication/login', user.value)
 
     if (response.status === 200) {
@@ -42,9 +44,13 @@ const login = async () => {
       authStore.setSecret(secret)
 
       await router.push({ path: '/dashboard' })
+      // Close the persistent 'Signing in…' toast before showing the success toast
+      if (toastRef) closeToast()
       showToast(`👋 Welcome back ${response.data.data.user.user_name}!!`, 'success')
     }
   } catch (err) {
+    // Close persistent toast before showing error handling toasts
+    if (toastRef) closeToast()
     handleError(err)
   } finally {
     loading.value = false
@@ -55,7 +61,7 @@ const login = async () => {
 <template>
   <div class="d-flex flex-column align-center my-6">
     <v-card class="pa-12 pb-8 mt-6" elevation="8" max-width="448" rounded="lg">
-      <v-img class="mx-auto my-1" height="50" src="/images/LOGO.png" alt="T-Control logo" />
+      <v-img class="mx-auto my-1" height="50" src="/images/LOGO.png" />
       <p class="mx-auto text-center text-h7 font-weight-bold">Welcome to T-Control</p>
       <p class="mx-auto text-center text-body-2">Please log in to continue</p>
       <div class="text-subtitle-1 text-medium-emphasis mt-4">Account</div>

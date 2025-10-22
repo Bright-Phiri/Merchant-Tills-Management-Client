@@ -21,6 +21,20 @@ export function showToast(title, icon) {
     title,
   })
 }
+
+export function showPersistentToast(title, icon = 'info') {
+  return Toast.fire({
+    icon,
+    title,
+    timer: 0,
+    showConfirmButton: false,
+  })
+}
+
+export function closeToast() {
+  Swal.close()
+}
+
 export function showAlert(icon, title, text) {
   return Swal.fire({
     icon,
