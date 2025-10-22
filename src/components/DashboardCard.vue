@@ -15,7 +15,14 @@ defineProps({
 </script>
 
 <template>
-  <v-card :color="cardColor" rounded="xl" height="200" :to>
+  <v-card
+    :color="cardColor"
+    rounded="xl"
+    height="200"
+    :to
+    aria-label="{{ title }} card"
+    class="dashboard-card"
+  >
     <v-card-title class="d-flex justify-space-between py-6">
       <div class="d-flex align-center">
         <v-avatar :color="avatarColor" size="50" rounded="xl">
@@ -42,3 +49,15 @@ defineProps({
     </v-card-text>
   </v-card>
 </template>
+
+<style scoped>
+.dashboard-card {
+  transition:
+    box-shadow 140ms ease,
+    transform 140ms ease;
+}
+.dashboard-card:focus-visible {
+  outline: 3px solid rgba(1, 161, 255, 0.25);
+  outline-offset: 2px;
+}
+</style>

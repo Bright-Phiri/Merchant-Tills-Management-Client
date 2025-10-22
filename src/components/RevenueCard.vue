@@ -12,7 +12,14 @@ defineProps({
 </script>
 
 <template>
-  <v-card rounded="xl" elevation="0" class="mt-2" :color="cardColor">
+  <v-card
+    rounded="xl"
+    elevation="0"
+    class="mt-2 revenue-card"
+    :color="cardColor"
+    tabindex="0"
+    aria-label="{{ label }}"
+  >
     <v-card-text class="d-flex align-center">
       <v-avatar :color="avatarColor" size="50" rounded="xl">
         <v-icon :icon :color="iconColor" size="28" />
@@ -26,3 +33,10 @@ defineProps({
     </v-card-text>
   </v-card>
 </template>
+
+<style scoped>
+.revenue-card:focus-visible {
+  outline: 3px solid rgba(1, 161, 255, 0.18);
+  outline-offset: 2px;
+}
+</style>

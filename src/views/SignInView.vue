@@ -55,7 +55,7 @@ const login = async () => {
 <template>
   <div class="d-flex flex-column align-center my-6">
     <v-card class="pa-12 pb-8 mt-6" elevation="8" max-width="448" rounded="lg">
-      <v-img class="mx-auto my-1" height="50" src="/images/LOGO.png" />
+      <v-img class="mx-auto my-1" height="50" src="/images/LOGO.png" alt="T-Control logo" />
       <p class="mx-auto text-center text-h7 font-weight-bold">Welcome to T-Control</p>
       <p class="mx-auto text-center text-body-2">Please log in to continue</p>
       <div class="text-subtitle-1 text-medium-emphasis mt-4">Account</div>

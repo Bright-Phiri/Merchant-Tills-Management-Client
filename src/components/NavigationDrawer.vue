@@ -78,7 +78,7 @@ const logout = () => {
     <v-navigation-drawer v-model="drawer" color="white" :width="280" elevation="1" app class="pa-4">
       <!-- Logo -->
       <div class="d-flex justify-start">
-        <v-img max-width="177" src="/images/LOGO.png" />
+        <v-img alt="T-Control logo" max-width="177" src="/images/LOGO.png" />
       </div>
 
       <!-- Navigation Links -->
@@ -107,12 +107,20 @@ const logout = () => {
         <div class="mt-auto pa-2">
           <v-divider class="mb-2" />
 
-          <v-btn block color="#01A1FF" prepend-icon="mdi-logout" @click="logout"> Logout </v-btn>
+          <v-btn
+            block
+            color="primary"
+            prepend-icon="mdi-logout"
+            @click="logout"
+            aria-label="Logout"
+          >
+            Logout
+          </v-btn>
         </div>
       </template>
     </v-navigation-drawer>
 
-    <v-app-bar :elevation="0" color="#f9fafe">
+    <v-app-bar :elevation="0" color="surface">
       <template v-slot:prepend>
         <v-app-bar-nav-icon size="large" variant="text" @click.stop="drawer = !drawer" />
       </template>

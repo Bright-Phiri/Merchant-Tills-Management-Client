@@ -222,9 +222,34 @@ onBeforeUnmount(() => {
   <div class="Home">
     <v-row>
       <v-col cols="12" lg="9" md="8" sm="12" xs="12">
-        <v-card rounded="xl" height="400">
-          <v-card-title class="text-grey-darken-2 text-subtitle-1">
-            Subscription and Payment Trends
+        <v-card
+          rounded="xl"
+          class="pa-6 elevation-6"
+          height="400"
+          aria-live="polite"
+          aria-label="Subscription and Payment Trends"
+        >
+          <v-card-title
+            class="d-flex align-center justify-space-between text-grey-darken-2 text-subtitle-1"
+          >
+            <div class="d-flex align-center">
+              Subscription and Payment Trends
+              <v-chip size="x-small" color="success" class="ml-2" variant="flat">
+                <v-icon size="14" start icon="mdi-access-point" />
+                Live
+              </v-chip>
+            </div>
+            <v-tooltip location="right">
+              <template v-slot:activator="{ props }">
+                <v-icon
+                  v-bind="props"
+                  size="small"
+                  color="grey-darken-1"
+                  icon="mdi-information-outline"
+                />
+              </template>
+              <span>Data updates in real-time via ActionCable</span>
+            </v-tooltip>
           </v-card-title>
 
           <v-card-text class="px-4 pb-4">
@@ -239,7 +264,7 @@ onBeforeUnmount(() => {
       </v-col>
 
       <v-col cols="12" lg="3" md="4" sm="12" xs="12">
-        <v-card rounded="xl" height="400">
+        <v-card rounded="xl" height="400" aria-live="polite">
           <v-card-text>
             <v-row no-gutters>
               <v-col v-for="(card, index) in revenueCards" :key="index" cols="12">
@@ -355,18 +380,23 @@ onBeforeUnmount(() => {
         <v-card rounded="xl" to="/payments">
           <v-card-title class="text-subtitle-1">Recent Payments</v-card-title>
           <v-card-text>
-            <v-data-table
-              hide-default-footer
-              density="comfortable"
-              class="elevation-0 rounded-xl"
-              :headers
-              :items="dashboardData.recent_payments"
-              hover
-            >
-              <template v-slot:item.amount="{ item }">
-                {{ formatCurrency(item.amount) }}
-              </template>
-            </v-data-table>
+            <div v-if="!dashboardData || Object.keys(dashboardData).length === 0">
+              <v-skeleton-loader type="table" />
+            </div>
+            <div v-else>
+              <v-data-table
+                hide-default-footer
+                density="comfortable"
+                class="elevation-0 rounded-xl"
+                :headers
+                :items="dashboardData.recent_payments"
+                hover
+              >
+                <template v-slot:item.amount="{ item }">
+                  {{ formatCurrency(item.amount) }}
+                </template>
+              </v-data-table>
+            </div>
           </v-card-text>
         </v-card>
       </v-col>
