@@ -19,6 +19,8 @@ const series1 = [
 
 const dashboardData = ref({})
 const clients = ref(0)
+const lastUpdated = ref('Waiting for live data...')
+
 const revenueCards = [
   {
     label: 'Total Revenue',
@@ -73,11 +75,11 @@ const monthlyPayments = new Array(12).fill(0)
 const growthSeries = ref([
   {
     name: 'Subscriptions',
-    data: monthlySubscriptions, // Dynamic array for subscriptions
+    data: monthlySubscriptions,
   },
   {
     name: 'Payments',
-    data: monthlyPayments, // Dynamic array for payments
+    data: monthlyPayments,
   },
 ])
 
@@ -97,8 +99,12 @@ const growthChartOptions = ref({
     type: 'gradient',
     gradient: { shadeIntensity: 1, opacityFrom: 0.6, opacityTo: 0.05, stops: [0, 100] },
   },
-  colors: ['#01A1FF', '#E3E9F1'],
+  colors: ['#01A1FF', '#8BCEFF'],
   dataLabels: { enabled: false },
+  grid: {
+    borderColor: '#e7eef8',
+    strokeDashArray: 4,
+  },
   xaxis: {
     categories: [
       'Jan',
@@ -123,7 +129,7 @@ const chartOptions = {
     sparkline: { enabled: true },
     toolbar: { show: false },
     animations: {
-      enabled: false, // 🔥 disables all chart animations
+      enabled: false,
     },
   },
   stroke: {
@@ -150,7 +156,7 @@ const chartOptions1 = {
     sparkline: { enabled: true },
     toolbar: { show: false },
     animations: {
-      enabled: false, // 🔥 disables all chart animations
+      enabled: false,
     },
   },
   stroke: {
@@ -171,6 +177,16 @@ const chartOptions1 = {
     enabled: false,
   },
 }
+
+const markUpdated = () => {
+  lastUpdated.value = new Date().toLocaleString(undefined, {
+    hour: '2-digit',
+    minute: '2-digit',
+    month: 'short',
+    day: 'numeric',
+  })
+}
+
 let subscription = null
 onMounted(() => {
   subscription = cable.subscriptions.create(
@@ -186,6 +202,8 @@ onMounted(() => {
         console.log('Received:', data)
         dashboardData.value = data
         clients.value = data.total_clients
+        markUpdated()
+
         const monthlySubscriptions = new Array(12).fill(0)
         const monthlyPayments = new Array(12).fill(0)
 
@@ -219,53 +237,63 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="Home">
+  <div class="home">
+    <v-row class="mb-2" align="center" justify="space-between">
+      <v-col cols="12" md="8">
+        <div class="hero-copy">
+          <p class="hero-eyebrow mb-1">Live Operations</p>
+          <h2 class="hero-title">Dashboard Overview</h2>
+          <p class="hero-subtitle mb-0">Track subscriptions, payments, and activity in real time.</p>
+        </div>
+      </v-col>
+      <v-col cols="12" md="4" class="d-flex justify-md-end">
+        <div class="live-status">
+          <v-chip color="success" size="small" variant="tonal" class="mr-2">
+            <v-icon start size="14" icon="mdi-access-point" />
+            Live
+          </v-chip>
+          <span class="live-text">Updated {{ lastUpdated }}</span>
+        </div>
+      </v-col>
+    </v-row>
+
     <v-row>
-      <v-col cols="12" lg="9" md="8" sm="12" xs="12">
+      <v-col cols="12" lg="9" md="8" sm="12">
         <v-card
           rounded="xl"
-          class="pa-6 elevation-6"
-          height="400"
+          class="trend-card"
           aria-live="polite"
           aria-label="Subscription and Payment Trends"
         >
-          <v-card-title
-            class="d-flex align-center justify-space-between text-grey-darken-2 text-subtitle-1"
-          >
+          <v-card-title class="trend-title d-flex align-center justify-space-between">
             <div class="d-flex align-center">
               Subscription and Payment Trends
-              <v-chip size="x-small" color="success" class="ml-2" variant="flat">
-                <v-icon size="14" start icon="mdi-access-point" />
-                Live
-              </v-chip>
+              <v-tooltip location="right">
+                <template v-slot:activator="{ props }">
+                  <v-icon
+                    v-bind="props"
+                    size="small"
+                    color="grey-darken-1"
+                    icon="mdi-information-outline"
+                    class="ml-2"
+                  />
+                </template>
+                <span>Data updates in real-time via ActionCable</span>
+              </v-tooltip>
             </div>
-            <v-tooltip location="right">
-              <template v-slot:activator="{ props }">
-                <v-icon
-                  v-bind="props"
-                  size="small"
-                  color="grey-darken-1"
-                  icon="mdi-information-outline"
-                />
-              </template>
-              <span>Data updates in real-time via ActionCable</span>
-            </v-tooltip>
+            <v-chip variant="outlined" size="small" color="primary">{{ clients || 0 }} Clients</v-chip>
           </v-card-title>
 
-          <v-card-text class="px-4 pb-4">
-            <apex-chart
-              type="area"
-              height="320"
-              :options="growthChartOptions"
-              :series="growthSeries"
-            />
+          <v-card-text class="pt-1">
+            <apex-chart type="area" height="320" :options="growthChartOptions" :series="growthSeries" />
           </v-card-text>
         </v-card>
       </v-col>
 
-      <v-col cols="12" lg="3" md="4" sm="12" xs="12">
-        <v-card rounded="xl" height="400" aria-live="polite">
-          <v-card-text>
+      <v-col cols="12" lg="3" md="4" sm="12">
+        <v-card rounded="xl" class="revenue-panel" aria-live="polite">
+          <v-card-title class="text-subtitle-2 text-medium-emphasis pb-0">Revenue Snapshot</v-card-title>
+          <v-card-text class="pt-2">
             <v-row no-gutters>
               <v-col v-for="(card, index) in revenueCards" :key="index" cols="12">
                 <RevenueCard
@@ -318,14 +346,8 @@ onBeforeUnmount(() => {
           :duration="700"
         >
           <template #extra>
-            <v-chip
-              class="d-flex justify-center mt-3"
-              size="small"
-              variant="outlined"
-              color="#8565E9"
-              style="width: 90px; border: 1px solid #526b7a"
-            >
-              <span style="color: #526b7a">{{ dashboardData.active_subscriptions }} Active</span>
+            <v-chip class="status-chip" size="small" variant="outlined" color="#8565E9">
+              {{ dashboardData.active_subscriptions || 0 }} Active
             </v-chip>
           </template>
           <template #chart>
@@ -352,14 +374,8 @@ onBeforeUnmount(() => {
           :duration="800"
         >
           <template #extra>
-            <v-chip
-              class="d-flex justify-center mt-2"
-              size="small"
-              variant="outlined"
-              color="#8565E9"
-              style="width: 90px; border: 1px solid #526b7a"
-            >
-              <span style="color: #526b7a">{{ dashboardData.active_terminals }} Active</span>
+            <v-chip class="status-chip" size="small" variant="outlined" color="#00a88f">
+              {{ dashboardData.active_terminals || 0 }} Active
             </v-chip>
           </template>
           <template #chart>
@@ -377,8 +393,11 @@ onBeforeUnmount(() => {
 
     <v-row>
       <v-col cols="12">
-        <v-card rounded="xl" to="/payments">
-          <v-card-title class="text-subtitle-1">Recent Payments</v-card-title>
+        <v-card rounded="xl" class="payments-card" to="/payments">
+          <v-card-title class="d-flex justify-space-between align-center">
+            <span class="text-subtitle-1">Recent Payments</span>
+            <v-btn size="small" variant="text" color="primary" append-icon="mdi-arrow-right">View all</v-btn>
+          </v-card-title>
           <v-card-text>
             <div v-if="!dashboardData || Object.keys(dashboardData).length === 0">
               <v-skeleton-loader type="table" />
@@ -387,8 +406,8 @@ onBeforeUnmount(() => {
               <v-data-table
                 hide-default-footer
                 density="comfortable"
-                class="elevation-0 rounded-xl"
-                :headers
+                class="elevation-0 rounded-xl payments-table"
+                :headers="headers"
                 :items="dashboardData.recent_payments"
                 hover
               >
@@ -403,3 +422,80 @@ onBeforeUnmount(() => {
     </v-row>
   </div>
 </template>
+
+<style scoped>
+.home {
+  padding: 6px 2px 18px;
+}
+
+.hero-eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6f8199;
+  font-weight: 700;
+}
+
+.hero-title {
+  margin: 0;
+  font-size: clamp(1.35rem, 2.1vw, 1.9rem);
+  line-height: 1.2;
+  color: #243b56;
+}
+
+.hero-subtitle {
+  color: #74889f;
+  font-size: 0.95rem;
+}
+
+.live-status {
+  display: inline-flex;
+  align-items: center;
+  background: #f3f8ff;
+  border: 1px solid #e2ebf8;
+  border-radius: 999px;
+  padding: 5px 10px;
+}
+
+.live-text {
+  color: #5f748e;
+  font-size: 0.77rem;
+  font-weight: 500;
+}
+
+.trend-card,
+.revenue-panel,
+.payments-card {
+  border: 1px solid #e7eef8;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+  box-shadow: 0 14px 28px rgba(18, 56, 91, 0.06);
+}
+
+.trend-title {
+  color: #2f4a68;
+  font-weight: 600;
+}
+
+.revenue-panel {
+  min-height: 400px;
+}
+
+.status-chip {
+  border-width: 1px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.payments-table :deep(thead th) {
+  color: #5e7490;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 960px) {
+  .live-status {
+    margin-top: 6px;
+  }
+}
+</style>

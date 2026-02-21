@@ -15,6 +15,7 @@ const user = ref({
   password: '',
   password_confirmation: '',
 })
+
 const roles = ref(['Officer', 'Admin'])
 const userForm = useTemplateRef('userForm')
 const loading = ref(false)
@@ -66,96 +67,58 @@ const cancelAddUser = () => {
 </script>
 
 <template>
-  <div class="AddUser">
+  <div class="form-view">
     <v-row>
-      <v-col cols="12">
-        <v-card rounded="xl">
-          <v-card-title class="text-black font-weight-bold">User Details</v-card-title>
-          <v-card-text>
+      <v-col cols="12" lg="10">
+        <v-card rounded="xl" class="form-card">
+          <v-card-title class="form-header px-6 pt-6 pb-2">
+            <div>
+              <p class="form-eyebrow mb-1">Management</p>
+              <h2 class="form-title">Add User</h2>
+              <p class="form-subtitle mb-0">Create a new user and assign role permissions.</p>
+            </div>
+          </v-card-title>
+
+          <v-card-text class="px-6 pb-6 pt-3">
             <v-form ref="userForm">
-              <v-container fluid>
-                <v-row>
-                  <v-col cols="12" sm="6" class="px-0">
-                    <v-text-field
-                      rounded="lg"
-                      v-model="user.first_name"
-                      label="First Name"
-                      variant="outlined"
-                      density="comfortable"
-                    ></v-text-field>
-                  </v-col>
+              <v-row>
+                <v-col cols="12" sm="6">
+                  <v-text-field v-model="user.first_name" label="First Name" variant="outlined" density="comfortable" rounded="lg"/>
+                </v-col>
 
-                  <v-col cols="12" sm="6">
-                    <v-text-field
-                      rounded="lg"
-                      v-model="user.last_name"
-                      label="Last Name"
-                      variant="outlined"
-                      density="comfortable"
-                    ></v-text-field>
-                  </v-col>
+                <v-col cols="12" sm="6">
+                  <v-text-field v-model="user.last_name" label="Last Name" variant="outlined" density="comfortable" rounded="lg"/>
+                </v-col>
 
-                  <v-col cols="12" sm="6" class="px-0">
-                    <v-text-field
-                      rounded="lg"
-                      v-model="user.user_name"
-                      label="Username"
-                      variant="outlined"
-                      density="comfortable"
-                    ></v-text-field>
-                  </v-col>
+                <v-col cols="12" sm="6">
+                  <v-text-field v-model="user.user_name" label="Username" variant="outlined" density="comfortable" rounded="lg"/>
+                </v-col>
 
-                  <v-col cols="12" sm="6">
-                    <v-select
-                      rounded="lg"
-                      v-model="user.role"
-                      label="Select Role"
-                      chips
-                      placeholder="Select Role"
-                      :items="roles"
-                      variant="outlined"
-                      density="comfortable"
-                    ></v-select>
-                  </v-col>
+                <v-col cols="12" sm="6">
+                  <v-select
+                    v-model="user.role"
+                    label="Select Role"
+                    placeholder="Select Role"
+                    :items="roles"
+                    variant="outlined"
+                    density="comfortable"
+                    rounded="lg"
+                  ></v-select>
+                </v-col>
 
-                  <v-col cols="12" sm="6" class="px-0">
-                    <v-text-field
-                      rounded="lg"
-                      v-model="user.email_address"
-                      label="Email Address"
-                      variant="outlined"
-                      density="comfortable"
-                    ></v-text-field>
-                  </v-col>
+                <v-col cols="12" sm="6">
+                  <v-text-field v-model="user.email_address" label="Email Address" variant="outlined" density="comfortable" rounded="lg"/>
+                </v-col>
 
-                  <v-col cols="12" sm="6">
-                    <v-text-field
-                      rounded="lg"
-                      v-model="user.phone_number"
-                      label="Phone Number"
-                      variant="outlined"
-                      density="comfortable"
-                    ></v-text-field>
-                  </v-col>
+                <v-col cols="12" sm="6">
+                  <v-text-field v-model="user.phone_number" label="Phone Number" variant="outlined" density="comfortable" rounded="lg"/>
+                </v-col>
 
-                  <v-col cols="12">
-                    <div class="d-flex">
-                      <v-btn color="#ff6692" rounded="xl" variant="tonal" v-on:click="cancelAddUser"
-                        >Cancel</v-btn
-                      >
-                      <v-btn
-                        color="#01A1FF"
-                        rounded="xl"
-                        class="ml-2"
-                        variant="flat"
-                        v-on:click="addUser"
-                        :loading
-                        >Submit</v-btn
-                      >
-                    </div>
-                  </v-col>
-                </v-row>
-              </v-container>
+                <v-col cols="12" class="d-flex flex-wrap action-wrap">
+                  <v-btn color="#ff6692" rounded="lg" variant="tonal" class="text-none" @click="cancelAddUser">Cancel</v-btn>
+                  <v-btn color="#01A1FF" rounded="lg" variant="flat" class="text-none" @click="addUser" :loading="loading">Submit</v-btn>
+                </v-col>
+              </v-row>
             </v-form>
           </v-card-text>
         </v-card>
@@ -163,3 +126,38 @@ const cancelAddUser = () => {
     </v-row>
   </div>
 </template>
+
+<style scoped>
+.form-view {
+  padding: 6px 2px 18px;
+}
+
+.form-card {
+  border: 1px solid #e7eef8;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+  box-shadow: 0 14px 28px rgba(18, 56, 91, 0.06);
+}
+
+.form-eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6f8199;
+  font-weight: 700;
+}
+
+.form-title {
+  margin: 0;
+  font-size: clamp(1.25rem, 1.8vw, 1.65rem);
+  color: #263d59;
+}
+
+.form-subtitle {
+  color: #74889f;
+  font-size: 0.9rem;
+}
+
+.action-wrap {
+  gap: 10px;
+}
+</style>
