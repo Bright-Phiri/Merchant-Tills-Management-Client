@@ -9,7 +9,7 @@ const { handleError } = useErrorHandler()
 const loading = ref(true)
 const terminals = ref([])
 const search = ref('')
-const itemsPerPage = ref(8)
+const itemsPerPage = ref(14)
 const totalItems = ref(0)
 const hasSearch = computed(() => search.value.trim().length > 0)
 const headers = [

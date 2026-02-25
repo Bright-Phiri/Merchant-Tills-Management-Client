@@ -91,7 +91,7 @@ const submitEmailAddress = async () => {
     return
   }
 
-  await makeApiRequest('passwords/forgot_password', { email_address: email }, () => {
+  await makeApiRequest('users/forgot_password', { email_address: email }, () => {
     if (step.value < 2) step.value = 2
   })
 }
@@ -113,7 +113,7 @@ const verifyToken = async () => {
 
   try {
     verifyingToken.value = true
-    await makeApiRequest('passwords/verify_password_reset_token', { reset_password_token: token }, () => {
+    await makeApiRequest('users/verify_password_reset_token', { reset_password_token: token }, () => {
       step.value = 3
     })
   } finally {
@@ -169,7 +169,7 @@ const resetAccountPassword = async () => {
   }
 
   await makeApiRequest(
-    'passwords/reset_password',
+    'users/reset_password',
     {
       email_address: user.value.email_address.trim(),
       password: user.value.password,
