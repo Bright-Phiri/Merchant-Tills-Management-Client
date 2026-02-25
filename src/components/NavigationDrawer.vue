@@ -23,7 +23,7 @@ const links = [
     action: 'read', // <-- match backend permission
   },
   {
-    text: 'Terminals',
+    text: 'Tills',
     icon: 'mdi-sitemap',
     to: '/terminals',
     resource: 'terminals',

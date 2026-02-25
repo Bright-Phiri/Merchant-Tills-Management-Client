@@ -20,9 +20,9 @@ const headers = [
     align: 'start',
     key: 'terminal_id',
     sortable: false,
-    title: 'Terminal ID',
+    title: 'Till ID',
   },
-  { key: 'terminal_label', title: 'Terminal Label' },
+  { key: 'terminal_label', title: 'Till Label' },
   { key: 'activation_date', title: 'Activation Date' },
   { key: 'taxpayer', title: 'Owner' },
   { key: 'status', title: 'Status' },
@@ -90,8 +90,8 @@ watch(search, () => {
           <v-card-title class="view-header px-6 pt-6 pb-2">
             <div>
               <p class="view-eyebrow mb-1">Client Operations</p>
-              <h2 class="view-title">{{ route.params.name }} Terminals</h2>
-              <p class="view-subtitle mb-0">Inspect and manage all terminals for this client.</p>
+              <h2 class="view-title">{{ route.params.name }} Tills</h2>
+              <p class="view-subtitle mb-0">Inspect and manage all tills for this client.</p>
             </div>
 
             <div class="header-tools">
@@ -106,8 +106,8 @@ watch(search, () => {
                 prepend-inner-icon="mdi-magnify"
                 clearable
                 v-model="search"
-                label="Search Terminal"
-                placeholder="Search terminal"
+                label="Search Till"
+                placeholder="Search till"
                 variant="solo-filled"
                 density="comfortable"
                 hide-details

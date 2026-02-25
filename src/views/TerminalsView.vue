@@ -9,7 +9,7 @@ const { handleError } = useErrorHandler()
 const loading = ref(true)
 const terminals = ref([])
 const search = ref('')
-const itemsPerPage = ref(14)
+const itemsPerPage = ref(8)
 const totalItems = ref(0)
 const hasSearch = computed(() => search.value.trim().length > 0)
 const headers = [
@@ -17,9 +17,9 @@ const headers = [
     align: 'start',
     key: 'terminal_id',
     sortable: false,
-    title: 'Terminal ID',
+    title: 'Till ID',
   },
-  { key: 'terminal_label', title: 'Terminal Label' },
+  { key: 'terminal_label', title: 'till Label' },
   { key: 'activation_date', title: 'Activation Date' },
   { key: 'taxpayer', title: 'Owner' },
   { key: 'posted_on', title: 'Posted On' },
@@ -58,16 +58,16 @@ watch(search, () => {
           <v-card-title class="view-header px-6 pt-6 pb-2">
             <div>
               <p class="view-eyebrow mb-1">Operations</p>
-              <h2 class="view-title">Terminals</h2>
-              <p class="view-subtitle mb-0">Track terminal status, ownership, and activity.</p>
+              <h2 class="view-title">Tills</h2>
+              <p class="view-subtitle mb-0">Track tills status, ownership, and activity.</p>
             </div>
             <v-text-field
               rounded="xl"
               prepend-inner-icon="mdi-magnify"
               clearable
               v-model="search"
-              label="Search Terminal"
-              placeholder="Search terminal"
+              label="Search Till"
+              placeholder="Search till"
               variant="solo-filled"
               density="comfortable"
               hide-details
@@ -81,7 +81,7 @@ watch(search, () => {
             <div class="table-shell">
               <div class="table-toolbar mb-3">
                 <span class="toolbar-text">
-                  {{ hasSearch ? `Results for "${search}"` : `${totalItems || 0} terminals` }}
+                  {{ hasSearch ? `Results for "${search}"` : `${totalItems || 0} tills` }}
                 </span>
               </div>
 
