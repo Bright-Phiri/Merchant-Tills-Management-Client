@@ -117,7 +117,7 @@ onMounted(() => {
   <div class="Settings">
     <v-row>
       <v-col cols="12">
-        <v-card rounded="xl">
+        <v-card>
           <v-card-title class="text-black font-weight-bold">Settings</v-card-title>
           <v-card-text>
             <div class="d-flex flex-row">

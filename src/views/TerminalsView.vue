@@ -52,7 +52,7 @@ watch(search, () => {
   <div class="Terminals">
     <v-row>
       <v-col cols="12">
-        <v-card rounded="xl">
+        <v-card>
           <v-card-title class="d-flex justify-space-between">
             <span class="text-black font-weight-bold">Terminals</span>
             <v-col cols="3">

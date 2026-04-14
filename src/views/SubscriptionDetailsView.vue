@@ -47,7 +47,7 @@ onMounted(() => {
 <template>
   <v-row>
     <v-col cols="12">
-      <v-card rounded="xl" class="pa-4" elevation="2" v-if="!loading && subscription">
+      <v-card class="pa-4" elevation="2" v-if="!loading && subscription">
         <v-card-title class="text-h6 px-0 d-flex justify-space-between text-black font-weight-bold"
           >Subscription Details
           <v-btn

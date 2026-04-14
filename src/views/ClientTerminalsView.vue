@@ -83,7 +83,7 @@ watch(search, () => {
   <div class="Terminals">
     <v-row>
       <v-col cols="12">
-        <v-card rounded="xl">
+        <v-card>
           <v-card-title>
             <span class="text-black font-weight-bold">{{ route.params.name }} Terminals</span>
             <div class="d-flex justify-space-between py-4">

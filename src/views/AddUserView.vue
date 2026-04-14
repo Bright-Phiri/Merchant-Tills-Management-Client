@@ -69,7 +69,7 @@ const cancelAddUser = () => {
   <div class="AddUser">
     <v-row>
       <v-col cols="12">
-        <v-card rounded="xl">
+        <v-card>
           <v-card-title class="text-black font-weight-bold">User Details</v-card-title>
           <v-card-text>
             <v-form ref="userForm">

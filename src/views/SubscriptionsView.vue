@@ -73,7 +73,7 @@ const deleteSubscription = async (id) => {
   <div class="Clients">
     <v-row>
       <v-col cols="12">
-        <v-card rounded="xl">
+        <v-card>
           <v-card-title class="d-flex justify-space-between">
             <span class="text-black font-weight-bold">Subscriptions</span>
             <v-col cols="3" class="pa-0">

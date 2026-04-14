@@ -76,7 +76,7 @@ const renewSubscription = async () => {
   <div class="RenewSubscription">
     <v-row>
       <v-col cols="12">
-        <v-card rounded="xl">
+        <v-card>
           <v-card-title class="text-black font-weight-bold">Subscription Details</v-card-title>
           <v-card-text>
             <v-form ref="renewSubscriptionForm" v-on:submit.prevent="renewSubscription">
