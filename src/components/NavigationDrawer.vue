@@ -130,7 +130,7 @@ const logout = () => {
 
     <!-- Main Content -->
     <router-view v-slot="{ Component, route }">
-      <Transition name="slide-fade" mode="out-in">
+     <Transition name="slide-fade" mode="out-in">
         <component :is="Component" :key="route.fullPath" />
       </Transition>
     </router-view>
@@ -138,17 +138,18 @@ const logout = () => {
 </template>
 
 <style scoped>
-.slide-fade-enter-active {
+.slide-fade-enter-active,
+.slide-fade-leave-active {
   transition: all 0.3s ease-out;
 }
 
-.slide-fade-leave-active {
-  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+.slide-fade-enter-from {
+  transform: translateX(15px);
+  opacity: 0;
 }
 
-.slide-fade-enter-from,
 .slide-fade-leave-to {
-  transform: translateX(20px);
+  transform: translateX(-15px);
   opacity: 0;
 }
 </style>
