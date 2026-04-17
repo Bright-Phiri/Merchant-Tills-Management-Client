@@ -120,8 +120,8 @@ onMounted(() => {
         <v-card>
           <v-card-title class="text-black font-weight-bold">Settings</v-card-title>
           <v-card-text>
-            <div class="d-flex flex-row">
-              <v-tabs v-model="tab" color="primary" direction="vertical">
+            <div class="settings-layout d-flex flex-row">
+              <v-tabs v-model="tab" color="primary" direction="vertical" class="settings-tabs">
                 <v-tab
                   prepend-icon="mdi-account"
                   text="Profile Information"
@@ -134,12 +134,12 @@ onMounted(() => {
                 ></v-tab>
               </v-tabs>
 
-              <v-tabs-window v-model="tab">
+              <v-tabs-window v-model="tab" class="settings-window">
                 <v-tabs-window-item value="Profile Information">
                   <v-card>
                     <v-card-title class="text-black">Edit Profile</v-card-title>
                     <v-card-text class="mt-2">
-                      <v-form ref="userForm">
+                      <v-form ref="userForm" class="settings-form">
                         <v-row no-gutters>
                           <v-col cols="12" class="px-0">
                             <v-text-field
@@ -187,17 +187,17 @@ onMounted(() => {
                           </v-col>
 
                           <v-col cols="12">
-                            <div class="d-flex">
+                            <div class="d-flex settings-form-actions">
                               <v-btn
                                 v-on:click="fetchUserDetails(authStore.getUserId)"
-                                color="#ff6692"
+                                color="#D93025"
                                 class="text-capitalize"
                                 rounded="xl"
                                 variant="tonal"
                                 >Cancel</v-btn
                               >
                               <v-btn
-                                color="#01A1FF"
+                                color="#1A73E8"
                                 rounded="xl"
                                 variant="flat"
                                 class="ml-2 text-capitalize"
@@ -217,7 +217,7 @@ onMounted(() => {
                   <v-card>
                     <v-card-title class="text-black">Change Password</v-card-title>
                     <v-card-text class="mt-2">
-                      <v-form ref="passwordForm">
+                      <v-form ref="passwordForm" class="settings-form">
                         <v-row no-gutters>
                           <v-col cols="12">
                             <v-text-field
@@ -250,16 +250,16 @@ onMounted(() => {
                           </v-col>
 
                           <v-col cols="12">
-                            <div class="d-flex">
+                            <div class="d-flex settings-form-actions">
                               <v-btn
-                                color="#ff6692"
+                                color="#D93025"
                                 class="text-capitalize"
                                 rounded="xl"
                                 variant="tonal"
                                 >Cancel</v-btn
                               >
                               <v-btn
-                                color="#01A1FF"
+                                color="#1A73E8"
                                 rounded="xl"
                                 variant="flat"
                                 class="ml-2 text-capitalize"
@@ -282,3 +282,33 @@ onMounted(() => {
     </v-row>
   </div>
 </template>
+
+<style scoped>
+.settings-layout {
+  gap: 20px;
+}
+
+.settings-tabs {
+  flex: 0 0 auto;
+}
+
+.settings-window {
+  flex: 1;
+  min-width: 0;
+}
+
+.settings-form :deep(.v-input) {
+  margin-bottom: 10px;
+}
+
+.settings-form-actions {
+  margin-top: 4px;
+}
+
+@media (max-width: 960px) {
+  .settings-layout {
+    flex-direction: column !important;
+    gap: 12px;
+  }
+}
+</style>

@@ -91,7 +91,7 @@ onMounted(() => {
                 ></v-text-field>
               </v-col>
               <v-btn
-                color="#01A1FF"
+                color="#1A73E8"
                 class="text-capitalize"
                 rounded="xl"
                 variant="outlined"
@@ -114,7 +114,7 @@ onMounted(() => {
               hover
             >
               <template v-slot:[`item.action`]="{ item }">
-                <v-icon small class="mr-0" v-on:click="loadEditUserForm(item.id)" color="#01A1FF"
+                <v-icon small class="mr-0" v-on:click="loadEditUserForm(item.id)" color="#1A73E8"
                   >mdi-pencil
                 </v-icon>
                 <v-tooltip bottom v-if="item.status === 'disabled'">
@@ -122,7 +122,7 @@ onMounted(() => {
                     <v-icon
                       small
                       class="mr-0"
-                      color="#01A1FF"
+                      color="#1A73E8"
                       v-on:click="activateUser(item.id)"
                       v-bind="attrs"
                       >mdi-account-off</v-icon
@@ -135,7 +135,7 @@ onMounted(() => {
                     <v-icon
                       small
                       class="mr-0"
-                      color="#ff6692"
+                      color="#D93025"
                       v-on:click="disableUser(item.id)"
                       v-bind="attrs"
                       >mdi-account-lock</v-icon
@@ -163,7 +163,7 @@ onMounted(() => {
                 <v-progress-linear
                   height="3"
                   indeterminate
-                  color="#01A1FF"
+                  color="#1A73E8"
                 ></v-progress-linear> </template
             ></v-data-table>
           </v-card-text>

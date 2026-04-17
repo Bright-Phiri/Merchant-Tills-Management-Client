@@ -24,33 +24,33 @@ const revenueCards = [
     label: 'Total Revenue',
     valueKey: 'total_payments',
     icon: 'mdi-cash',
-    iconColor: '#ffA31F',
-    avatarColor: '#FFF1CC',
-    cardColor: '#EFF4FA',
+    iconColor: '#F9AB00',
+    avatarColor: '#FEF7E0',
+    cardColor: '#F8FAFD',
   },
   {
     label: 'Total Revenue This Month',
     valueKey: 'monthly_revenue',
     icon: 'mdi-cash',
-    iconColor: '#00cb36',
-    avatarColor: '#D2F9F4',
-    cardColor: '#EFF4FA',
+    iconColor: '#188038',
+    avatarColor: '#E6F4EA',
+    cardColor: '#F8FAFD',
   },
   {
     label: 'Total Revenue This Week',
     valueKey: 'weekly_revenue',
     icon: 'mdi-cash',
-    iconColor: '#ff6692',
-    avatarColor: '#FFE4EC',
-    cardColor: '#EFF4FA',
+    iconColor: '#D93025',
+    avatarColor: '#FCE8E6',
+    cardColor: '#F8FAFD',
   },
   {
     label: "Today's Revenue",
     valueKey: 'daily_revenue',
     icon: 'mdi-cash',
-    iconColor: '#00A1FF',
-    avatarColor: '#EFF5FF',
-    cardColor: '#EFF4FA',
+    iconColor: '#1A73E8',
+    avatarColor: '#E8F0FE',
+    cardColor: '#F8FAFD',
   },
 ]
 const headers = [
@@ -97,7 +97,7 @@ const growthChartOptions = ref({
     type: 'gradient',
     gradient: { shadeIntensity: 1, opacityFrom: 0.6, opacityTo: 0.05, stops: [0, 100] },
   },
-  colors: ['#01A1FF', '#E3E9F1'],
+  colors: ['#1A73E8', '#188038'],
   dataLabels: { enabled: false },
   xaxis: {
     categories: [
@@ -139,7 +139,7 @@ const chartOptions = {
       stops: [0, 100],
     },
   },
-  colors: ['#f72047'],
+  colors: ['#D93025'],
   tooltip: {
     enabled: false,
   },
@@ -166,7 +166,7 @@ const chartOptions1 = {
       stops: [0, 100],
     },
   },
-  colors: ['#8565e9'],
+  colors: ['#1A73E8'],
   tooltip: {
     enabled: false,
   },
@@ -265,8 +265,8 @@ onBeforeUnmount(() => {
           title="All Clients"
           icon="mdi-account-multiple"
           iconColor="white"
-          avatarColor="#ff6692"
-          cardColor="#FFE4EC"
+          avatarColor="#D93025"
+          cardColor="#FCE8E6"
           :value="dashboardData.total_clients"
         >
           <template #chart>
@@ -287,8 +287,8 @@ onBeforeUnmount(() => {
           title="All Subscriptions"
           icon="mdi-playlist-check"
           iconColor="white"
-          avatarColor="#8565E9"
-          cardColor="#E7E2F3"
+          avatarColor="#1A73E8"
+          cardColor="#E8F0FE"
           :value="dashboardData.total_subscriptions"
           :duration="700"
         >
@@ -297,10 +297,10 @@ onBeforeUnmount(() => {
               class="d-flex justify-center mt-3"
               size="small"
               variant="outlined"
-              color="#8565E9"
-              style="width: 90px; border: 1px solid #526b7a"
+              color="#1A73E8"
+              style="width: 96px"
             >
-              <span style="color: #526b7a">{{ dashboardData.active_subscriptions }} Active</span>
+              <span>{{ dashboardData.active_subscriptions }} Active</span>
             </v-chip>
           </template>
           <template #chart>
@@ -321,8 +321,8 @@ onBeforeUnmount(() => {
           title="All Terminals"
           icon="mdi-sitemap"
           icon-color="#ffffff"
-          avatarColor="#00CEB6"
-          cardColor="#D2F9F4"
+          avatarColor="#188038"
+          cardColor="#E6F4EA"
           :value="dashboardData.total_terminals"
           :duration="800"
         >
@@ -331,10 +331,10 @@ onBeforeUnmount(() => {
               class="d-flex justify-center mt-2"
               size="small"
               variant="outlined"
-              color="#8565E9"
-              style="width: 90px; border: 1px solid #526b7a"
+              color="#1A73E8"
+              style="width: 96px"
             >
-              <span style="color: #526b7a">{{ dashboardData.active_terminals }} Active</span>
+              <span>{{ dashboardData.active_terminals }} Active</span>
             </v-chip>
           </template>
           <template #chart>
@@ -342,7 +342,7 @@ onBeforeUnmount(() => {
               :model-value="dashboardData.active_terminals"
               size="90"
               width="6"
-              color="#00CBE6"
+              color="#1A73E8"
               rotate="-90"
             />
           </template>

@@ -22,8 +22,65 @@ import App from './App.vue'
 const vuetify = createVuetify({
   components,
   directives,
+  theme: {
+    defaultTheme: 'gmailLight',
+    themes: {
+      gmailLight: {
+        dark: false,
+        colors: {
+          primary: '#1A73E8',
+          secondary: '#185ABC',
+          background: '#F6F8FC',
+          surface: '#FFFFFF',
+          'surface-variant': '#F1F3F4',
+          error: '#D93025',
+          success: '#188038',
+          warning: '#F9AB00',
+          info: '#1A73E8',
+        },
+      },
+    },
+  },
   defaults: {
-    VBtn: { class: 'text-capitalize' },
+    VAppBar: {
+      color: '#F6F8FC',
+      elevation: 0,
+    },
+    VBtn: {
+      class: 'text-none',
+      rounded: 'pill',
+      color: 'primary',
+      style: 'letter-spacing:0;font-weight:600;',
+    },
+    VCard: {
+      rounded: 'xl',
+      elevation: 0,
+    },
+    VChip: {
+      rounded: 'pill',
+    },
+    VDataTable: {
+      density: 'comfortable',
+    },
+    VDataTableServer: {
+      density: 'comfortable',
+    },
+    VSelect: {
+      variant: 'outlined',
+      density: 'comfortable',
+      color: 'primary',
+      hideDetails: 'auto',
+    },
+    VTextField: {
+      variant: 'outlined',
+      density: 'comfortable',
+      color: 'primary',
+      hideDetails: 'auto',
+    },
+    VProgressLinear: {
+      color: 'primary',
+      height: 3,
+    },
   },
 })
 

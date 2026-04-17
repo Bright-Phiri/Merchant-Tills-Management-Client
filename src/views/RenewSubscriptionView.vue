@@ -149,13 +149,13 @@ const renewSubscription = async () => {
                 <div>
                   <v-btn
                     variant="tonal"
-                    color="#ff6692"
+                    color="#D93025"
                     rounded="xl"
                     v-on:click="cancelRenewSubscription"
                     >Cancel</v-btn
                   >
                   <v-btn
-                    color="#01A1FF"
+                    color="#1A73E8"
                     class="ml-2"
                     variant="flat"
                     rounded="xl"

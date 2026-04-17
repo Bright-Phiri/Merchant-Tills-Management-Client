@@ -44,8 +44,8 @@ export function showAlert(icon, title, text) {
 }
 
 export function getColor(status) {
-  if (status === 'active') return '#01A1FF'
-  else return '#ff6692'
+  if (status === 'active') return '#1A73E8'
+  return '#D93025'
 }
 
 export function formatCurrency(amount) {

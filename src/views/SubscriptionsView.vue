@@ -123,7 +123,7 @@ const deleteSubscription = async (id) => {
               <template v-slot:[`item.action`]="{ item }">
                 <div class="d-flex">
                   <v-icon
-                    color="#01A1FF"
+                    color="#1A73E8"
                     icon="mdi-eye"
                     size="small"
                     @click="viewSubscription(item.id)"
@@ -131,7 +131,7 @@ const deleteSubscription = async (id) => {
 
                   <v-icon
                     class="ml-2"
-                    color="#ff6692"
+                    color="#D93025"
                     icon="mdi-delete"
                     size="small"
                     @click="deleteSubscription(item.id)"
@@ -142,7 +142,7 @@ const deleteSubscription = async (id) => {
                 <v-progress-linear
                   height="3"
                   indeterminate
-                  color="#01A1FF"
+                  color="#1A73E8"
                 ></v-progress-linear> </template
             ></v-data-table-server>
             <v-empty-state

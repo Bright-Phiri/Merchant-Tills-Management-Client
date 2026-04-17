@@ -53,69 +53,388 @@ const login = async () => {
 </script>
 
 <template>
-  <div class="d-flex flex-column align-center my-6">
-    <v-card class="pa-12 pb-8 mt-6" elevation="8" max-width="448" rounded="lg">
-      <v-img class="mx-auto my-1" height="50" src="/images/LOGO.png" />
-      <p class="mx-auto text-center text-h7 font-weight-bold">Welcome to T-Control</p>
-      <p class="mx-auto text-center text-body-2">Please log in to continue</p>
-      <div class="text-subtitle-1 text-medium-emphasis mt-4">Account</div>
+  <div class="gmail-signin-page">
+    <div class="bg-one"></div>
 
-      <v-text-field
-        density="compact"
-        placeholder="User name"
-        prepend-inner-icon="mdi-account-outline"
-        variant="outlined"
-        v-model.trim="user.user_name"
-      ></v-text-field>
+    <section class="signin-container" aria-label="Sign in panel">
+      <div class="signin-box">
+        <v-img class="service-logo" src="/images/LOGO.png" alt="T-Control logo" />
 
-      <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
-        Password
+        <form class="signin-form" @submit.prevent="login">
+          <div class="signin-head">
+            <h1 id="headtitle">Sign in</h1>
+            <p class="service-name">to access <span>T-Control</span></p>
+          </div>
 
-        <router-link class="text-caption text-decoration-none text-blue" to="/forgot-password">
-          Forgot login password?
-        </router-link>
+          <div class="field-container">
+            <label class="textbox-label" for="login-id">Email address or user name</label>
+            <div class="textbox-div" id="getusername">
+              <input
+                id="login-id"
+                v-model.trim="user.user_name"
+                class="textbox"
+                type="text"
+                placeholder="Email address or mobile number"
+                autocomplete="username"
+                autocapitalize="off"
+                autocorrect="off"
+                spellcheck="false"
+              />
+            </div>
+
+            <div class="textbox-actions">
+              <label class="textbox-label" for="password">Password</label>
+              <router-link class="bluetext-action" to="/forgot-password">Forgot Password?</router-link>
+            </div>
+
+            <div class="textbox-div">
+              <input
+                id="password"
+                v-model.trim="user.password"
+                :type="visible ? 'text' : 'password'"
+                class="textbox password-input"
+                placeholder="Enter password"
+                autocomplete="current-password"
+                autocapitalize="off"
+                autocorrect="off"
+                @keyup.enter="login"
+              />
+              <button
+                type="button"
+                class="toggle-password"
+                :aria-label="visible ? 'Hide password' : 'Show password'"
+                @click="visible = !visible"
+              >
+                <v-icon size="20">{{ visible ? 'mdi-eye-off-outline' : 'mdi-eye-outline' }}</v-icon>
+              </button>
+            </div>
+          </div>
+
+          <button id="nextbtn" class="signin-btn blue" type="submit" :disabled="loading">
+            <span v-if="loading" class="loader-dot" aria-hidden="true"></span>
+            <span>{{ loading ? 'Signing in...' : 'Next' }}</span>
+          </button>
+        </form>
+
+        <div id="signuplink">
+          Don't have a T-Control account?
+          <router-link to="/sign-up" class="signuptrigger">Sign up now</router-link>
+        </div>
       </div>
 
-      <v-text-field
-        :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-        :type="visible ? 'text' : 'password'"
-        density="compact"
-        placeholder="Enter your password"
-        prepend-inner-icon="mdi-lock-outline"
-        variant="outlined"
-        @click:append-inner="visible = !visible"
-        @keyup.enter="login"
-        v-model.trim="user.password"
-      ></v-text-field>
-
-      <v-card class="mb-12" color="surface-variant" variant="tonal">
-        <v-card-text class="text-medium-emphasis text-caption">
-          you can also click "Forgot login password?" to reset the login password.
-        </v-card-text>
-      </v-card>
-
-      <v-btn
-        class="mb-8 text-uppercase"
-        color="#01A1FF"
-        size="large"
-        variant="tonal"
-        block
-        :loading
-        v-on:click="login"
-      >
-        Log In
-      </v-btn>
-
-      <v-card-text class="text-center">
-        Don't have account?
-        <router-link
-          to="/sign-up"
-          class="text-blue text-decoration-none d-inline-flex align-center"
-        >
-          Sign up
-          <v-icon icon="mdi-chevron-right"></v-icon>
-        </router-link>
-      </v-card-text>
-    </v-card>
+      <aside class="rightside-box">
+        <div class="mfa-panel">
+          <div class="product-img" aria-hidden="true"></div>
+          <div class="product-head">Keep your account secure</div>
+          <div class="product-text">
+            Use a strong password and never share login credentials. This account controls sensitive
+            terminal operations.
+          </div>
+        </div>
+      </aside>
+    </section>
   </div>
 </template>
+
+<style scoped>
+.gmail-signin-page {
+  position: relative;
+  min-height: calc(100vh - 32px);
+  padding: 36px 16px 20px;
+  font-family:
+    'Avenir Next',
+    'Segoe UI',
+    'Trebuchet MS',
+    sans-serif;
+}
+
+.bg-one {
+  display: block;
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(180deg, #f8fafd 0%, #edf2fb 100%);
+  z-index: -1;
+}
+
+.signin-container {
+  display: flex;
+  width: min(890px, 100%);
+  min-height: 520px;
+  background-color: #fff;
+  box-shadow: 0 2px 18px #00000014;
+  border: 1px solid #dfe3eb;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.signin-box {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  min-height: 540px;
+  background: #fff;
+  box-sizing: border-box;
+  padding: 50px;
+  overflow-y: auto;
+  border-right: 1px solid #e7ebf3;
+}
+
+.service-logo {
+  height: 40px;
+  max-width: 170px;
+  margin-bottom: 20px;
+}
+
+.signin-form {
+  flex: 1;
+}
+
+.signin-head {
+  margin-bottom: 24px;
+}
+
+#headtitle {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 30px;
+  color: #000;
+}
+
+.service-name {
+  margin: 4px 0 0;
+  display: block;
+  font-size: 16px;
+  color: #000;
+  font-weight: 400;
+  line-height: 28px;
+}
+
+.service-name span {
+  font-weight: 600;
+}
+
+.textbox-label {
+  display: block;
+  font-size: 14px;
+  color: #626262;
+  padding-bottom: 10px;
+}
+
+.textbox-div {
+  display: block;
+  margin-bottom: 28px;
+  position: relative;
+}
+
+.textbox {
+  display: block;
+  width: 100%;
+  height: 44px;
+  border-radius: 2px;
+  font-size: 16px;
+  outline: none;
+  background: #f8f8f8;
+  border: 1px solid #e4e4e4;
+  padding: 0 12px;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.textbox::placeholder {
+  color: #aab2bb;
+  letter-spacing: 0.3px;
+  font-weight: 400;
+}
+
+.textbox:focus {
+  border-color: #1a73e8;
+  background: #fff;
+}
+
+.password-input {
+  padding-right: 52px;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  height: 28px;
+  width: 28px;
+  border: none;
+  background: transparent;
+  color: #8f8f8f;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+.textbox-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bluetext-action {
+  font-size: 14px;
+  color: #1a73e8;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.signin-btn {
+  cursor: pointer;
+  display: inline-flex;
+  width: 100%;
+  height: 44px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  margin: 0 auto 36px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.signin-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
+.blue {
+  background-color: #1a73e8;
+  color: #fff;
+}
+
+.blue:hover:not(:disabled) {
+  background-color: #185abc;
+}
+
+.loader-dot {
+  width: 14px;
+  height: 14px;
+  border: 2px solid #fff;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#signuplink {
+  width: 100%;
+  display: inline-block;
+  margin: auto auto 0;
+  padding-top: 26px;
+  line-height: 20px;
+  font-weight: 400;
+  font-size: 14px;
+  color: #555;
+  text-align: center;
+}
+
+#signuplink .signuptrigger {
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+  color: #1a73e8;
+  margin-left: 4px;
+}
+
+.rightside-box {
+  width: 390px;
+  box-sizing: border-box;
+  padding: 40px;
+  background-color: #f8fafd;
+  border-left: 1px solid #e7ebf3;
+  overflow: hidden;
+}
+
+.mfa-panel {
+  overflow: hidden;
+}
+
+.product-img {
+  display: block;
+  height: 180px;
+  width: 180px;
+  border-radius: 22px;
+  border: 1px solid #d7deeb;
+  background:
+    radial-gradient(circle at 24% 24%, #e8f0fe 0 26%, transparent 27%),
+    radial-gradient(circle at 76% 28%, #e6f4ea 0 24%, transparent 25%),
+    radial-gradient(circle at 50% 78%, #fce8e6 0 26%, transparent 27%),
+    linear-gradient(145deg, #f6f9ff, #eef3fb);
+  margin: 0 auto 50px;
+}
+
+.product-head {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #3c4043;
+}
+
+.product-text {
+  display: block;
+  font-size: 14px;
+  line-height: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+@media (max-width: 1024px) {
+  .signin-container {
+    width: min(500px, 100%);
+    box-shadow: none;
+  }
+
+  .signin-box {
+    width: 100%;
+    border-right: none;
+  }
+
+  .rightside-box {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .gmail-signin-page {
+    padding-top: 40px;
+  }
+
+  .signin-container {
+    width: 100%;
+    box-shadow: none;
+    min-height: auto;
+  }
+
+  .signin-box {
+    padding: 0 30px 30px;
+  }
+
+  .service-logo {
+    margin: 0 auto 24px;
+  }
+
+  .signin-head {
+    margin-bottom: 30px;
+  }
+}
+</style>

@@ -51,7 +51,7 @@ onMounted(() => {
         <v-card-title class="text-h6 px-0 d-flex justify-space-between text-black font-weight-bold"
           >Subscription Details
           <v-btn
-            color="#01A1FF"
+            color="#1A73E8"
             rounded="xl"
             variant="outlined"
             v-on:click="loadRenewSubPage"
@@ -131,7 +131,7 @@ onMounted(() => {
                 <v-progress-linear
                   height="3"
                   indeterminate
-                  color="#01A1FF"
+                  color="#1A73E8"
                 ></v-progress-linear> </template
             ></v-data-table>
           </v-col>

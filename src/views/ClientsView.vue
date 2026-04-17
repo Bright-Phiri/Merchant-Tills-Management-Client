@@ -102,7 +102,7 @@ const loadClientTerminalsView = (id, name) => {
                     variant="text"
                     prepend-icon="mdi-eye"
                     class="text-capitalize"
-                    color="#01A1FF"
+                    color="#1A73E8"
                     density="compact"
                     v-on:click="loadClientTerminalsView(item.id, item.name)"
                     >View Terminals</v-btn
@@ -112,7 +112,7 @@ const loadClientTerminalsView = (id, name) => {
                     variant="text"
                     prepend-icon="mdi-plus-circle-multiple-outline"
                     class="text-capitalize ml-2"
-                    color="#01A1FF"
+                    color="#1A73E8"
                     density="compact"
                     v-on:click="loadNewSubscriptionForm(item.id)"
                     >Create Subscription</v-btn
@@ -120,7 +120,7 @@ const loadClientTerminalsView = (id, name) => {
                 </div>
               </template>
               <template v-slot:loader>
-                <v-progress-linear height="3" indeterminate color="#01A1FF"></v-progress-linear>
+                <v-progress-linear height="3" indeterminate color="#1A73E8"></v-progress-linear>
               </template>
             </v-data-table-server>
             <v-empty-state

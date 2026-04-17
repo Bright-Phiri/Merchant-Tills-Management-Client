@@ -149,7 +149,7 @@ onMounted(() => {
                   <v-col cols="12">
                     <div class="d-flex">
                       <v-btn
-                        color="#01A1FF"
+                        color="#1A73E8"
                         rounded="xl"
                         variant="flat"
                         class="text-capitalize"
@@ -158,7 +158,7 @@ onMounted(() => {
                         >Update</v-btn
                       >
                       <v-btn
-                        color="#ff6692"
+                        color="#D93025"
                         class="ml-2 text-capitalize"
                         rounded="xl"
                         variant="tonal"

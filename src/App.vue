@@ -16,7 +16,7 @@ function resetIdleTimer() {
 
   idleTimeout = setTimeout(() => {
     authStore.logout()
-    router.push('/login')
+    router.push('/sign-in')
     showToast('🔒 You were logged out due to inactivity.', 'info')
   }, idleLimit)
 }
@@ -36,14 +36,13 @@ onBeforeUnmount(() => {
 
 <template>
   <v-app>
-    <v-main style="background-color: #f9fafe">
-      <v-container fluid>
+    <v-main class="gmail-main">
+      <v-container fluid class="gmail-content">
         <router-view />
       </v-container>
-      <!-- FAB in bottom-right corner -->
       <v-fab
         v-if="authStore.isUserLoggedIn"
-        color="#01A1FF"
+        color="primary"
         icon="mdi-cog"
         size="large"
         class="fab"
@@ -54,10 +53,25 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
+.gmail-main {
+  background-color: #f6f8fc;
+}
+
+.gmail-content {
+  padding: 20px 24px;
+}
+
 .fab {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
+  bottom: 20px;
+  right: 20px;
   z-index: 10;
+  box-shadow: 0 3px 10px #00000026;
+}
+
+@media (max-width: 960px) {
+  .gmail-content {
+    padding: 14px 12px;
+  }
 }
 </style>

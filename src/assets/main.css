@@ -1,35 +1,139 @@
 @import './base.css';
 
+:root {
+  --gmail-primary: #1a73e8;
+  --gmail-bg: #f6f8fc;
+  --gmail-surface: #ffffff;
+  --gmail-border: #dfe3eb;
+  --gmail-border-soft: #edf0f5;
+  --gmail-text: #202124;
+  --gmail-muted: #5f6368;
+  --gmail-hover: #f1f5ff;
+}
+
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  font-weight: 400;
 }
 
-a,
-.green {
+body {
+  background: var(--gmail-bg);
+}
+
+a {
   text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
+  color: var(--gmail-primary);
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
+a:hover {
+  text-decoration: underline;
+  background: transparent;
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
+.v-application {
+  background: var(--gmail-bg) !important;
+  color: var(--gmail-text) !important;
+}
+
+.v-card {
+  border: 1px solid var(--gmail-border) !important;
+  box-shadow: none !important;
+  background: var(--gmail-surface) !important;
+}
+
+.v-card-title {
+  color: var(--gmail-text) !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  line-height: 1.45 !important;
+}
+
+.v-btn {
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  font-weight: 600 !important;
+}
+
+.v-btn--variant-outlined {
+  border-color: #c4c7ce !important;
+}
+
+.v-btn--variant-flat {
+  box-shadow: none !important;
+}
+
+.v-field {
+  border-radius: 999px !important;
+  background: #fff !important;
+}
+
+.v-field--variant-outlined .v-field__outline {
+  --v-field-border-opacity: 1;
+  color: #c7cbd3 !important;
+}
+
+.v-field--focused .v-field__outline {
+  color: var(--gmail-primary) !important;
+}
+
+.v-field__input {
+  color: var(--gmail-text) !important;
+  min-height: 44px !important;
+}
+
+.v-field__prepend-inner > .v-icon,
+.v-field__append-inner > .v-icon {
+  color: var(--gmail-muted) !important;
+}
+
+.v-table {
+  border: 1px solid var(--gmail-border-soft);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.v-table .v-table__wrapper > table > thead > tr > th {
+  background: #f8fafd !important;
+  color: var(--gmail-muted) !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.2px;
+  border-bottom: 1px solid var(--gmail-border-soft) !important;
+}
+
+.v-table .v-table__wrapper > table > tbody > tr > td {
+  border-bottom: 1px solid var(--gmail-border-soft) !important;
+  color: var(--gmail-text);
+  font-size: 13px;
+}
+
+.v-table .v-table__wrapper > table > tbody > tr:hover > td {
+  background: var(--gmail-hover) !important;
+}
+
+.v-data-table-footer {
+  border-top: 1px solid var(--gmail-border-soft);
+}
+
+.v-chip {
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+.v-empty-state {
+  border-radius: 16px;
+  border: 1px dashed var(--gmail-border);
+}
+
+@media (max-width: 960px) {
+  .v-card-title {
+    font-size: 0.95rem !important;
   }
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
+  .v-table .v-table__wrapper > table > thead > tr > th {
+    font-size: 11px !important;
   }
 }

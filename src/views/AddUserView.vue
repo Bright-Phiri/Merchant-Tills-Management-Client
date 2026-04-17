@@ -140,11 +140,11 @@ const cancelAddUser = () => {
 
                   <v-col cols="12">
                     <div class="d-flex">
-                      <v-btn color="#ff6692" rounded="xl" variant="tonal" v-on:click="cancelAddUser"
+                      <v-btn color="#D93025" rounded="xl" variant="tonal" v-on:click="cancelAddUser"
                         >Cancel</v-btn
                       >
                       <v-btn
-                        color="#01A1FF"
+                        color="#1A73E8"
                         rounded="xl"
                         class="ml-2"
                         variant="flat"

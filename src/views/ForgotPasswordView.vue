@@ -7,6 +7,7 @@ import { useErrorHandler } from '@/composables/useErrorHandler'
 
 const { handleError } = useErrorHandler()
 const step = ref(1)
+const visible = ref(false)
 const loading = ref(false)
 const router = useRouter()
 const user = ref({
@@ -110,8 +111,8 @@ const resetAccountPassword = async () => {
 </script>
 
 <template>
-  <div class="d-flex flex-column align-center my-6">
-    <v-card class="pa-12 pb-8 mt-6" elevation="8" width="448" rounded="lg">
+  <div class="forgot-page">
+    <v-card class="forgot-card pa-10 pb-8 mt-6" width="468" rounded="xl">
       <v-img class="mx-auto my-1" height="50" src="/images/LOGO.png" />
       <v-window v-model="step">
         <v-window-item :value="1">
@@ -123,10 +124,8 @@ const resetAccountPassword = async () => {
             </p>
             <v-text-field
               class="mt-2"
-              density="compact"
               placeholder="Email Address"
               prepend-inner-icon="mdi-email-outline"
-              variant="outlined"
               v-on:keyup.enter="submitEmailAddress"
               v-model="user.email_address"
             ></v-text-field>
@@ -142,10 +141,8 @@ const resetAccountPassword = async () => {
             </p>
             <v-text-field
               class="mt-2"
-              density="compact"
               placeholder="Reset Token"
               prepend-inner-icon="mdi-key-chain"
-              variant="outlined"
               v-model="user.reset_password_token"
             ></v-text-field>
           </v-card-text>
@@ -162,10 +159,8 @@ const resetAccountPassword = async () => {
             <v-text-field
               :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
               :type="visible ? 'text' : 'password'"
-              density="compact"
               placeholder="Enter your password"
               prepend-inner-icon="mdi-lock-outline"
-              variant="outlined"
               @click:append-inner="visible = !visible"
               v-model="user.password"
             ></v-text-field>
@@ -174,21 +169,18 @@ const resetAccountPassword = async () => {
             <v-text-field
               :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
               :type="visible ? 'text' : 'password'"
-              density="compact"
               placeholder="Enter your password"
               prepend-inner-icon="mdi-lock-outline"
-              variant="outlined"
               @click:append-inner="visible = !visible"
               v-model="user.password_confirmation"
             ></v-text-field>
           </v-card-text>
         </v-window-item>
       </v-window>
-      <v-card-actions class="mx-o">
+      <v-card-actions class="mx-0">
         <v-spacer></v-spacer>
         <v-btn
           v-if="step < 4"
-          color="primary"
           variant="flat"
           :loading
           @click="resetAccountPassword"
@@ -199,3 +191,29 @@ const resetAccountPassword = async () => {
     </v-card>
   </div>
 </template>
+
+<style scoped>
+.forgot-page {
+  min-height: calc(100vh - 40px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 24px;
+}
+
+.forgot-card {
+  border: 1px solid #dfe3eb !important;
+  box-shadow: 0 2px 14px #00000014 !important;
+}
+
+@media (max-width: 600px) {
+  .forgot-page {
+    padding-top: 10px;
+  }
+
+  .forgot-card {
+    width: 100% !important;
+    padding: 26px 22px 22px !important;
+  }
+}
+</style>
