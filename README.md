@@ -1,5 +1,9 @@
 # TerminalControlClient
 
+The app now includes a separate merchant subscription workspace at `/portal/login`, alongside staff management at `/sign-in`.
+
+See [customer portal design and setup](docs/customer-portal.md) for routes, configuration, payment integration, and browser tests.
+
 This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup

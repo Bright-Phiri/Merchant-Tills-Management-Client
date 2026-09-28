@@ -1,4 +1,4 @@
-<script setup>
+﻿<script setup>
 import { ref, onMounted, useTemplateRef } from 'vue'
 import { useAuthStore } from '@/stores/useAuthStore'
 import api from '@/services/api'
@@ -37,18 +37,18 @@ const updatePassword = async () => {
 
   const missingField = requiredFields.find((field) => !user.value[field])
   if (missingField) {
-    showToast('⚠️ Please enter all required fields.', 'warning')
+    showToast('âš ï¸ Please enter all required fields.', 'warning')
     return
   }
   const password = await decryptPassword(authStore.getSecret)
 
   if (password !== user.value.old_password) {
-    showToast('❌ Old password is incorrect.', 'error')
+    showToast('âŒ Old password is incorrect.', 'error')
     return
   }
 
   if (user.value.password !== user.value.password_confirmation) {
-    showToast('❌ Oops! Your passwords don’t match.', 'error')
+    showToast('âŒ Oops! Your passwords donâ€™t match.', 'error')
     return
   }
 
@@ -78,7 +78,7 @@ const updateUserDetails = async () => {
   const missingField = requiredFields.find((field) => !user.value[field])
 
   if (missingField) {
-    showToast('⚠️ Please enter all required fields.', 'warning')
+    showToast('âš ï¸ Please enter all required fields.', 'warning')
     return
   }
 
@@ -197,7 +197,7 @@ onMounted(() => {
                                 >Cancel</v-btn
                               >
                               <v-btn
-                                color="#1A73E8"
+                                color="#087E70"
                                 rounded="xl"
                                 variant="flat"
                                 class="ml-2 text-capitalize"
@@ -259,7 +259,7 @@ onMounted(() => {
                                 >Cancel</v-btn
                               >
                               <v-btn
-                                color="#1A73E8"
+                                color="#087E70"
                                 rounded="xl"
                                 variant="flat"
                                 class="ml-2 text-capitalize"

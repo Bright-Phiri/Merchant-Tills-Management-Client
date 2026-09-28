@@ -1,4 +1,4 @@
-<script setup>
+﻿<script setup>
 import { onMounted, ref } from 'vue'
 import api from '@/services/api'
 import { formatCurrency, getColor } from '@/utils/utils'
@@ -13,6 +13,10 @@ const subscription = ref(null)
 const loading = ref(true)
 const search = ref('')
 const payments = ref([])
+const canRenew = () =>
+  subscription.value?.status === 'active' && subscription.value?.access_type !== 'perpetual'
+const statusLabel = (status) =>
+  ({ active: 'Active', expired: 'Expired', cancelled: 'Cancelled' })[status] || status
 
 const headers = [
   { align: 'start', key: 'payment_date', sortable: false, title: 'Payment Date' },
@@ -51,7 +55,8 @@ onMounted(() => {
         <v-card-title class="text-h6 px-0 d-flex justify-space-between text-black font-weight-bold"
           >Subscription Details
           <v-btn
-            color="#1A73E8"
+            v-if="canRenew()"
+            color="#087E70"
             rounded="xl"
             variant="outlined"
             v-on:click="loadRenewSubPage"
@@ -73,8 +78,15 @@ onMounted(() => {
           </v-col>
 
           <v-col cols="12" lg="3" sm="6" md="2">
+            <strong>Plan</strong>
+            <div>{{ subscription.plan }}</div>
+          </v-col>
+
+          <v-col cols="12" lg="3" sm="6" md="2">
             <strong>End Date</strong>
-            <div>{{ subscription.end_date }}</div>
+            <div>
+              {{ subscription.access_type === 'perpetual' ? 'No expiry' : subscription.end_date }}
+            </div>
           </v-col>
 
           <v-col cols="12" lg="3" sm="6" md="2">
@@ -91,7 +103,7 @@ onMounted(() => {
                 :icon="subscription.status === 'active' ? 'mdi-check-circle' : 'mdi-close-circle'"
                 start
               ></v-icon>
-              {{ subscription.status === 'expired' ? 'Expired' : 'Active' }}
+              {{ statusLabel(subscription.status) }}
             </v-chip>
           </v-col>
         </v-row>
@@ -131,7 +143,7 @@ onMounted(() => {
                 <v-progress-linear
                   height="3"
                   indeterminate
-                  color="#1A73E8"
+                  color="#087E70"
                 ></v-progress-linear> </template
             ></v-data-table>
           </v-col>

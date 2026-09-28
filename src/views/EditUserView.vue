@@ -1,4 +1,4 @@
-<script setup>
+﻿<script setup>
 import { useRoute, useRouter } from 'vue-router'
 import { ref, useTemplateRef, onMounted } from 'vue'
 import api from '@/services/api'
@@ -45,7 +45,7 @@ const updateUser = async () => {
   const missingField = requiredFields.find((field) => !user.value[field])
 
   if (missingField) {
-    showToast('⚠️ Please enter all required fields.', 'warning')
+    showToast('âš ï¸ Please enter all required fields.', 'warning')
     return
   }
 
@@ -149,7 +149,7 @@ onMounted(() => {
                   <v-col cols="12">
                     <div class="d-flex">
                       <v-btn
-                        color="#1A73E8"
+                        color="#087E70"
                         rounded="xl"
                         variant="flat"
                         class="text-capitalize"

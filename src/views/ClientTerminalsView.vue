@@ -1,4 +1,4 @@
-<script setup>
+﻿<script setup>
 import { ref, watch } from 'vue'
 import api from '@/services/api'
 import { useRoute } from 'vue-router'
@@ -108,7 +108,7 @@ watch(search, () => {
                   >Block All Terminals</v-btn
                 >
                 <v-btn
-                  color="#1A73E8"
+                  color="#087E70"
                   variant="text"
                   prepend-icon="mdi-redo"
                   v-on:click="unblockAllTerminals"
@@ -154,7 +154,7 @@ watch(search, () => {
                 <v-progress-linear
                   height="3"
                   indeterminate
-                  color="#1A73E8"
+                  color="#087E70"
                 ></v-progress-linear></template
             ></v-data-table-server>
             <v-empty-state

@@ -12,10 +12,10 @@ defineProps({
 </script>
 
 <template>
-  <v-card rounded="xl" elevation="0" class="mt-2 revenue-card" :color="cardColor">
+  <v-card elevation="0" class="revenue-card" :color="cardColor">
     <v-card-text class="d-flex align-center">
-      <v-avatar :color="avatarColor" size="50" rounded="lg">
-        <v-icon :icon :color="iconColor" size="28" />
+      <v-avatar :color="avatarColor" size="38" rounded="lg">
+        <v-icon :icon :color="iconColor" size="21" />
       </v-avatar>
       <div class="d-flex flex-column justify-center ml-3">
         <span class="revenue-label">{{ label }}</span>
@@ -29,19 +29,25 @@ defineProps({
 
 <style scoped>
 .revenue-card {
-  border: 1px solid #e1e6f0 !important;
+  margin-bottom: 7px;
+  border: 1px solid #e0e6e4 !important;
+  box-shadow: none !important;
+}
+
+.revenue-card :deep(.v-card-text) {
+  padding: 10px 12px !important;
 }
 
 .revenue-label {
   font-size: 12px;
-  color: #5f6368;
+  color: #66777b;
   font-weight: 600;
   line-height: 18px;
 }
 
 .revenue-value {
   font-size: 15px;
-  color: #202124;
+  color: #172d35;
   font-weight: 700;
   line-height: 20px;
 }

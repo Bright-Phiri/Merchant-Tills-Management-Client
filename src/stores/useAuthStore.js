@@ -10,6 +10,7 @@ export const useAuthStore = defineStore(
     const email = ref(null)
     const secret = ref(null)
     const permissions = ref({})
+    const must_change_password = ref(false)
     const isUserLoggedIn = ref(false)
 
     function setUserId(userId) {
@@ -37,6 +38,10 @@ export const useAuthStore = defineStore(
       permissions.value = perms
     }
 
+    function setMustChangePassword(value) {
+      must_change_password.value = Boolean(value)
+    }
+
     const getPermissions = computed(() => permissions.value)
     const getToken = computed(() => token.value)
     const getUserId = computed(() => user_id.value)
@@ -44,6 +49,7 @@ export const useAuthStore = defineStore(
     const getSecret = computed(() => secret.value)
     const getUserName = computed(() => user_name.value)
     const getIsUserLoggedIn = computed(() => isUserLoggedIn.value)
+    const getMustChangePassword = computed(() => must_change_password.value)
 
     function logout() {
       token.value = null
@@ -51,6 +57,7 @@ export const useAuthStore = defineStore(
       user_id.value = null
       secret.value = null
       permissions.value = {}
+      must_change_password.value = false
       isUserLoggedIn.value = false
     }
 
@@ -61,6 +68,7 @@ export const useAuthStore = defineStore(
       email,
       secret,
       permissions,
+      must_change_password,
       isUserLoggedIn,
 
       getUserId,
@@ -70,6 +78,7 @@ export const useAuthStore = defineStore(
       getSecret,
       getPermissions,
       getIsUserLoggedIn,
+      getMustChangePassword,
 
       setUserId,
       setToken,
@@ -77,6 +86,7 @@ export const useAuthStore = defineStore(
       setEmail,
       setSecret,
       setPermissions,
+      setMustChangePassword,
       logout,
     }
   },

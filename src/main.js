@@ -6,6 +6,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueSweetalert2 from 'vue-sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css'
+import './assets/management.css'
 
 // Vuetify
 import 'vuetify/styles'
@@ -23,27 +24,27 @@ const vuetify = createVuetify({
   components,
   directives,
   theme: {
-    defaultTheme: 'gmailLight',
+    defaultTheme: 'tControlLight',
     themes: {
-      gmailLight: {
+      tControlLight: {
         dark: false,
         colors: {
-          primary: '#1A73E8',
-          secondary: '#185ABC',
-          background: '#F6F8FC',
+          primary: '#087E70',
+          secondary: '#174F42',
+          background: '#F7F8F5',
           surface: '#FFFFFF',
-          'surface-variant': '#F1F3F4',
-          error: '#D93025',
-          success: '#188038',
-          warning: '#F9AB00',
-          info: '#1A73E8',
+          'surface-variant': '#EEF3EF',
+          error: '#A33A2B',
+          success: '#247A58',
+          warning: '#B97918',
+          info: '#31716B',
         },
       },
     },
   },
   defaults: {
     VAppBar: {
-      color: '#F6F8FC',
+      color: '#FFFFFF',
       elevation: 0,
     },
     VBtn: {
@@ -53,7 +54,7 @@ const vuetify = createVuetify({
       style: 'letter-spacing:0;font-weight:600;',
     },
     VCard: {
-      rounded: 'xl',
+      rounded: 'lg',
       elevation: 0,
     },
     VChip: {
@@ -89,10 +90,10 @@ pinia.use(piniaPluginPersistedstate)
 
 createApp(App)
   .use(VueAxios, axios)
+  .use(pinia)
   .use(router)
   .use(VueSweetalert2)
   .use(vuetify)
-  .use(pinia)
   .component('AnimatedCounter', AnimatedCounter)
   .component('ApexChart', VueApexCharts)
   .mount('#app')

@@ -1,4 +1,4 @@
-<script setup>
+﻿<script setup>
 import { ref, watch } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
 import api from '@/services/api'
@@ -22,6 +22,7 @@ const headers = [
     title: 'Client TIN',
   },
   { key: 'taxpayer', title: 'Client Name' },
+  { key: 'plan', title: 'Plan' },
   { key: 'start_date', title: 'Start Date' },
   { key: 'end_date', title: 'End Date' },
   { key: 'duration', title: 'Duration' },
@@ -58,10 +59,11 @@ const viewSubscription = (id) => {
 }
 
 const deleteSubscription = async (id) => {
+  if (!window.confirm('Cancel this subscription? Its payment history will be kept.')) return
   try {
     const response = await api.delete(`subscriptions/${id}`)
     if (response.status === 204) {
-      showToast('Subscription successfully deleted', 'success')
+      showToast('Subscription cancelled. Payment history was kept.', 'success')
       fetchSubscriptions(tableOptions.value)
     }
   } catch (err) {
@@ -117,13 +119,16 @@ const deleteSubscription = async (id) => {
                     :icon="item.status === 'active' ? 'mdi-check-circle' : 'mdi-close-circle'"
                     start
                   ></v-icon>
-                  {{ item.status === 'active' ? 'Active' : 'Expired' }}
+                  {{ ({ active: 'Active', expired: 'Expired', cancelled: 'Cancelled' })[item.status] || item.status }}
                 </v-chip>
+              </template>
+              <template v-slot:[`item.end_date`]="{ item }">
+                {{ item.access_type === 'perpetual' ? 'No expiry' : item.end_date }}
               </template>
               <template v-slot:[`item.action`]="{ item }">
                 <div class="d-flex">
                   <v-icon
-                    color="#1A73E8"
+                    color="#087E70"
                     icon="mdi-eye"
                     size="small"
                     @click="viewSubscription(item.id)"
@@ -132,8 +137,9 @@ const deleteSubscription = async (id) => {
                   <v-icon
                     class="ml-2"
                     color="#D93025"
-                    icon="mdi-delete"
+                    icon="mdi-cancel"
                     size="small"
+                    :disabled="item.status === 'cancelled'"
                     @click="deleteSubscription(item.id)"
                   ></v-icon>
                 </div>
@@ -142,7 +148,7 @@ const deleteSubscription = async (id) => {
                 <v-progress-linear
                   height="3"
                   indeterminate
-                  color="#1A73E8"
+                  color="#087E70"
                 ></v-progress-linear> </template
             ></v-data-table-server>
             <v-empty-state

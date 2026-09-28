@@ -1,4 +1,4 @@
-<script setup>
+﻿<script setup>
 import { ref, watch } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
 import api from '@/services/api'
@@ -90,7 +90,7 @@ watch(search, () => {
                 <v-progress-linear
                   height="3"
                   indeterminate
-                  color="#1A73E8"
+                  color="#087E70"
                 ></v-progress-linear> </template
             ></v-data-table-server>
             <v-empty-state

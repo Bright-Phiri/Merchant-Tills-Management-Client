@@ -9,7 +9,7 @@ const route = useRoute()
 const authStore = useAuthStore()
 const { mdAndDown } = useDisplay()
 
-const drawer = ref(true)
+const drawer = ref(!mdAndDown.value)
 const rail = ref(false)
 
 const links = [
@@ -35,6 +35,13 @@ const links = [
     icon: 'mdi-playlist-check',
     to: '/subscriptions',
     resource: 'subscriptions',
+    action: 'read',
+  },
+  {
+    text: 'Plan configuration',
+    icon: 'mdi-calendar-edit-outline',
+    to: '/subscription-plans',
+    resource: 'subscription_plans',
     action: 'read',
   },
   {
@@ -101,6 +108,10 @@ const userInitial = computed(() => {
   const name = authStore.getUserName || ''
   return name ? name.charAt(0).toUpperCase() : '?'
 })
+const currentPage = computed(() => {
+  const match = links.find((link) => link.to && isActive(link.to))
+  return match?.text || 'Dashboard'
+})
 
 const toggleDrawer = () => {
   if (mdAndDown.value) {
@@ -137,9 +148,9 @@ const logout = () => {
       v-model="drawer"
       app
       class="gmail-drawer"
-      color="#f8fafd"
-      :width="280"
-      :rail-width="84"
+      color="#122b32"
+      :width="260"
+      :rail-width="76"
       :rail="isRailMode"
       :permanent="!mdAndDown"
       :temporary="mdAndDown"
@@ -148,7 +159,8 @@ const logout = () => {
     >
       <div class="drawer-top" :class="{ compact: isRailMode }">
         <div class="brand-wrap" :class="{ compact: isRailMode }">
-          <v-img class="brand-logo" max-width="130" src="/images/LOGO.png" />
+          <span class="brand-mark"><v-icon icon="mdi-point-of-sale" size="22" /></span>
+          <span v-if="!isRailMode" class="brand-name">T-Control<small>MANAGEMENT</small></span>
         </div>
       </div>
 
@@ -175,7 +187,7 @@ const logout = () => {
       <template v-slot:append>
         <div class="drawer-footer" :class="{ compact: isRailMode }">
           <div class="account-chip">
-            <v-avatar size="34" color="#1a73e8">
+            <v-avatar size="34" color="#b5e4ca">
               <span class="avatar-text">{{ userInitial }}</span>
             </v-avatar>
 
@@ -200,19 +212,24 @@ const logout = () => {
       </template>
     </v-navigation-drawer>
 
-    <v-app-bar :elevation="0" color="#f8fafd">
+    <v-app-bar :elevation="0" color="#ffffff" class="management-topbar">
       <template v-slot:prepend>
         <v-app-bar-nav-icon
+          aria-label="Toggle management navigation"
           class="menu-toggle-btn"
           size="large"
           variant="text"
           @click.stop="toggleDrawer"
         />
       </template>
-      <v-app-bar-title class="app-title">Terminal Control</v-app-bar-title>
+      <v-app-bar-title class="app-title">
+        <span class="topbar-kicker">Operations workspace</span>
+        <strong>{{ currentPage }}</strong>
+      </v-app-bar-title>
 
       <template v-slot:append>
-        <v-avatar size="34" color="#1a73e8" class="mr-2">
+        <span class="secure-label"><v-icon icon="mdi-lock-outline" size="14" /> Secure</span>
+        <v-avatar size="34" color="#eaf0e8" class="mr-2">
           <span class="text-white text-subtitle-2">
             {{ authStore.getUserName ? authStore.getUserName.charAt(0).toUpperCase() : '' }}
           </span>
@@ -246,12 +263,7 @@ const logout = () => {
 }
 
 .nav-shell {
-  font-family:
-    'Google Sans',
-    'Segoe UI',
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
 }
 
 .gmail-drawer {
@@ -262,15 +274,15 @@ const logout = () => {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: #f8fafd;
+  background: #122b32;
 }
 
 .gmail-drawer :deep(.v-navigation-drawer__append) {
-  background: #f8fafd;
+  background: #122b32;
 }
 
 .drawer-top {
-  padding: 10px 12px 0 12px;
+  padding: 24px 18px 4px;
 }
 
 .drawer-top.compact {
@@ -281,7 +293,8 @@ const logout = () => {
   display: flex;
   align-items: center;
   min-height: 42px;
-  padding: 2px 0 8px 10px;
+  padding: 2px 4px 15px;
+  gap: 11px;
 }
 
 .brand-wrap.compact {
@@ -289,8 +302,33 @@ const logout = () => {
   padding: 2px 0 8px 0;
 }
 
-.brand-logo {
-  opacity: 0.95;
+.brand-mark {
+  width: 37px;
+  height: 41px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  color: #174f42;
+  background: #b5e4ca;
+  transform: rotate(-3deg);
+}
+
+.brand-name {
+  color: #fff;
+  font-size: 22px;
+  font-weight: 650;
+  line-height: 1;
+  letter-spacing: -0.7px;
+}
+
+.brand-name small {
+  display: block;
+  margin-top: 7px;
+  color: #93abab;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 2.2px;
 }
 
 .compose-btn {
@@ -329,7 +367,7 @@ const logout = () => {
 .drawer-scroll {
   flex: 1;
   overflow-y: auto;
-  padding: 14px 0 0;
+  padding: 14px 12px 0;
 }
 
 .drawer-scroll.compact {
@@ -340,38 +378,39 @@ const logout = () => {
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.8px;
-  color: #5f6368;
+  color: #789395;
   margin: 14px 0 8px;
-  padding-left: 28px;
+  padding-left: 12px;
   text-transform: uppercase;
 }
 
 .gmail-nav-item {
-  width: calc(100% - 10px);
+  width: 100%;
   border: none;
   background: transparent;
   min-height: 34px;
-  border-radius: 0 17px 17px 0;
-  margin: 0 10px 2px 0;
-  padding: 0 12px 0 26px;
+  border-radius: 9px;
+  margin: 0 0 4px;
+  padding: 0 12px;
   display: flex;
   align-items: center;
   gap: 15px;
   text-align: left;
   cursor: pointer;
-  color: #202124;
+  color: #bdcdcd;
   transition:
     background-color 0.16s ease,
     color 0.16s ease;
 }
 
 .gmail-nav-item:hover {
-  background: #eaedf3;
+  background: #1b3940;
+  color: #fff;
 }
 
 .gmail-nav-item.active {
-  background: #d3e3fd;
-  color: #001d35;
+  background: #b5e4ca;
+  color: #153c36;
 }
 
 .gmail-nav-item.active .nav-label {
@@ -389,11 +428,11 @@ const logout = () => {
 }
 
 .gmail-nav-item.compact:hover {
-  background: #eaedf3;
+  background: #1b3940;
 }
 
 .gmail-nav-item.compact.active {
-  background: #d3e3fd;
+  background: #b5e4ca;
 }
 
 .nav-icon {
@@ -408,7 +447,7 @@ const logout = () => {
 
 .drawer-footer {
   padding: 10px 12px 14px;
-  border-top: 1px solid #e4e8f1;
+  border-top: 1px solid #28434a;
 }
 
 .drawer-footer.compact {
@@ -420,7 +459,7 @@ const logout = () => {
   align-items: center;
   gap: 10px;
   border-radius: 18px;
-  background: #edf2fa;
+  background: #19363d;
   padding: 8px 10px;
   min-height: 50px;
 }
@@ -431,7 +470,7 @@ const logout = () => {
 }
 
 .avatar-text {
-  color: #fff;
+  color: #174f42;
   font-size: 14px;
   font-weight: 700;
 }
@@ -446,7 +485,7 @@ const logout = () => {
   font-size: 13px;
   font-weight: 600;
   line-height: 16px;
-  color: #1f1f1f;
+  color: #f4f8f7;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -454,7 +493,7 @@ const logout = () => {
 
 .account-caption {
   font-size: 11px;
-  color: #5f6368;
+  color: #93abab;
   line-height: 14px;
 }
 
@@ -466,8 +505,9 @@ const logout = () => {
   letter-spacing: 0;
   font-size: 13px;
   font-weight: 600;
-  color: #001d35;
-  background: #d3e3fd;
+  color: #bdcdcd;
+  background: transparent;
+  border: 1px solid #355159;
 }
 
 .drawer-footer.compact .logout-btn {
@@ -480,13 +520,44 @@ const logout = () => {
 }
 
 .menu-toggle-btn:hover {
-  background: #e9eef6;
+  background: #eef3ef;
 }
 
 .app-title {
+  color: #172d35;
+  line-height: 1.1;
+}
+
+.app-title strong {
+  display: block;
   font-size: 16px;
-  font-weight: 600;
-  color: #2e3135;
+  font-weight: 650;
+}
+
+.topbar-kicker {
+  display: block;
+  margin-bottom: 4px;
+  color: #738286;
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+}
+
+.management-topbar {
+  border-bottom: 1px solid #e0e6e4 !important;
+}
+
+.secure-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #718184;
+  font-size: 11px;
+}
+
+.management-topbar :deep(.v-avatar span) {
+  color: #49614c !important;
 }
 
 @media (max-width: 960px) {
@@ -506,6 +577,11 @@ const logout = () => {
   .gmail-nav-item {
     width: calc(100% - 8px);
     padding-left: 20px;
+  }
+
+  .secure-label,
+  .management-topbar :deep(.mr-5) {
+    display: none;
   }
 }
 </style>

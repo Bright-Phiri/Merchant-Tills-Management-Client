@@ -1,18 +1,19 @@
 <script setup>
-import { onMounted, onBeforeUnmount } from 'vue'
-import { useRouter } from 'vue-router'
+import { onMounted, onBeforeUnmount, watch } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/useAuthStore'
 import { showToast } from '@/utils/utils'
 
 const authStore = useAuthStore()
 const router = useRouter()
+const route = useRoute()
 
 let idleTimeout
 const idleLimit = 15 * 60 * 1000 // 15 minutes
 
 function resetIdleTimer() {
   clearTimeout(idleTimeout)
-  if (!authStore.isUserLoggedIn) return
+  if (!authStore.isUserLoggedIn || route.meta.portal) return
 
   idleTimeout = setTimeout(() => {
     authStore.logout()
@@ -22,6 +23,7 @@ function resetIdleTimer() {
 }
 
 const events = ['mousemove', 'keydown', 'click', 'scroll']
+watch(() => route.meta.portal, resetIdleTimer)
 
 onMounted(() => {
   events.forEach((event) => window.addEventListener(event, resetIdleTimer))
@@ -36,41 +38,44 @@ onBeforeUnmount(() => {
 
 <template>
   <v-app>
-    <v-main class="gmail-main">
-      <v-container fluid class="gmail-content">
+    <v-main
+      class="app-main"
+      :class="{
+        'customer-main': route.meta.portal,
+        'management-main': authStore.isUserLoggedIn && !route.meta.portal,
+      }"
+    >
+      <v-container
+        fluid
+        class="app-content"
+        :class="{
+          'customer-content': route.meta.portal,
+          'management-content': authStore.isUserLoggedIn && !route.meta.portal,
+        }"
+      >
         <router-view />
       </v-container>
-      <v-fab
-        v-if="authStore.isUserLoggedIn"
-        color="primary"
-        icon="mdi-cog"
-        size="large"
-        class="fab"
-        to="/settings"
-      ></v-fab>
     </v-main>
   </v-app>
 </template>
 
 <style scoped>
-.gmail-main {
-  background-color: #f6f8fc;
+.customer-content {
+  padding: 0 !important;
+}
+.customer-main {
+  background: #f7f8f5 !important;
+}
+.app-main {
+  background-color: #f7f8f5;
 }
 
-.gmail-content {
+.app-content {
   padding: 20px 24px;
 }
 
-.fab {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 10;
-  box-shadow: 0 3px 10px #00000026;
-}
-
 @media (max-width: 960px) {
-  .gmail-content {
+  .app-content {
     padding: 14px 12px;
   }
 }

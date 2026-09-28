@@ -24,33 +24,33 @@ const revenueCards = [
     label: 'Total Revenue',
     valueKey: 'total_payments',
     icon: 'mdi-cash',
-    iconColor: '#F9AB00',
-    avatarColor: '#FEF7E0',
-    cardColor: '#F8FAFD',
+    iconColor: '#8A5B13',
+    avatarColor: '#F8EBCF',
+    cardColor: '#FFFFFF',
   },
   {
     label: 'Total Revenue This Month',
     valueKey: 'monthly_revenue',
     icon: 'mdi-cash',
-    iconColor: '#188038',
-    avatarColor: '#E6F4EA',
-    cardColor: '#F8FAFD',
+    iconColor: '#247A58',
+    avatarColor: '#E1F1E7',
+    cardColor: '#FFFFFF',
   },
   {
     label: 'Total Revenue This Week',
     valueKey: 'weekly_revenue',
     icon: 'mdi-cash',
-    iconColor: '#D93025',
-    avatarColor: '#FCE8E6',
-    cardColor: '#F8FAFD',
+    iconColor: '#A33A2B',
+    avatarColor: '#F7E5E0',
+    cardColor: '#FFFFFF',
   },
   {
     label: "Today's Revenue",
     valueKey: 'daily_revenue',
     icon: 'mdi-cash',
-    iconColor: '#1A73E8',
-    avatarColor: '#E8F0FE',
-    cardColor: '#F8FAFD',
+    iconColor: '#087E70',
+    avatarColor: '#DFF0E9',
+    cardColor: '#FFFFFF',
   },
 ]
 const headers = [
@@ -97,7 +97,7 @@ const growthChartOptions = ref({
     type: 'gradient',
     gradient: { shadeIntensity: 1, opacityFrom: 0.6, opacityTo: 0.05, stops: [0, 100] },
   },
-  colors: ['#1A73E8', '#188038'],
+  colors: ['#087E70', '#D49B3F'],
   dataLabels: { enabled: false },
   xaxis: {
     categories: [
@@ -139,7 +139,7 @@ const chartOptions = {
       stops: [0, 100],
     },
   },
-  colors: ['#D93025'],
+  colors: ['#A33A2B'],
   tooltip: {
     enabled: false,
   },
@@ -166,7 +166,7 @@ const chartOptions1 = {
       stops: [0, 100],
     },
   },
-  colors: ['#1A73E8'],
+  colors: ['#087E70'],
   tooltip: {
     enabled: false,
   },
@@ -207,8 +207,8 @@ onMounted(() => {
 })
 
 function formatCurrency(amount) {
-  if (!amount) return 'MW 0.00'
-  return `MW${Number(amount).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+  if (!amount) return 'MK 0.00'
+  return `MK ${Number(amount).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
 }
 
 onBeforeUnmount(() => {
@@ -220,11 +220,24 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="Home">
+    <header class="management-page-intro">
+      <div>
+        <p class="management-eyebrow">Management overview</p>
+        <h1 class="management-heading">Your operation, at a glance.</h1>
+        <p class="management-lead">
+          Monitor subscriptions, terminals, clients, and revenue from one workspace.
+        </p>
+      </div>
+      <span class="management-live">Live operational data</span>
+    </header>
+    <p class="management-section-title">Performance</p>
     <v-row>
       <v-col cols="12" lg="9" md="8" sm="12" xs="12">
-        <v-card rounded="xl" height="400">
-          <v-card-title class="text-grey-darken-2 text-subtitle-1">
-            Subscription and Payment Trends
+        <v-card class="trend-card" height="400">
+          <v-card-title>
+            <span
+              ><small class="card-kicker">YEAR TO DATE</small>Subscription and payment trends</span
+            >
           </v-card-title>
 
           <v-card-text class="px-4 pb-4">
@@ -239,7 +252,10 @@ onBeforeUnmount(() => {
       </v-col>
 
       <v-col cols="12" lg="3" md="4" sm="12" xs="12">
-        <v-card rounded="xl" height="400">
+        <v-card class="revenue-summary" height="400">
+          <v-card-title>
+            <span><small class="card-kicker">REVENUE</small>Collection summary</span>
+          </v-card-title>
           <v-card-text>
             <v-row no-gutters>
               <v-col v-for="(card, index) in revenueCards" :key="index" cols="12">
@@ -258,6 +274,7 @@ onBeforeUnmount(() => {
       </v-col>
     </v-row>
 
+    <p class="management-section-title">Workspace totals</p>
     <v-row>
       <v-col cols="12" lg="4">
         <DashboardCard
@@ -265,9 +282,10 @@ onBeforeUnmount(() => {
           title="All Clients"
           icon="mdi-account-multiple"
           iconColor="white"
-          avatarColor="#D93025"
-          cardColor="#FCE8E6"
+          avatarColor="#A33A2B"
+          cardColor="#FFFFFF"
           :value="dashboardData.total_clients"
+          helper="Registered taxpayer accounts"
         >
           <template #chart>
             <apex-chart
@@ -287,22 +305,12 @@ onBeforeUnmount(() => {
           title="All Subscriptions"
           icon="mdi-playlist-check"
           iconColor="white"
-          avatarColor="#1A73E8"
-          cardColor="#E8F0FE"
+          avatarColor="#087E70"
+          cardColor="#FFFFFF"
           :value="dashboardData.total_subscriptions"
           :duration="700"
+          :helper="`${dashboardData.active_subscriptions || 0} currently active`"
         >
-          <template #extra>
-            <v-chip
-              class="d-flex justify-center mt-3"
-              size="small"
-              variant="outlined"
-              color="#1A73E8"
-              style="width: 96px"
-            >
-              <span>{{ dashboardData.active_subscriptions }} Active</span>
-            </v-chip>
-          </template>
           <template #chart>
             <ApexChart
               type="area"
@@ -321,28 +329,18 @@ onBeforeUnmount(() => {
           title="All Terminals"
           icon="mdi-sitemap"
           icon-color="#ffffff"
-          avatarColor="#188038"
-          cardColor="#E6F4EA"
+          avatarColor="#247A58"
+          cardColor="#FFFFFF"
           :value="dashboardData.total_terminals"
           :duration="800"
+          :helper="`${dashboardData.active_terminals || 0} currently active`"
         >
-          <template #extra>
-            <v-chip
-              class="d-flex justify-center mt-2"
-              size="small"
-              variant="outlined"
-              color="#1A73E8"
-              style="width: 96px"
-            >
-              <span>{{ dashboardData.active_terminals }} Active</span>
-            </v-chip>
-          </template>
           <template #chart>
             <v-progress-circular
               :model-value="dashboardData.active_terminals"
-              size="90"
-              width="6"
-              color="#1A73E8"
+              size="68"
+              width="5"
+              color="#087E70"
               rotate="-90"
             />
           </template>
@@ -350,10 +348,11 @@ onBeforeUnmount(() => {
       </v-col>
     </v-row>
 
+    <p class="management-section-title">Latest activity</p>
     <v-row>
       <v-col cols="12">
-        <v-card rounded="xl" to="/payments">
-          <v-card-title class="text-subtitle-1">Recent Payments</v-card-title>
+        <v-card to="/payments">
+          <v-card-title>Recent payments</v-card-title>
           <v-card-text>
             <v-data-table
               hide-default-footer
@@ -373,3 +372,22 @@ onBeforeUnmount(() => {
     </v-row>
   </div>
 </template>
+
+<style scoped>
+.card-kicker {
+  display: block;
+  margin-bottom: 5px;
+  color: #087e70;
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: 1.4px;
+}
+
+.trend-card :deep(.v-card-text) {
+  padding-top: 4px;
+}
+
+.revenue-summary :deep(.v-card-text) {
+  padding-top: 0;
+}
+</style>

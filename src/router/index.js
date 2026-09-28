@@ -1,10 +1,60 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/useAuthStore'
 import Navbar from '@/components/NavigationDrawer.vue'
+import { useCustomerStore } from '@/stores/useCustomerStore'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: '/portal/login',
+      name: 'customer-login',
+      meta: { portal: true },
+      component: () => import('../views/portal/CustomerSignInView.vue'),
+    },
+    {
+      path: '/portal/change-password',
+      name: 'customer-change-password',
+      meta: { portal: true, customer: true, passwordChange: true, title: 'Secure your account' },
+      component: () => import('../views/ChangeTemporaryPasswordView.vue'),
+    },
+    {
+      path: '/portal',
+      component: () => import('../components/portal/PortalLayout.vue'),
+      meta: { portal: true, customer: true },
+      children: [
+        {
+          path: '',
+          name: 'customer-overview',
+          meta: { title: 'Overview' },
+          component: () => import('../views/portal/OverviewView.vue'),
+        },
+        {
+          path: 'plans',
+          name: 'customer-plans',
+          meta: { title: 'Subscription plans' },
+          component: () => import('../views/portal/PlansView.vue'),
+        },
+        {
+          path: 'checkout/:planId',
+          name: 'customer-checkout',
+          meta: { title: 'Checkout' },
+          component: () => import('../views/portal/CheckoutView.vue'),
+        },
+        {
+          path: 'payment',
+          name: 'customer-payment',
+          meta: { title: 'Payment confirmation' },
+          component: () => import('../views/portal/PaymentResultView.vue'),
+        },
+        {
+          path: 'payments',
+          name: 'customer-payments',
+          meta: { title: 'Payment history' },
+          component: () => import('../views/portal/PaymentHistoryView.vue'),
+        },
+      ],
+    },
     {
       path: '/',
       component: Navbar,
@@ -43,6 +93,11 @@ const router = createRouter({
           path: '/subscriptions',
           name: 'subscriptions',
           component: () => import('../views/SubscriptionsView.vue'),
+        },
+        {
+          path: '/subscription-plans',
+          name: 'subscription-plans',
+          component: () => import('../views/SubscriptionPlansView.vue'),
         },
         {
           path: '/payments',
@@ -92,6 +147,12 @@ const router = createRouter({
       component: () => import('../views/SignInView.vue'),
     },
     {
+      path: '/change-password',
+      name: 'change-password',
+      meta: { passwordChange: true },
+      component: () => import('../views/ChangeTemporaryPasswordView.vue'),
+    },
+    {
       path: '/sign-up',
       name: 'sign-up',
       component: () => import('../views/SignUpView.vue'),
@@ -105,6 +166,16 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  if (to.meta.portal) {
+    const customerStore = useCustomerStore()
+    if (to.meta.customer && !customerStore.authenticated) {
+      return next({ name: 'customer-login', query: { redirect: to.fullPath } })
+    }
+    if (customerStore.authenticated && customerStore.mustChangePassword && !to.meta.passwordChange) {
+      return next({ name: 'customer-change-password' })
+    }
+    return next()
+  }
   const authStore = useAuthStore()
 
   if (
@@ -114,9 +185,22 @@ router.beforeEach((to, from, next) => {
     !authStore.getIsUserLoggedIn
   ) {
     next({ name: 'sign-in' })
+  } else if (
+    authStore.getIsUserLoggedIn &&
+    authStore.getMustChangePassword &&
+    !to.meta.passwordChange
+  ) {
+    next({ name: 'change-password' })
   } else {
     next()
   }
+})
+
+router.afterEach((to) => {
+  document.title = to.meta.portal
+    ? `${to.meta.title || 'Merchant sign in'} · T-Control`
+    : 'T-Control · Back office'
+  window.scrollTo({ top: 0, behavior: 'instant' })
 })
 
 export default router
